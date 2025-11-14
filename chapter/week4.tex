@@ -1,0 +1,212 @@
+% !TeX root = ../main.tex
+
+\section{Homework \#4 [2025-09-23]}
+
+\begin{problem}
+  理想费米气体的巨配分函数为
+  \[
+    Z_G = \Tr \exp\ab\{-\beta \sum_p[\epsilon(p) - \mu] \hat n_p\}
+  \]
+  其中 $\hat n_p$ 的本征值为 $0$ 或 $1$. 证明
+  \begin{enumext}[label = (\alph*)]
+    \item $Z_G = \prod_p(1 + \upe^{-\beta(\epsilon(p)-\mu)})$
+    \item 根据热力学关系求 $U = \sum_p \epsilon(p) \hat n_p$ 和
+    $\braket<N> = \sum_p \hat n_p$.
+    \item 若 $\epsilon(p) = \frac{p^2}{2m}$，
+    $\sum_p \to V \int \frac{\d^3p}{(2\pi^3)}$，求 $T = 0$ 时 $\braket<N>$
+    （设 $\mu = \epsilon_F$ 是费米能）.
+    \item 证明 $T > 0$，$\beta_{\epsilon_F} \gg 1$ 时，
+    \begin{align*}
+      \frac{\braket<N>}{V} & = \frac{(2m\mu)^{1/2}}{6\pi^2}\ab[1
+      + \frac{\pi^2}{8}(\beta\mu)^{-2}
+      + \frac{7\pi^4}{640}(\beta\mu)^{-4} + \cdots]\\
+      \frac UV & = \frac{(2m\mu)^{3/2}}{10\pi^2} \ab[1
+      + \frac{5\pi^2}{8}(\beta\mu)^{-2}
+      - \frac{7\pi^4}{384}(\beta\mu)^{-4} + \cdots]
+    \end{align*}
+    积分公式
+    \[
+      \int_0^\infty \frac{\d u}{\upe^{-\alpha+u} + 1}\ab(\odv \varphi u)
+    = \varphi(u) + 2\sum_{n=1}^\infty C_{2n} \ab(\odv[2n]\varphi u)_{u=\alpha},
+    \quad
+      C_m = \sum_{k=1}^\infty \frac{(-1)^{k+1}}{k^m},~
+      C_2 = \frac{\pi^2}{12},~ C_4 = \frac{7\pi^2}{720}
+    \]
+  \end{enumext}
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}[label = (\alph*)]
+    \item 对 $n_p = 0$ 与 $n_p = 1$ 的情况求和
+    \[
+      Z_G = \prod_p \sum_{n_p=0}^1 \upe^{-\beta[\epsilon(p)-\mu] n_p}
+          = \prod_p \ab[1 + \upe^{-\beta(\epsilon(p)-\mu)}].
+    \]
+    \item
+    巨势 $\Omega = -\frac{1}{\beta} \ln Z_G = -\frac{1}{\beta} \sum_p \ln\ab[1 + \upe^{-\beta(\epsilon(p)-\mu)}]$，  由热力学关系：
+    \[
+      \braket<N> = -\ab(\pdv\Omega\mu)_{T,V}
+    = \sum_p \frac{1}{e^{\beta(\epsilon(p)-\mu)} + 1},\quad
+  U = \sum_p \frac{\epsilon(p)}{e^{\beta(\epsilon(p)-\mu)} + 1}.
+    \]
+    \item $T = 0$ 时 $\mu = \epsilon_F$，
+    $\braket<n_p> = \Theta(\epsilon_F - \epsilon(p))$，
+    \[
+    \frac{\braket<N>}{V} = \frac{1}{(2\pi)^3} \int_0^{p_F} 4\pi p^2 \d p
+  = \frac{p_F^3}{6\pi^2}
+  = \frac{(2m\epsilon_F)^{3/2}}{6\pi^2}.
+    \]
+    \item
+    令 $\varphi(\epsilon) = \frac{2}{3} \epsilon^{3/2}$，
+    则 $\varphi'(\epsilon) = \epsilon^{1/2}$，利用 Sommerfeld 展开：
+    \[
+      \int_0^\infty \frac{\epsilon^{1/2} \d\epsilon}{e^{\beta(\epsilon-\mu)}+1}
+    = \varphi(\mu) + 2\sum_{n=1}^\infty C_{2n} \varphi^{(2n)}(\mu) \beta^{-2n},
+    \]
+    其中 $C_2 = \frac{\pi^2}{12}$, $C_4 = \frac{7\pi^4}{720}$，代入得
+    \[
+      \frac{\braket<N>}{V}
+    = \frac{(2m)^{3/2}}{6\pi^2} \mu^{3/2} \ab[1 + \frac{\pi^2}{8}(\beta\mu)^{-2} + \frac{7\pi^4}{640}(\beta\mu)^{-4} + \cdots].
+    \]
+    对 $U$，取 $\varphi(\epsilon) = \frac{2}{5} \epsilon^{5/2}$，得：
+    \[
+      \frac{U}{V}
+    = \frac{(2m)^{3/2}}{10\pi^2} \mu^{5/2} \ab[1 + \frac{5\pi^2}{8}(\beta\mu)^{-2} - \frac{7\pi^4}{384}(\beta\mu)^{-4} + \cdots].
+    \]
+  \end{enumext}
+\end{solution}
+
+\begin{problem}
+  声子的状态可用一组整数 $\{n_{k\lambda}\}$ 来表征
+  （$\lambda = 1$, $2$, $3$ 是声波的偏振方向），
+  能量为 $E_{\{n_{\bm k\lambda}\}} = \sum_{\bm k\lambda} (n_{\bm k\lambda} + \frac12)\omega_{0\lambda}(\bm k)$.
+  在低能近似下，$\omega_{01,2}(\bm k) = c_Tk$, $\omega_{03}(\bm k) = c_Lk$.
+  \begin{enumext}[label = (\alph*)]
+    \item 利用 $Z = \prod_{\bm k\lambda}\sum_{n_{k\lambda}}^\infty \upe^{-\beta(n_{\bm k\lambda}+\frac12)\omega_0\lambda}$，求 $Z$ 和 $F$
+    （用 $\braket<n_{\bm k\lambda}>[1 - \upe^{-\beta\omega_0\lambda}]^{-1}$表达）.
+    \item 设 $\omega_T$ 和 $\omega_L$ 是横、纵声子的频率上限，把 $\omega$ 连续化，写出 $F$.
+  \end{enumext}
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}[label = (\alph*)]
+    \item 配分函数
+    \[
+      Z = \prod_{\bm k, \lambda} \sum_{n=0}^\infty \upe^{-\beta (n+\frac12)\omega_{0\lambda}(\bm k)}
+        = \prod_{\bm k, \lambda} \frac{e^{-\beta\omega_{0\lambda}/2}}{1 - \upe^{-\beta\omega_{0\lambda}}}
+    \]
+    自由能
+    \[
+      F = -\frac{1}{\beta} \ln Z
+        = \sum_{\bm k, \lambda} \ab[\frac{\omega_{0\lambda}}{2} + \frac{1}{\beta} \ln\ab(1 - \upe^{-\beta\omega_{0\lambda}})]
+    \]
+    利用 $\braket<n_{\bm k\lambda}> = (e^{\beta\omega_{0\lambda}} - 1)^{-1}$，有
+    \[
+      1 - \upe^{-\beta\omega_{0\lambda}} = \frac{1}{\braket<n_{\bm k\lambda}> + 1}
+    \]
+    因此
+    \[
+      F = \sum_{\bm k, \lambda} \ab[\frac{\omega_{0\lambda}}{2} - \frac{1}{\beta} \ln\ab(\langle n_{\bm k\lambda} \rangle + 1)]
+    \]
+    \item
+    横模 $\omega = c_T k$（2 支），纵模 $\omega = c_L k$（1 支），
+    频率上限分别为 $\omega_T$、$\omega_L$. 态密度
+    \[
+      g_T(\omega) = \frac{V}{\pi^2} \frac{\omega^2}{c_T^3}, \quad
+      g_L(\omega) = \frac{V}{2\pi^2} \frac{\omega^2}{c_L^3}
+    \]
+    自由能
+    \[
+      F = \frac{V}{\pi^2 c_T^3} \int_0^{\omega_T} \omega^2 \ab[\frac12 \omega + \frac{1}{\beta} \ln\ab(1 - \upe^{-\beta\omega})] d\omega
+        + \frac{V}{2\pi^2 c_L^3} \int_0^{\omega_L} \omega^2 \ab[\frac12 \omega + \frac{1}{\beta} \ln\ab(1 - \upe^{-\beta\omega})] d\omega
+    \]
+  \end{enumext}
+\end{solution}
+
+\begin{problem}
+  粒子数守恒的玻色子系统，巨配分函数为
+  $Z_G = \prod_{N=0}^\infty \sum_{\{n_p\}} \upe^{-\beta\sum_{\bm p}(\epsilon(\bm p) - \mu)}$, 求和 $\sum_{\{n_p\}}1 = N$.
+  \begin{enumext}[label = (\alph*)]
+    \item 证明 $Z_G = \prod_{\bm p}[1 - \upe^{-\beta(\epsilon(\bm p)-\mu)}]^{-1}$.
+    \item 若 $\epsilon(p) = \frac{p^2}{2m}$，在把求和化作积分后，证明
+    \[
+      \ln Z_G = V\ab(\frac{m}{2\pi\beta})^{3/2} g_{5/2} (\beta\mu),~
+      g_k(\beta\mu) = \sum_{n=1}^\infty \frac{\upe^{n\beta\mu}}{n^k}
+    \]
+    \item $g_k(\nu)$ 只在 $\nu \leq 0$ 才收敛，即对玻色子化学势最大为 $0$.
+    说明存在临界密度 $n_c = \ab(\frac{m}{2\pi\beta})^{3/2} g_{3/2}(0)$，
+    当密度 $n \leq n_c$, $\mu \leq 0$.
+    反之，对给定 $n$，有一个临界温度 $T_c^{-1} = \frac{km}{2\pi}\ab(\frac{g_{3/2}(0)}n)^{2/3}$，当 $T \geq T_c$, $\mu \leq 0$.
+    问将温度降到 $T < T_c$，会发生什么物理现象？
+    \item $\braket<n> = [1 - \upe^{-\beta(\epsilon(\bm p)-\mu)}]^{-1}$
+    在 $p = 0$ 时是无意义的，$\braket<N>$ 中的 $p = 0$ 部分应单独写出
+    \[
+      \braket<N> = N_0 + \frac{(2m)^{3/2}V}{(2\pi)^2}
+      \int_{0^+}^\infty \d\epsilon \epsilon^{1/2}(\upe^{\beta\epsilon} - 1)
+    \]
+    证明 $T < T_c$ 时，$N_0/V$ 是一个宏观量
+    \[
+      \frac{N_0}{V} = n\ab(1 - \ab(\frac T{T_c})^{3/2})
+    \]
+  \end{enumext}
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}[label = (\alph*)]
+    \item \begin{proof}
+    \renewcommand* \qedsymbol \relax
+    巨正则系综对每个单粒子态独立求和（对玻色子 $n_p = 0,1,2,\dots$）
+    \[
+      Z_G = \prod_{\bm p} \sum_{n_p=0}^\infty \upe^{-\beta(\epsilon(\bm p) - \mu) n_p}
+    \]
+    于是几何级数的求和结果为
+    \[
+      \sum_{n=0}^\infty \upe^{-\beta(\epsilon - \mu) n} = \frac{1}{1 - \upe^{-\beta(\epsilon - \mu)}}, \quad \mu < \epsilon
+    \]
+    最终得到
+    \[
+      Z_G = \prod_{\bm p} \ab[1 - \upe^{-\beta(\epsilon(\bm p) - \mu)}]^{-1}\hfill\square
+    \]
+    \end{proof}
+    \item \begin{proof}
+    \renewcommand* \qedsymbol \relax
+    已知恒等式
+    \[
+      -\ln(1 - \upe^{-\beta(\epsilon - \mu)}) = \sum_{n=1}^\infty \frac{e^{n\beta\mu} \upe^{-n\beta\epsilon}}{n}
+    \]
+    于是，在三维连续极限下
+    \[
+      \ln Z_G = - \sum_{\bm p} \ln\ab[1 - \upe^{-\beta(\epsilon(\bm p) - \mu)}] = \sum_{\bm p} \sum_{n=1}^\infty \frac{e^{n\beta\mu}}{n} \upe^{-n\beta p^2/(2m)}
+    \]
+    对 $\bm p$ 积分
+    \[
+      \sum_{\bm p} \upe^{-n\beta p^2/(2m)} \to \frac{V}{(2\pi)^3} \int \d^3p \upe^{-n\beta p^2/(2m)}
+    = \frac{V}{(2\pi)^3} \ab(\frac{2\pi m}{n\beta} )^{3/2}
+    \]
+    因此
+    \[
+      \ln Z_G = V \ab(\frac{m}{2\pi\beta} )^{3/2} g_{5/2}(\beta\mu), \quad
+      g_k(z) = \sum_{n=1}^\infty \frac{z^n}{n^k}
+    = \sum_{n=1}^\infty \frac{\upe^{n\beta\mu}}{n^k}\hfill\square
+    \]
+    \end{proof}
+    \item 粒子数密度：
+    \[
+      n = \frac{1}{V} \frac{\partial \ln Z_G}{\partial (\beta\mu)} 
+        = \frac{1}{\lambda_T^3} g_{3/2}(e^{\beta\mu}).
+    \]
+    $g_{3/2}(z)$ 在 $z \le 1$ 收敛，故 $\mu \le 0$。  
+    临界密度：
+    \[
+      n_c = \frac{1}{\lambda_T^3} g_{3/2}(1) 
+          = \left( \frac{m}{2\pi\beta} \right)^{3/2} \zeta(3/2).
+    \]
+    当 $n > n_c$ 或 $T < T_c$ 时发生 Bose - Einstein 凝聚，$\mu \to 0^-$，宏观占据基态.
+    \item $T < T_c$ 时 $\mu \approx 0$，总粒子数：
+    \[
+      N = N_0 + \frac{V}{\lambda_T^3} g_{3/2}(1)
+        = N_0 + N \left( \frac{T}{T_c} \right)^{3/2},
+    \]
+    所以
+    \[
+      \frac{N_0}{V} = n \left[ 1 - \left( \frac{T}{T_c} \right)^{3/2} \right].
+    \]
+  \end{enumext}
+\end{solution}

@@ -1,0 +1,626 @@
+% !TeX root = ../main.tex
+
+\section{Homework \#3 [2025-09-16]}
+
+\begin{problem}
+  $N$ 个单原子分子组成的理想气体，
+  \[
+    H = \sum_{i=1}^{3N} \frac{p_i^2}{2m}
+  \]
+  微观状态数的定义为
+  \[
+    \Omega(E) = \frac1{N!h^{3N}} \int_{E\leq H \leq E+\Delta E}
+    \d q_1 \cdots \d q_{3N} \d p_1 \cdots \d p_{3N}
+  \]
+  证明
+  \[
+    \Omega(E) = \pdv{\Sigma(E)}E \Delta E
+  \]
+  其中 $\Sigma(E) = K \frac{V^N}{N!h^{3N}} (2mE)^{3N/2}$,
+  $K = \frac{\pi^{3N/2}}{(3N/2)!}$.
+\end{problem}
+\begin{solution}\begin{proof}
+  $N$ 个分子构成的 $3N$ 维 Euclidean 空间 (动量空间) 体积为
+  \[
+    V_p^{(3N)} = \int \prod_{i=1}^{3N} \d p_i
+  = \frac{\pi^{3N/2}}{\Gamma(\frac32N + 1)} R^{3N}
+  = \frac{\pi^{3N/2}}{(3N/2)!} R^{3N} = KR^{3N}
+  \]
+  其中 $R = \sqrt{2mE}$ 为动量空间半径. 则区间 $E \sim E + \Delta E$ 内的空间壳体积为
+  \[
+    \Delta V_p^{(3N)} = \pdv{V_p^{(3N)}}R \Delta R
+  = 3NKR^{3N-1} \Delta R
+  \xlongequal{\Delta R = m\Delta E/R} 3mNK(2mE)^{(3N-2)/2} \Delta E
+  \]
+  代入微观状态数的定义中
+  \[
+    \Omega(E) = \frac{3NmKV^N}{N!h^{3N}} (2mE)^{(3N-2)/2} \Delta E
+  \]
+  其中 $V^N = (\int \d^3q_i)^N$. 注意到
+  \[
+    \pdv{\Sigma(E)}E = \frac{3NmKV^N}{N!h^{3N}}(2mE)^{3N/2 - 1}
+  \]
+  于是证明了 $\Omega(E) = \pdv{\Sigma(E)}E \Delta E$.
+  \end{proof}
+\end{solution}
+
+\begin{problem}
+  一维谐振子
+  \[
+    H = \frac1{2m} p^2 + \frac k2 q^2
+  \]
+  证明
+  \begin{enumext}
+    \item 正则方程的解是
+    \[
+      q = A \cos(\omega t + \phi), \quad
+      p = m\dot q = -m\omega A \sin(\omega t + \phi)
+    \]
+    $A$ 为振幅，$\omega = \sqrt{k/m}$ 是频率.
+    \item 振子的能量为
+    \[
+      E = \frac12 m\omega^2A^2
+    \]
+    \item $(q,p)$ 在相空间的轨道是
+    \[
+      \frac{q^2}{\frac{2E}{m\omega^2}} + \frac{p^2}{2mE} = 1
+    \]
+    \item 求在能量区间 $E - \frac\Delta 2 \leq H \leq E + \frac\Delta2$，
+    在相空间代表点的数目
+    \[
+      \int_{E-\Delta/2\leq H\leq E+\Delta/2} \d q \d p
+    \]
+  \end{enumext}
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}
+    \item 由哈密顿正则方程
+    \[
+      \dot q = \frac pm, \quad \dot p = -kq
+    \]
+    将 $\dot q$ 再次对时间求导，得运动方程
+    \[
+      \ddot q = \frac{\dot p}m = -\frac km q,\quad
+      \ddot q + \frac km q = 0
+    \]
+    则通解为
+    \[
+      q = A \cos(\omega t + \phi), \quad
+      p = m\dot q = -m\omega A\sin(\omega t + \phi)
+    \]
+    其中 $\omega = \sqrt{k/m}$.
+    \item 振子的能量为
+    \[
+      E = K + V = \frac{p^2}{2m} + \frac12 m\omega^2q^2
+        = \frac12 m\dot q^2 + \frac12 m\omega^2 q^2 = \frac12 m\omega^2 A^2
+    \]
+    \item 将 $p$, $q$ 表达式合并
+    \[
+      \ab(\frac qA)^2 + \ab(\frac p{m\omega A})^2 = 1
+    \]
+    由 $E = \frac12 mA^2$ 得 $A^2 = 2E/m$. 代入得相空间轨道
+    \[
+      \frac{q^2}{\frac{2E}{m\omega^2}} + \frac{p^2}{2mE} = 1
+    \]
+    \item $(q,p)$ 在相空间的轨道为椭圆，其面积为
+    \[
+      A(E) = \pi ab = \pi \sqrt{\frac{2E}{m\omega^2}} \sqrt{2mE} = \frac{2\pi E}{\omega}
+    \]
+    则在能量区间 $E - \frac\Delta 2 \leq H \leq E + \frac\Delta2$，
+    相空间代表点的数目即为能量区间的对应的相空间面积
+    \[
+      \int_{E-\Delta/2\leq H\leq E+\Delta/2} \d q \d p = A(E + \Delta/2) - A(E - \Delta/2) = \frac{2\pi\Delta}{\omega}
+    \]
+  \end{enumext}
+\end{solution}
+\pagebreak
+\begin{problem}
+  读 Pathria 书的 \S1.2，\S1.3，写一个阅读笔记.
+\end{problem}
+\paragraph{\S1.2 统计学与热力学之间的联系}
+\begin{enumext}
+  \item \textbf{系统描述与基本假设.}
+  \begin{enumext}
+    \item 两个系统 $A_1$ 和 $A_2$，分别处于平衡态，
+    宏观态由 $(N_1, V_1, E_1)$ 和 $(N_2, V_2, E_2)$ 描述.
+    \item 系统的微观状态数分别为 $\Omega_1(N_1, V_1, E_1)$, $\Omega_2(N_2, V_2, E_2)$.
+    \item 复合系统 $A^{(0)} = A_1 + A_2$ 的总能量守恒
+    $E^{(0)} = E_1 + E_2 = \text{Constant}$.
+  \end{enumext}
+  \item \textbf{复合系统的微观状态数.}
+  $\Omega^{(0)}(E_1, E_2) = \Omega_1(E_1) \cdot \Omega_2(E_2)$
+  \item \textbf{平衡条件与最概然状态.}
+  平衡时，$\Omega^{(0)}$ 取最大值
+  \[
+    \frac{\partial \ln \Omega_1(E_1)}{\partial E_1}
+  = \frac{\partial \ln \Omega_2(E_2)}{\partial E_2}
+  \]
+  定义 $\beta \equiv
+    \ab( \frac{\partial \ln \Omega(N, V, E)}{\partial E} )_{N, V}$，
+  则平衡条件为 $\beta_1 = \beta_2$.
+  \item \textbf{熵与温度的联系.}
+  热力学中存在关系
+  \[
+    \ab( \frac{\partial S}{\partial E} )_{N, V} = \frac{1}{T}
+  \]
+  对比统计定义 $S = k \ln \Omega$ 可得 $\beta = \frac{1}{k_BT}$，
+  $k$ 为玻尔兹曼常数
+\end{enumext}
+
+\paragraph{\S1.3 统计学与热力学的进一步联系}
+\leavevmode
+\begin{enumext}
+  \item \textbf{能量与体积交换.}
+  若系统间可交换能量与体积，则平衡条件为
+  \[
+    \beta_1 = \beta_2 \qq{and} \eta_1 = \eta_2
+  \]
+  其中 $\eta \equiv \ab( \frac{\partial \ln \Omega}{\partial V} )_{N, E}$.
+  \item \textbf{能量、体积与粒子数交换.}
+  若还可交换粒子，则平衡条件为
+  \[
+    \beta_1 = \beta_2, \quad \eta_1 = \eta_2, \quad \zeta_1 = \zeta_2
+  \]
+  其中 $\zeta \equiv \ab( \frac{\partial \ln \Omega}{\partial N} )_{V, E}$.
+  \item \textbf{与热力学量的对应.}
+  由热力学基本关系
+  \[
+    \d E = T\d S - P\d V + \mu \d N
+  \]
+  可得 $\eta = \frac{P}{k_BT}$, $\zeta = -\frac{\mu}{k_BT}$.
+  \item \textbf{统计热力学的核心公式.}
+  \begin{enumext*}[columns = 5, label = \roman*., labelsep = 0pt, widest = 3]
+    \item(2) 熵: $S(N, V, E) = k \ln \Omega(N, V, E)$.
+    \item(3) 强度量: $\frac{1}{T} = \ab( \frac{\partial S}{\partial E} )_{N,V}$,
+    $\frac{P}{T} = \ab( \frac{\partial S}{\partial V} )_{N,E}$,
+    $-\frac{\mu}{T} = \ab( \frac{\partial S}{\partial N} )_{V,E}$.
+  \end{enumext*}
+\end{enumext}
+
+\begin{problem}
+  经典单原子分子理想气体，忽略气体内部自由度，用正则系综求内能，物态方程和熵.
+\end{problem}
+\begin{solution}
+  考虑单粒子的 Hamiltonian，对于理想气体
+  \[
+    H(\bm p, \bm q) = \frac{\bm p^2}{2m}
+  \]
+  无势能，与 $\bm q$ 无关. 单粒子的配分函数为
+  \[
+    Z_0 = \frac1{h^3} \int_V \d^3\bm q \int_{\mathbb R^3} \upe^{-\beta H}
+  = \frac{V}{h^3} \ab(\int_{-\infty}^\infty \upe^{-\beta p_i^2/(2m)} \d p_i)^3
+  \]
+  其中 $i = x$, $y$, $z$, $\beta = (k_BT)^{-1}$.
+  这里利用了单粒子三个自由度之间的对称性，并引入量子相空间尺度 $h^3$ 作无量纲化.
+  利用 Gaussian 积分
+  \[
+    \int_{-\infty}^\infty \upe^{-\beta p_i^2/(2m)} \d p_i = \sqrt{\frac{2\pi m}{\beta}}
+  \]
+  单粒子的配分函数可写做
+  \[
+    Z_0 = \frac{V}{h^3} \ab(\frac{2\pi m}{\beta})^{3/2} = \frac{V}{\lambda^3}
+  \]
+  其中 $\lambda \equiv \sqrt{\frac{\beta h^2}{2\pi m}}$ 为 de Broglie 波长.
+  接下来考虑 $N$ 个不可区分粒子的配分函数，其可近似为
+  \[
+    Z_N = \frac{Z_0^N}{N!} = \frac1{N!} \ab(\frac V{\lambda^3})^N
+  \]
+  其中因子 $N!$ 为 Gibbs 修正，为了解不可区分性.
+  \begin{enumext}
+    \item 内能
+    \[
+      U = -\pdv*{\ln Z_N}\beta
+      \xlongequal[\ln Z_N = N\ln Z_0 - \ln N!]{\text{Stirling identity}}
+      -N \pdv*{\ln Z_0}\beta
+    = \frac32 Nk_BT
+    \]
+    \item 状态方程.
+    系统的自由能
+    \[
+      F= -k_BT \ln Z_N \xlongequal[\ln Z_N = N\ln Z_0 - \ln N!]{\text{Stirling identity}}
+      -Nk_BT\ab[\ln\ab(\frac{V}{N\lambda^3}) + 1]
+    \]
+    由热力学关系 $p = -(\pdv F/V)_T$ 得
+    \[
+      p = k_BT\pdv*{\ln Z_N}V = \frac{nk_BT}{V}
+    \]
+    于是状态方程为
+    \[
+      pV = Nk_BT
+    \]
+    \item 熵. 由 $S = -(\pdv F/T)_V$ 得
+    \[
+      S = k_B\ln Z_N + k_BT\pdv*{\ln Z_N}T = Nk_B\ab[\ln\ab(\frac{V}{N\lambda^3} + 1)] + \frac32 k_BT
+    = Nk\ab\{\ln\ab[\frac VN \ab(\frac{4\pi m}{\beta h^3})^{3/2}] + \frac52\}
+    \]
+    这里在 Stirling 公式的基础上做了一阶 Taylor 展开.
+  \end{enumext}
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 8.1]
+  设有 $N$ 个粒子组成的系统处于平衡态，满足经典极限条件.
+  \begin{enumext}
+    \item 试由正则系统的几率分布导出系统微观能量处在 $E$ 与 $E + \d E$ 之间的几率
+    $P(E) \d E$（$P(E)$ 为正则系综按能量的几率分布）.
+    \item 证明使 $P(E)$ 取得极大值的能量满足方程
+    \[
+      \frac{\Sigma''(E)}{\Sigma(E)} = \beta
+    \]
+    其中 $\Sigma(E)$ 定义为
+    \[
+      \Sigma(E) = \frac1{N!h^s} \int_{H\leq E} \d\Omega
+    \]
+    $H = H(q_1, \cdots, q_s; p_1, \cdots, p_s)$ 为系统的Hamiltonian.
+    \item 将上述结果用到单原子分子理想气体，证明
+    \[
+      E = \ab(\frac{3N}2 - 1) \frac1\beta \approx \frac32 Nk_BT.
+    \]
+    这个结果说明什么？
+  \end{enumext}
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}
+    \item 在正则系综中，系统处于某一微观状态 $i$ 的几率为：
+    \[
+      p_i = \frac1Z \upe^{-\beta E_i}, \qq{and}
+      Z = \sum_i \upe^{-\beta E_i}
+    \]
+    系统的微观状态数函数
+    \[
+      \Sigma(E) = \frac1{N!h^{3N}} \int_{H\leq E} \d\Omega
+    = \frac1{N!h^{3N}} \int_V \d^{3N} \bm q \int_{H\leq E} \d^{3N} \bm p
+    = \frac{V^N}{N!h^{3N}} \frac{(2\pi mE)^{3N/2}}{\Gamma(3N/2 + 1)}
+    \]
+    则系统处在能量区间 $E \sim E + \d E$ 之间的概率为
+    \[
+      P(E) \d E = p_i (\Sigma(E + \d E) - \Sigma(E))
+    = \frac1Z \upe^{-\beta E_i} \Sigma'(E) \d E
+    \]
+    \item $P(E)$ 最大时，$\odv{P(E)}E = 0$，即
+    \[
+      \odv{P(E)}E = -\frac\beta Z \upe^{-\beta E_i} \Sigma'(E) + \frac1Z \upe^{-\beta E_i} \Sigma''(E) = 0
+    \]
+    由此得 $\Sigma''(E)/\Sigma'(E) = \beta$.
+    \item 展开 (b) 中的结论
+    \[
+      \frac{-\frac{3N}{2E}\Sigma(E) + \frac{3N}{2E} \frac{3N}{2E} \Sigma(E)}
+        {\frac{3N}{2E}\Sigma(E)}
+    = \frac{3N - 2}{2E} = \beta
+    \]
+    由此得最概然能量
+    \[
+      E = \frac1\beta \ab(\frac32N - 1)
+      \xlongequal{N\gg1} \frac32Nk_BT
+    \]
+    表明使 $P(E)$ 取极大值的能量即平均能量，体现了统计物理中的大数定律.
+  \end{enumext}
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 8.2]
+  有两种不同分子组成的混合理想气体，处于平衡态.
+  设该气体满足经典极限条件；且可把分子当作质点（即忽略其内部运动自由度）.
+  试用正则系统求该气体的 $p$, $\bar E$, $S$, $\mu_i$ ($i = 1$, $2$).
+\end{problem}
+\begin{solution}
+  设第一种与第二种分子数分别为 $N_1$, $N_2$, 微观能量分别为 $\epsilon_i$, $\epsilon_j$.
+  则混合理想气体的微观总能量为
+  \[
+    E = E_1 + E_2 = \sum_{i=1}^{N_1} \epsilon_i + \sum_{i=1}^{N_1} \epsilon_j
+  \]
+  由 \textbf{\textsf{Problem 3.4}}: 单粒子的配分函数，则两种分子的配分函数分别为
+  \[
+    Z^{(1,2)} = \frac{Z_0^{(1,2)}}{N_{1,2}!}, \quad
+    Z_0^{(1,2)} = \frac V{h^3} \ab(\frac{2\pi m_{1,2}}{\beta})^{3/2}
+  \]
+  则系统的配分函数为
+  \[
+    Z_{N_1, N_2} = Z_{N_1} Z_{N_2}
+  = N_1 \ln Z^{(1)} - \ln N_1! + N_2 \ln Z^{(2)} - \ln N_2!
+  \]
+  则气体的参数为
+  \begin{align*}
+    p & = \frac1\beta \pdv*{\ln Z_{N_1, N_2}}V
+  = \frac{(N_1 + N_2) k_BT}V,\\
+    \bar E & = -\pdv*{\ln Z_{N_1, N_2}}\beta = (N_1 + N_2) \frac32 k_BT,\\
+    S & = k(\ln Z_{N_1, N_2} - \beta \pdv*{\ln Z_{N_1, N_2}}\beta)
+  = \sum_{i=1,2} N_i k_B \ab\{\frac32\ln T + \ln \frac V{N_i} +
+                \ab[\frac52 + \frac32 \ln\ab(\frac{2\pi m_i k_B}{h^2})]\},\\
+    \mu_i & = \ab(\pdv F{N_i})_{T,V} = \ab\bigg(\pdv{\bar E - TS}{N_i})_{T,V}
+  = -k_BT \ab[\frac32\ln T + \ln \frac{V}{N_i}
+  + \frac32 \ln\ab(\frac{2\pi m_i k_B}{h^2})]
+  \end{align*}
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 8.3]
+  有一极端相对论性的理想气体，粒子的能谱为 $\epsilon = cp$
+  （$p = |\bm p|$，$c$ 为光速），并满足非简并条件.
+  设粒子的内部运动自由度可以忽略（即可将粒子看成质点）.
+  试用正则系综求该气体的 $p$, $\bar E$, $S$, $\mu$, $C_v$, $C_p$.
+\end{problem}
+\begin{solution}
+  此时单粒子的配分函数为
+  \[
+    Z_0 = \frac1{h^2} \int_V \d^3\bm q \int_{\mathbb R^2} \d^3 \bm q \upe^{-\beta\epsilon}
+  = \frac{V}{h^3} \int_0^\infty \upe^{-\beta cp} 4\pi p^2 \d p
+  = \frac{8\pi V}{(hc)^3} (k_BT)^3
+  \]
+  系统的配分函数仍然成立
+  \[
+    Z_N = \frac{Z_0}{N!} = \frac{V^N T^{3N}}{N!} \ab[\frac{8\pi k_B^3}{(hc)^3}]^N
+  \]
+  则该系统的参数分别为
+  \begin{align*}
+    p & = -\ab(\pdv FV)_{T,N} = -\ab(\pdv{-k_BT\ln Z_N}V)_{T,N} = \frac{Nk_BT}{V},
+    \quad
+    \bar E = -T^2 \pdv*{(F/T)}T = 3Nk_BT,\\
+    S & = -\ab(\pdv FT)_{V,N}
+    = Nk_B\ab\{3\ln T + \ln \frac VN + \ab[4 + \ln\frac{8\pi k_B^3}{(hc)^3}]\},\\
+    \mu & = -k_BT\ab\{3\ln T + \ln\frac VN + \ln\ab[\frac{8\pi k_B^3}{(hc)^3}]\},
+    \quad
+    C_v = \ab(\pdv{\bar E}T)_V = 3Nk_B, \quad
+    C_p = \ab(\pdv HT)_p = 4Nk_B
+  \end{align*}
+  其中焓 $H \equiv \bar E + pV = 4Nk_BT$.
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 8.6]
+  设被吸附在液体表面上的分子形成一种二维气体，分子之间相互作用为两两作用的短程力，
+  且只与两分子的质心距离有关. 试根据正则系综，证明在第二位力系数的近似下，该气体的物态方程为
+  \[
+    pA = Nk_BT\ab(1 + \frac{B_2}{A})
+  \]
+  其中 $A$ 为液面的面积，$B_2$ 由下式给出
+  \[
+    B_2 = -\frac N2 \int (\upe^{-\phi(r)/k_BT} - 1) 2\pi r \d r
+  \]
+\end{problem}
+\begin{solution}
+  气体的 Hamiltonian 为
+  \[
+    H = K + \Phi = \sum_{i=1}^N \frac{\bm p_i^2}{2m} + \sum_{i<j} \phi_{ij}
+  \]
+  其中 $U = \sum_{i<j} \phi(r_{ij})$
+  对二维气体，配分函数为
+  \[
+    Z_N = \frac1{N!h^{2N}} \int \upe^{-\beta H} \d^{2N} \bm q \d^{2N} \bm p
+  \]
+  单个粒子的动量积分为
+  \[
+    \frac1{h^2} \int \exp\ab(-\frac{\beta p^2}{2m}) \d^2\bm p = \frac{2\pi mk_BT}{h^2} = \lambda_T^{-2}
+  \]
+  所以气体的配分函数为
+  \[
+    Z_N = \frac1{N!\lambda_T^{2N}}
+          \int_{A^N} \upe^{-\beta\sum_{i<j}\phi_{ij}} \prod_{i=1}^N \d^2 \bm q_i
+        = \frac1{N!\lambda_T^{2N}} Q_N
+  \]
+  其中 $Q_N$ 为位形积分. 使用 Mayer 函数 $f_{ij} = \upe^{-\beta\phi_{ij}} - 1$，
+  位形积分在第二位力系数近似下可展开为
+  \[
+    Q_N \approx \int_{A^N} \ab(1 + \sum_{i<j} f_{ij}) \prod_{i=1}^N \d^2 \bm q_i
+  = A^N \ab(1 + \frac{N^2}{2A} \int f_{12} 2\pi r \d r_1)
+  \]
+  其中 $f_{12} = f(\bm q_1 - \bm q_2)$, $\d^2\bm r_1 = 2\pi r_1 \d r_1$.
+  令 $B_2 = -\frac N2 \int f_{12} \d^2\bm r_1$，则位形积分的对数可写做
+  \[
+    \ln Q_N = N \ln A + \ln\ab(1 - \frac NA B_2) \approx N \ln A - \frac NA B_2
+  \]
+  对二维气体，正则系综压强为
+  \[
+    p = \frac1\beta \pdv*{\ln Z_N}A \approx Nk_BT \ab(1 + \frac{B_2}{A})
+  \]
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 8.7]
+  物质磁性的起源是纯量子力学性质的，这一点可以从玻尔-范列文（Bohr-van Leeuwen）定理看出.
+  该定理可以表述为：遵从经典力学和经典统计力学的系统的磁化率严格等于零.
+  \begin{remark}
+    由公式 $\chi = \ab(\pdv{\mathcal M}{\mathcal H})_{T,V}$,
+    $\mathcal M = -\ab(\pdv F{\mathcal H})_{T,V}$ 及 $F = -k_BT\ln Z_N$，
+    只需证明正则系综的配分函数 $Z_N$ 与磁场 $\mathcal H$ 无关即可.
+    设矢势为 $\bm A$（磁场由 $\bm A$ 定出），处于磁场中的 $N$ 个带电粒子系统的微观总能量
+    （即系统的 Hamiltonian）可以表为
+    \[
+      E = \sum_{i=1}^N \frac1{2m} \ab(\bm p_i + \frac{e_i}{c} \bm A(\bm r_i))^2
+    + \Phi(\bm r_1, \ldots, \bm r_N),
+    \]
+    其中 $\Phi$ 代表粒子之间的相互作用能.
+    由正则系统出发，在满足经典极限条件下，证明 $Z_N$ 与 $\bm A$ 无关.
+  \end{remark}
+\end{problem}
+\begin{solution}
+  正则系统的配分函数为
+  \[
+    Z_N = \frac1{N!h^{3N}}\ab\{
+      \int_{V^N} \upe^{-\beta\phi(\bm q_1, \cdots, \bm q_N)}
+      \prod_{i=1}^N \d^3 \bm q_N\} \ab\{
+      \int_{\mathbb R^{3N}}
+        \exp\ab[-\beta \sum_i\ab(\bm p_i + \frac{e_i}{c} \bm A(\bm q_i))^2/2m]
+        \prod_{i=1}^N \d^3 \bm p_i
+    \}
+  \]
+  做动量积分的变量变换，令
+  \[
+    \bm p_i' = \bm p_i + \frac{e_i}{c} \bm A(\bm r_i)
+  \]
+  由多重积分变换
+  \[
+    \prod_{i=1}^N \d^3 \bm p_i = |J| \prod_{i=1}^N \d^3 \bm p_i'
+  \]
+  其中 Jacobian 为
+  \[
+    J = \frac
+      {\partial(p_{1_x}, p_{1_y}, p_{1_z}, \ldots, p_{N_x}, p_{N_y}, p_{N_z})}
+      {\partial(p_{1_x}', p_{1_y}', p_{1_z}', \ldots, p_{N_x}', p_{N_y}', p_{N_z}')}
+  \]
+  由于 $\pdv{p_i}/{\bm A(\bm r_i)} = 0$，所以 $J = 1$，$Z_N$ 与 $\bm A$ 无关.
+\end{solution}
+
+\begin{problem}
+  用巨正则系综计算单原子理想气体的热力学函数.
+\end{problem}
+\begin{solution}
+单粒子配分函数
+\[
+  Z_1 = \frac{V}{\lambda^3}, \quad \lambda = \frac{h}{\sqrt{2\pi m k_B T}}
+\]  
+由此得巨配分函数和巨势
+\[
+  \Xi = \exp\ab(\upe^{\beta\mu} Z_1)
+= \exp\ab(\upe^{\beta\mu} \frac{V}{\lambda^3}), \quad
+  \Omega = -k_B T \ln \Xi = -k_B T \upe^{\beta\mu} \frac{V}{\lambda^3}
+\]
+粒子数
+\[
+  \braket<N> = -\ab(\pdv\Omega\mu)_{T,V} = \upe^{\beta\mu} \frac{V}{\lambda^3}
+  \quad\Longrightarrow\quad
+  \upe^{\beta\mu} = \frac{\braket<N> \lambda^3}{V}
+\]  
+内能
+\[
+  U = \sum_{\bm p} \varepsilon_{\bm p} \braket<n_{\bm p}>
+= \upe^{\beta\mu} \frac{V}{h^3} \int \frac{p^2}{2m} \upe^{-\beta p^2/(2m)} \d^3p
+= \frac{3}{2\beta} \upe^{\beta\mu} \frac{V}{\lambda^3}
+= \frac32 \braket<N> k_B T
+\]
+压强  
+\[
+  P = -\frac{\Omega}{V} = k_B T \upe^{\beta\mu} \frac{1}{\lambda^3}
+    = \frac{\braket<N> k_B T}{V} \quad\Longrightarrow\quad
+  PV = \braket<N> k_B T
+\]  
+由 $\Omega = U - TS - \mu \braket<N>$ 得熵
+\[
+  S = \frac{U - \mu\braket<N> - \Omega}{T}
+    = \braket<N> k_B \ab[\frac52 - \ln(n \lambda^3)],
+  \quad n = \frac{\braket<N>}{V}
+\]
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 8.9]
+  试用巨正则系综求解题 \textbf{\textsf{Problem 3.7}}，并于正则系综的结果比较.
+\end{problem}
+\begin{solution}
+  由 \textbf{\textsf{Problem 3.7}} 中单粒子的配分函数
+  $Z = \frac{8\pi V}{(hc)^3} \beta^{-3}$
+  得巨正则系综函数
+  \[
+    \Xi = \sum_{N=0}^\infty \frac{(\upe^{-\alpha} Z)^N}{N!}
+  = \exp(\upe^{-\alpha} Z), \quad
+    \ln \Xi = \upe^{-\alpha} Z = \frac{8\pi V}{(hc)^3} \beta{-3}
+  \]
+  利用巨正则系综求解系统的参数为
+  \begin{align*}
+    \bar N & = -\pdv*{\ln\Xi}\alpha = \upe^{-\alpha} Z, \quad
+    \mu = -k_BT \ln \frac ZN = -k_BT\ab[3\ln T + \ln\frac VN + \ln\ab[\frac{8\pi k^3}{(hc)^3}]],\\
+    \bar E & = -\pdv*{\ln\Xi}p = 3\bar Nk_BT, \quad
+    p = \frac1\beta \pdv*{\ln\Xi}V = \frac{\bar Nk_BT}{V} = \frac{\bar E}{3V},\\
+    S & = k_B\ab(\ln\Xi - \alpha\pdv*{\ln X}\alpha - \beta\pdv*{\ln\Xi}\beta)
+  = \bar Nk\ab\{3\ln T + \ln\frac{V}{\bar N} + \ab[4 + \ln\ab(\frac{8\pi k_B^3}{(hc)^3})]\},\\
+    C_V & = \ab(\pdv*{\bar E}T)_V = 3Nk_B,\quad
+    C_p = \ab(\pdv HT)_p = 4Nk_B
+  \end{align*}
+  结果与 \textbf{\textsf{Problem 3.7}} 一致.
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 8.10]
+  证明熵的下列公式.
+  \begin{enumext}
+    \item 对正则系综，$S = -k \sum_s \rho_s \ln \rho_s$，
+    其中 $\rho_s = \frac1{Z_N} \upe^{-\beta E_s}$ 为正则系综的几率分布.
+    \item 对巨正则系综，$S = -k \sum_N \sum_s \rho_{N_s} \ln \rho_{N_s}$，
+    其中 $\rho_{N_s} = \frac1\Xi \upe^{-aN-\beta E_s}$ 为巨正则系综的几率分布.
+  \end{enumext}
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}
+    \item \begin{proof}
+    由熵的定义出发
+    \[
+      S = -\pdv FT = -\pdv{-kT \ln Z}T
+    = k\ln Z + \frac{\braket<E>}{T}
+    \]
+    其中 $Z = \sum_s \upe^{-\beta E_s}$, $\beta = (kT)^{-1}$,
+    $\braket<E> = \frac1Z \sum_s E_s \upe^{-\beta E_s}$.
+    将正则系综概率分布 $\rho_s = \frac1Z \upe^{-\beta E_s}$
+    代入题目中正则系综中 $S$ 的右式
+    \[
+      -k \sum_s \rho_s \ln \rho_s = -k \sum_s \rho_s \ln\ab(\frac1Z \upe^{-\beta E_s})
+      = k\ln Z + k\beta\braket<E>
+    \]
+    结果和 $S = -\pdv F/T$ 的表达式一致.
+    \end{proof}
+    \item \begin{proof}
+      类似的，从巨势 $\Omega \equiv -kT \ln \Xi$ 出发，熵的表达式为
+      \[
+        S = -\pdv\Omega T = k \ln\Xi + \frac{\braket<E> - \mu\braket<N>}{T}
+      \]
+      其中巨正则系综几率分布 $\Xi = \sum_{N,s} \exp[\beta(\mu N - E_s)]$.
+      从熵的定义出发可得
+      \[
+        S = -k \sum_N \sum_s \rho_{N_s} \ln \rho_{N_s}
+      = -k \sum_{N,s} \rho_{N_s}(-\ln\Xi + \beta \mu N - \beta E_s)
+      = k\ln\Xi + k\beta \mu\braket<N> - k\beta\braket<E>
+      \]
+      结果和 $S = -\pdv \Omega/T$ 的表达式一致.
+    \end{proof}
+  \end{enumext}
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 8.12]
+  设有一 $N$ 个相互作用可以忽略的粒子（可看成质点）组成的系统，
+  在满足经典极限的条件下，巨正则系综的几率分布为
+  \[
+    \rho_N(q_1, \ldots, p_{3N}) \d\Omega_N = \frac1{\Xi N! h^{3N}}
+    \upe^{-\alpha N-\beta E_N(q_1, \ldots, p_{3N})} \d\Omega_N
+  \]
+  \begin{enumext}
+    \item 试证明巨正则系综的总粒子数是 $N$ 的几率为
+    \[
+      P(N) = \frac1\Xi \upe^{-\alpha N} Z_N,
+    \]
+    其中 $Z_N$ 是总粒子数为 $N$ 时的正则系综配分函数.
+    \item 证明使 $P(N)$ 取极大的总粒子数满足下面的关系
+    \[
+      \alpha = \pdv{\ln Z_N}N.
+    \]
+    （证明时，直接求 $\ln P(N)$ 的极大更方便.）
+    \item 上式进一步可化为
+    \[
+      N = \upe^{-a} Z
+    \]
+    其中 $Z$ 为单粒子的配分函数，即 $Z = \frac V{h^3} \ab(\frac{2\pi m}{\beta})^{3/2}$.
+    上述结果说明什么？
+  \end{enumext}
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}
+    \item 巨正则系综的总粒子数是 $N$ 的几率可写做微观态的几率对相空间的积分
+    \[
+      P(N) = \int \rho_N(q_1, \ldots, q_{3N}; p_1, \ldots, p_{3N}) \d\Omega_N
+    = \frac1{\Xi N! h^{3N}} \upe^{-\alpha N} \int \upe^{-\beta E_N} \d \Omega_N
+    \]
+    由于 $N$ 个粒子的正则系综配分函数为
+    \[
+      Z_N = \frac{1}{N!h^{3N}} \int \upe^{-\beta E_N} \d\Omega_N
+    \]
+    所以可得 $P(N) = \frac1\Xi \upe^{-\alpha N} Z_N$.
+    \item 在 $P(N)$ 取极大时，$\pdv PN = 0$.
+    将 (a) 中的表达式取对数并对 $N$ 求导得
+    \[
+      \pdv{\ln P(N)}N = -\alpha + \pdv{\ln Z_N}N = 0
+    \]
+    于是得 $\alpha = \pdv{\ln Z_N}/N$.
+    \item 考虑 $N$ 个可忽略相互作用的粒子，系统的配分函数为
+    \[
+      Z_N = \frac{Z_0}{N!}
+    \]
+    其中 $Z_0 = \frac V{h^3} \ab(\frac{2\pi m}{\beta})^{3/2}$.
+    对系统的配分函数取对数并对 $N$ 求导得
+    \[
+      \pdv{\ln Z_N}N = \ln Z - \ln N = \ln \frac ZN = \alpha
+    \]
+    由此得 $N = \upe^{-\alpha} Z \bar N$.
+    即使 $P(N)$ 取极大值的 $N$ 就是平均值 $\bar N$.
+  \end{enumext}
+\end{solution}

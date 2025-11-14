@@ -1,0 +1,409 @@
+% !TeX root = ../main.tex
+
+\section{Homework \#1 [2025-09-02]}
+
+\begin{problem}
+  总结热力学的基本概念：什么叫平衡态？写出温度、温标的定义；
+  内能的定义；热容和比热的定义；熵的定义和物理意义.
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}
+    \item 平衡态：在没有外界影响的条件下，
+    物体各部分的性质长时间不发生任何变化的状态.
+    \item 温度：衡量物体间是否热平衡的物理量称为温度.
+    \item 温标：确定温度具体数值的规则叫温标.
+    \item 内能：系统所含有的能量，但不包含因外部力场而产生的系统整体之动能与势能.
+    \item 热容：在不发生相变化和化学变化的前提下，系统与环境所交换的热与由此引起的温度变化之比称为系统的热容.
+    即 $C_\eta = \odv{Q_y}T$ 称为热容，其中 $\gamma$ 表示不变的量.
+    \item 比热：单位质量的物质在温度变化时所吸收或释放的热量与其质量之比，即 $c = C/V$.
+    \item 熵：一个系统内所有元素状态的总和，物理意义：用来衡量系统的无序程度.
+  \end{enumext}
+\end{solution}
+
+\begin{problem}
+  什么叫物态方程？写出理想气体的物态方程。写出范德瓦尔斯气体的物态方程，
+  并解释对理想气体物态方程修正项的物理意义.
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}
+    \item 物态方程：物体的物理状态由几何变量（$V$, $A$, $L$），
+    力学变量（$p$, $\sigma$, $F$），电磁变量（$\bm E$, $\bm P$, $\bm H$, $\bm M$）
+    和化学变量等描述，温度与这些状态变量之间的函数关系
+    $T = f(p, V, \cdots)$ 称为物态方程.
+    \item 理想气体状态方程：$pV = nRT = NkT$
+    \item 范德瓦尔斯气体的物态方程：$ab(p + \frac{n^2a}{V^2})(V - nb) = nRT$.
+    \begin{enumext}
+      \item 体积修正 $-nb$: 分子有固有体积，活动空间减少
+      \item 压力修正 $+an^2/V^2$: 分子间吸引力减弱对器壁的冲击
+    \end{enumext}
+  \end{enumext}
+\end{solution}
+
+\begin{problem}
+  对 $p-V-T$ 系统，依据自变量不同，写出 4 种等价的热力学微分方程，
+  说明各自在什么条件下适用.
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}[columns = 2]
+    \item $\d U = T\d S - p\d V ~ (S,V)$, 适用绝热过程
+    \item $\d H = T\d S + V\d P ~ (S,P)$, 适用等压过程
+    \item $\d F = -S\d T - p\d V$, 适用等温等容
+    \item $\d G = -S\d T + V\d P$, 适用等温等压、相变
+  \end{enumext}
+\end{solution}
+
+\pagebreak
+
+\begin{problem}
+  解释热力学第一、二、三定理的物理意义.
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}
+    \item 热力学第一定律: 推广到非绝热过程，
+    系统从外界吸热，$Q = U_2 - U_1 - W_0$，即能量守恒
+    \item 热力学第二定律: 熵增加原理
+    \item 热力学第三定律: 不可能通过有限步骤使物体冷却到绝对零度 
+  \end{enumext}
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 1.1]
+  设三个函数 $f$, $g$, $h$ 都是二独立变量 $x$, $y$ 的函数，证明：
+  \begin{enumext}[columns = 3]
+    \item $\ab(\pdv fg)_h = 1/\ab(\pdv gf)_h$
+    \item $\ab(\pdv fg)_x = \pdv fy/\pdv gy$
+    \item $\ab(\pdv yx)_f = -\pdv fx/\pdv fy$
+    \item $\ab(\pdv fg)_h \ab(\pdv gh)_f \ab(\pdv hf)_g = -1$
+    \item $\ab(\pdv fx)_g = \pdv fx + \pdv fy\ab(\pdv yx)_g$
+  \end{enumext}
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}
+    \item 对 $f$ 取微分
+    \[
+      \d f = \ab(\pdv fg)_h \d g + \ab(\pdv fh)_g \d h
+    \]
+    令 $\d h = 0$ 得
+    \[
+      1 = \ab(\pdv fg)_h \ab(\pdv gf_h), \quad
+      \ab(\pdv fg)_h = 1/\ab(\pdv gf)_h
+    \]
+    \item $f = f(x,y(x,g))$. 由复合函数求导法则
+    \[
+      \ab(\pdv fg)_x = \ab(\pdv fy)_x \ab(\pdv yg)_x
+    = \ab(\pdv fy)_x \ab(\pdv gy)_x
+    \]
+    这里利用了 (a) 中的结论.
+    \item $f = f(x,y)$. 令 $f$ 的微分为 $0$ 得
+    \[
+      \d f = \ab(\pdv fx)_y \d x + \ab(\pdv fy)_x \d y = 0,\quad
+      \ab(\pdv yx)_f = -\ab(\pdv fx)_y/\ab(\pdv fy)_x
+    \]
+    \item $f = f(g,h)$. 对 (c) 中结论做变量替换
+    \[
+      \ab(\pdv hg)_f = -\ab(\pdv fg)_h/\ab(\pdv fh)_g
+    \]
+    利用 (a) 中的结论得
+    \[
+      \ab(\pdv fg)_h \ab(\pdv gh)_f \ab(\pdv hf)_g = -1
+    \]
+    \item $f = f(x,y(x,g))$. 由复合函数求导法则
+    \[
+      \ab(\pdv fx)_g = \ab(\pdv fx)_y + \ab(\pdv fy)_x \ab(\pdv yx)_g
+    \]
+  \end{enumext}
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 1.5]
+  有一铜块处于 $\qty0\degreeCelsius$ 和 $\qty1{atm}$ 下，
+  经测定，其膨胀系数和等温压缩系数分别为 $\qty{4.85e-5}{\K^{-1}}$,
+  $\kappa_\tau = \qty{7.8e-7}{(atm)^{-1}}$, $\alpha$ 和 $\kappa_\tau$
+  可以近似当成常数. 今使铜块加热至 $\qty{10}\degreeCelsius$，问
+  \begin{enumext}[columns = 2]
+    \item 压强要增加多少才能维持铜块体积不变？
+    \item 若压强增加 $\qty{100}{atm}$，铜块的体积改变多少？
+  \end{enumext}
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}
+    \item 在温度变化 $\d T$ 和压强变化 $\d p$ 范围内，铜块体积变化
+    \[
+      \d V = V(\alpha \d T - \kappa \d p)
+    \]
+    要维持铜块体积不变，则 $\d V = 0$，即
+    \[
+      \d p = \frac\alpha{\kappa_T}\d T = \qty{621.79}{atm}
+    \]
+    \item 对体积变化公式分离变量并积分得
+    \[
+      \ln \frac{V}{V_0} = \alpha \Delta T - \kappa_T \Delta p
+    \]
+    令 $V = V_0 + \Delta V$，则
+    \[
+      \ln\frac{V_0 + \Delta V}{V_0} \approx \frac{\Delta V}{V_0}
+    = \alpha\Delta T - \kappa_T \Delta p = \num{4.07e-4}
+    \]
+    即铜块体积改变 $\qty{4.07e-2}\%$.
+  \end{enumext}
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 1.6]
+  已知一理想弹性丝的物态方程为
+  \[
+    \mathcal F = bT\ab(\frac L{L_0} - \frac{L_0^2}{L^2})
+  \]
+  其中 $\mathcal F$ 使张力；$L$ 使长度，$L_0$ 使张力为零时的 $L$ 值，
+  $L_0$ 只是温度 $T$ 的函数；$b$ 使常数. 定义（线）膨胀系数为
+  \[
+    \alpha \equiv \frac1L \ab(\pdv LT)_{\mathcal F}
+  \]
+  等温杨氏模量为
+  \[
+    Y = \frac LA \ab(\pdv{\mathcal F}L)_T
+  \]
+  其中 $A$ 使弹性丝的横截面积. 证明：
+  \begin{enumext}[columns = 2]
+    \item $Y = \frac{bT}{A} \ab(\frac L{L_0} + \frac{2L_0^2}{L^2})$.
+    \item $\alpha = \alpha_0 - \frac1T \frac{L^3/L_0^3 - 1}{L^3/L_0^3 + 2}$，
+    其中 $\alpha_0 = \frac1{L_0} \odv{L_0}T$.
+  \end{enumext}
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}
+    \item 将 $\mathcal F$ 带入 $Y$ 即可
+    \[
+      Y = \frac LA bT\ab(\frac1{L_0} + \frac{2L_0^2}{L^3})
+    = \frac{bT}{A}\ab(\frac{L}{L_0} + \frac{2L_0^2}{L^2})
+    \]
+    \item 令 $\pdv{\mathcal F}/T = 0$
+    \[
+      0 = b\ab(\frac L{L_0} - \frac{L_0^2}{L^2})
+    + bT\ab(\frac1{L_0} + \frac{2L_0^2}{L^3})\ab(\pdv LT)_{\mathcal F}
+    + bT\ab(-\frac L{L_0^2} - \frac{2L_0}{L^2})\odv{L_0}T
+    \]
+    得
+    \[
+      \alpha = \alpha_0 = \frac1T \frac{L^3/L_0^3 - 1}{L^3/L_0^3 + 2}
+    \]
+  \end{enumext}
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 2.2]
+  证明下列关系：
+  \begin{enumext}[columns = 2]
+    \item $\ab(\pdv UV)_p = -T \ab(\pdv VT)_S$.
+    \item $\ab(\pdv UV)_p = -T\ab(\pdv pT)_S - p$.
+    \item $\ab(\pdv TV)_U = p\ab(\pdv TU)_V - T\ab(\pdv pU)_V$.
+    \item $\ab(\pdv Tp)_H = T\ab(\pdv VH)_p - V\ab(\pdv TH)_p$.
+    \item $\ab(\pdv TS)_H = \frac T{C_p} - \frac{T^2}{V}\ab(\pdv VH)_p$.
+  \end{enumext}
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}
+    \item 由热力学基本微分方程
+    \[
+      \d U = T\d S - p\d V
+    \]
+    得 Maxwell 关系
+    \[
+      \ab(\pdv VT)_S = -\ab(\pdv Sp)_v
+    = -\pdv{(S,V)}{(p,V)} = -\ab(\pdv SU)_V \ab(\pdv Up)_v
+    = -\frac1T\ab(\pdv Up)_V
+    \]
+    即
+    \[
+      \ab(\pdv Up)_V = -T\ab(\pdv VT)_S
+    \]
+    \item 将热力学基本微分方程两侧对 $V$ 取偏微分
+    \[
+      \ab(\pdv UV)_p = T\ab(\pdv SV)_p - p
+    \]
+    已知
+    \[
+      \d H = T\d S + V\d p
+    \]
+    得 Maxwell 关系
+    \[
+      \ab(\pdv pT)_S = \ab(\pdv SV)_p
+    \]
+    所以有
+    \[
+      \ab(\pdv UV)_p = T\ab(\pdv pT)_S - p
+    \]
+    \item 将热力学基本微分方程写为
+    \[
+      \d S = \frac1T\d U + \frac pT \d V
+    \]
+    由此得 Maxwell 关系
+    \[
+      \ab(\pdv{(1/T)}V)_U = \ab(\pdv{(p/T)}U)_V
+    \]
+    展开得
+    \[
+      \ab(\pdv TV)_U = p\ab(\pdv TU)_V - T\ab(\pdv pU)_V
+    \]
+    \item 同 (iii), 使用
+    \[
+      \d S = \frac1T \d H - \frac VT\d p
+    \]
+    得 Maxwell 关系
+    \[
+      \ab(\pdv{(1/T)}p)_H = -\ab(\pdv{(V/T)}H)_p
+    \]
+    展开得
+    \[
+      \ab(\pdv Tp)_H = T\ab(\pdv VH)_p - V\ab(\pdv TH)_p
+    \]
+    \item 由复合函数求导法则
+    \[
+      \ab(\pdv TS)_H = \pdv{(T,H)}{(S,p)} \cdot \pdv{(S,p)}{(S,H)}
+    = \frac T{C_p} + \ab(\pdv Tp)_s \ab(\pdv pS)_H
+    \]
+    令 $\d H = 0$，得
+    \[
+      0 = T\d S + V\d p, \quad \ab(\pdv pS) = -\frac TV
+    \]
+    使用 Maxwell 关系
+    \[
+      \ab(\pdv Tp)_s = \ab(\pdv VS)_p = T\ab(\pdv VH)_p
+    \]
+    将以上两式带入求导结果
+    \[
+      \ab(\pdv TS)_H = \frac T{C_p} - \frac{T^2}{V}\ab(pdv VH)_p
+    \]
+  \end{enumext}
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 2.3]
+  对 $p-V-T$ 系统，证明
+  \[
+    \frac{\kappa_T}{\kappa_S} = \frac{C_p}{C_V}
+  \]
+  其中
+  \[
+    \kappa_T \equiv -\frac1V \ab(\pdv Vp)_T,\quad
+    \kappa_S \equiv -\frac1V \ab(\pdv Vp)_S
+  \]
+  分别代表等温与绝热压缩系数.
+\end{problem}
+\begin{solution}
+  \begin{proof}
+    \let \qedsymbol \relax
+    \[
+      \frac{C_p}{C_v} = \frac{T\ab(\pdv ST)_p}{T\ab(\pdv ST)_V}
+    = \frac{\ab(\pdv SV)_p\ab(\pdv VT)_p}{\ab(\pdv Sp)_V \ab(\pdv pT)_V}
+    = \ab[-\frac1V\ab(\pdv Vp)_T]/\ab[-\frac1V\ab(\pdv Vp)_S]
+    = \frac{\kappa_T}{\kappa_S}
+    \hfill\square
+    \]
+  \end{proof}
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 2.5]
+  \leavevmode
+  \begin{enumext}
+    \item 证明
+    \[
+      \ab(\pdv{C_V}V)_T = T\ab(\pdv[2]pT)_V; \quad
+      \ab(\pdv{C_p}p)_T = -T\ab(\pdv[2]VT)_p
+    \]
+    并由此导出
+    \[
+      C_V = C_{V_0} + T \int_{V_0}^V \ab(\pdv[2]pT)_V \d V,\quad
+      C_p = C_{p_0} - T int_{p_0}^p \ab(\pdv[2]VT)_p \d p.
+    \]
+    其中 $C_{V_0}$ 与 $C_{p_0}$ 分别代表体积为 $V_0$ 时的定容热容
+    与压强为 $p_0$ 时的定压热容，它们都只是温度的函数.
+    \item 根据以上 $C_V$, $C_p$ 两式证明，理想气体的 $C_V$ 与 $C_p$
+    只是温度的函数.
+    \item 证明范德瓦耳斯气体的 $C_V$ 只是温度的函数，与体积无关.
+  \end{enumext}
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}
+    \item 将 $C_V$ 对 $V$ 取偏导数
+    \[
+      \ab(\pdv{C_V}V)_T = T\pdv{S}{T,V}
+    = T\ab(\pdv[2]pT)_V
+    \]
+    则 $C_V(T,V)$ 的积分分为等容过程和等压过程
+    \[
+      C_V(T,V) - C_V(T_0,V_0)
+    = \int_{T_0}^T \ab(\pdv{C_V}T)_V\d T + \int_{V_0}^V\ab(\pdv{C_V}V)_T \d V
+    \]
+    使用 Maxwell 关系，积分可写作
+    \[
+      C_V(T,V) = C_{V_0}(T) + T \int_{V_0}^V \ab(\pdv[2]pT)_V \d V.
+    \]
+    同理可证
+    \[
+      \ab(\pdv{C_p}p)_T = -T\ab(\pdv[2]VT)_p, \quad
+      C_p = C_{p_0} - T int_{p_0}^p \ab(\pdv[2]VT)_p \d p.
+    \]
+    \item 由理想气体状态方程
+    \[
+      pV = NRT
+    \]
+    可得
+    \[
+      \ab(\pdv[2]pT)_V = 0, \quad
+      \ab(\pdv[2]VT)_p = 0.
+    \]
+    带入 (a) 中结论得
+    \[
+      \ab(\pdv{C_V}V)_T = 0, \quad
+      \ab(\pdv{C_p}p)_T = 0
+    \]
+    即理想气体的 $C_V$ 与 $C_p$ 都只是温度的函数.
+    \item 由范德瓦耳斯气体的物态方程
+    \[
+      \ab(p + \frac{N^2a}{V^2})(V - Nb) = NRT
+    \]
+    当 $V$ 固定时，有
+    \[
+      \ab(\pdv[2]pT)_V = \ab(\pdv{C_V}V)_T = 0
+    \]
+    表明范德瓦耳斯气体的 $C_V$ 只是温度的函数，与体积无关.
+  \end{enumext}
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 3.1]
+  利用无穷小的变动，导出下列各平衡判据（假设总粒子数不变，且 $S > 0$）
+  \begin{enumext}[columns = 2]
+    \item 在 $U$ 及 $V$ 不变的情形下，平衡态的 $S$ 极大
+    \item 在 $S$ 及 $V$ 不变的情形下，平衡态的 $S$ 极小
+    \item 在 $S$ 及 $U$ 不变的情形下，平衡态的 $V$ 极小
+    \item 在 $H$ 及 $p$ 不变的情形下，平衡态的 $S$ 极大
+    \item 在 $S$ 及 $p$ 不变的情形下，平衡态的 $H$ 极小
+    \item 在 $T$ 及 $V$ 不变的情形下，平衡态的 $F$ 极小
+    \item 在 $F$ 及 $T$ 不变的情形下，平衡态的 $V$ 极小
+    \item 在 $T$ 及 $p$ 不变的情形下，平衡态的 $G$ 极小
+  \end{enumext}
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}
+    \item 系统孤立，内能和体积固定.
+    由熵增原理，一切自发过程朝熵增方向进行，平衡时熵取最大值.
+    \item 熵和体积固定时，由
+    \[\d U = T\d S - p\d V\]
+    得可逆过程 $\d U = 0$.
+    实际不可逆过程在总熵不变时内能会减少，平衡时内能最小.
+    \item 熵与内能固定，由
+    \[\d U = T\d S - p\d V\]
+    得 $p\d V=0$. 考虑力学稳定性，系统会自发收缩或抵抗膨胀，平衡时体积最小.
+    \item 焓 $H = U + pV$，压强不变时 $\d H = T\d S$.
+    固定 $H,p$ 则 $\d S = 0$，熵判据要求平衡时熵最大.
+    \item 熵与压强固定，由
+    \[\d H = T\d S + V\d p\] 得 $\d H = 0$.
+    系统自发趋向焓更低的状态，平衡时焓最小.
+    \item 亥姆霍兹自由能 $F = U - TS$，固定 $T,V$ 时
+    \[\d F = -S\d T - p\d V = 0\]
+    自发过程 $\d F<0$，平衡时 $F$ 最小.
+    \item 固定 $F,T$，由
+    \[dF = -S\d T - p\d V\]
+    得 $p\d V = 0$. 体积稳定性要求平衡时体积最小.
+    \item 吉布斯自由能
+    \[G = U - TS + pV\]
+    固定 $T,p$ 时 $\d G = 0$（可逆）.
+    自发过程 $\d G < 0$，平衡时 $G$ 最小.
+  \end{enumext}
+\end{solution}
