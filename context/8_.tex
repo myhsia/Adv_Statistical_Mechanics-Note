@@ -490,7 +490,8 @@ The derivatives
 \end{gather*}
 Finally, we have
 \[
-  \ab(\frac{\Delta V}V)_c^2 = 0.338\ab[-\frac{V_c^4}{24kT_c} \ab(\pdv[3]pV)_c]^{-1/2}
+  \ab(\frac{\Delta V}V)_c^2 = 0.338\ab[-\frac{V_c^4}{24kT_c}
+  \ab(\pdv[3]pV)_c]^{-1/2}
 = 0.901/\sqrt N
 \]
 
@@ -508,3 +509,290 @@ Finally, we have
   \propto \frac1{\sqrt N}
   \]
 \end{example}
+
+
+\section{Fluctuation Phenomenon (Random External Forces, Brown Motions)}
+
+\subsection{Langevin equation}
+
+For particles: $\num{e-5} \sim \qty{e-4}\cm$.
+\begin{enumext}
+  \item For fixed external forces: Gravity, Buoyancy, Viscous Force.
+  \item Random forces: $\qty{e-4}\cm$, liquid molecule density
+  $n = \qty{e22}{\cm^{-3}}$, the collisions occur $10^{22-4}/\unit\s$.
+  
+  For gas: $n \sim \num{e19}$, collision occurs $\qty{e15}{/\s}$.
+
+  Fluctuation forces: the eigen time of collisions
+  $\num{e-18} \sim \num{e-15} \unit\s$.
+  \[
+    m\odv{\bm u}t = \bm F_1 + \bm F_2(t), \quad
+    \bm u = \odv{\bm x}t, \quad \bm u = u_x
+  \]
+  where $F$ is the viscous force: $F_1 = -\alpha u$, $F_2 = x(t)$.
+  \[
+    m\braket<u> = kT, \quad
+    \odv[2]{\braket<x^2>}t + \frac1\tau \odv*{\braket<x^2>}t - \frac{2kT}{m} = 0,\quad
+    \tau = \ab(\frac\alpha m)^{-1}
+  \]
+  Then, the solution
+  \[
+    \braket<x^2> = \frac{2kT\tau}{m}t + C_1\upe^{-t/\tau} + C_2
+  \]
+  and substitute the initial condition $t = 0$, $\braket<x^2>$,
+  $\odv*{\braket<x^2>}t = 0$. Hence,
+  \begin{equation}
+    \braket<x^2>
+  = \frac{2kT\tau^2}{m} \ab[\frac t\tau - \ab(1 - \upe^{-t/\tau})]
+  \end{equation}
+  \begin{enumext}
+    \item If the observe time $t \ll \tau$,
+    \[
+      \braket<x^2> = \frac{2kT\tau}{m}, \quad
+      \ab(\frac t\tau - (1 - 1 + \frac t\tau - \frac12 \frac{t^2}{\tau^2}))
+    = \frac{kT}{m}t^2 = \braket<u^2>t^2
+    \]
+    \item If $t \gg \tau$, then
+    \[
+      \braket<x^2> \approxeq \frac{2kT\tau}{m}t
+    = \frac{2kT}{\alpha}t = 2Dt \propto t
+    \]
+  \end{enumext}
+\end{enumext}
+
+\subsection{The Diffusion of Brown particles}
+
+Assume $n(x,t)\d x$ is in the range of $(x, x + \d x)$ at time $t$,
+introduce $f(x,t) \d x$ for the Brownian particle number of the unit area
+perpendicular to $x$-axis:
+The probability of a particle at $t = 0$ and located at $x = 0$ to time $t$ is
+transformed to $(x, x + \d x)$.
+\begin{equation}
+  n(x, t+ \tau) = \int_{-\infty}^\infty f(x - x', \tau) n(x', t) \d x'
+= \int_{-\infty}^\infty f(\xi, \tau) n(x - \xi, t) \d\xi
+\end{equation}
+where
+\[
+  \int_{-\infty}^\infty \d x f(x, \tau) = 1, \qq{and}
+  f(x, \tau) = f(-x, \tau)
+\]
+For small $\tau$
+\begin{equation}
+  n(x, t + \tau) = n(x, t) + \tau\pdv nt + \frac12 \tau^2 \pdv[2]nt + \cdots
+\end{equation}
+For small $\xi$
+\begin{equation}
+  n(x - \xi, t) = n(x, t) - \xi \pdv nx + \frac12 \xi^2 \pdv[2]nt + \cdots
+\end{equation}
+Assume when $\xi$ is large, $n(x - \xi, t)$ is small. Then,
+\begin{equation}
+  n(x, t + \tau) \approxeq n(x, t) + \tau \pdv nt
++ \frac12\tau^2 \pdv[2]nt + \cdots
+= \int_{-infty}^\infty \d \xi f(\xi, \tau)
+  \ab(n(x,t) - \xi\pdv nx + \frac12 \xi^2 \pdv[2]nx + \xi^3\xi^4),
+\end{equation}
+where $\pdv nt = D\pdv[2]nx, \quad D = \frac{\braket<\xi^2>}{2\tau}$.
+\begin{gather}
+  \pdv*{n(x, t + t')}{t'} - D\pdv*[2]{n(x, t + t')}x = 0\\
+  \int_{-infty}^\infty \ab[\pdv*{f(x - x')}{t'} - D\pdv*[2]{f(x -x ', t')}x]
+    n(x', t) \d x' = 0
+\end{gather}
+So, the kernel
+\[
+  \pdv{f(\xi, t)}t - D\pdv*[2]{f(\xi, t)}\xi = 0.
+\]
+
+\subsection{Time correlation in Brown motion}
+
+\[
+  u(t) = g(t) \upe^{-t/\tau}
+\]
+where
+\[
+  \odv[fun]{g\upe^{-t/\tau}}t = -\frac{g(t)\upe^{-t/\tau}}\tau
++ \frac{\chi(t)}{m}
+\]
+Then, we obtain the ODE
+\[
+  \odv{g(t)}t = \upe^{t/\tau} \frac{\chi(t)}{m} A(t)
+\]
+the solution
+\begin{gather}
+  [g(t) - g(0)] \upe^{-t/\tau}
+= \upe^{-t/\tau} \int_0^t \upe^{t'/\tau} A(t') \d t'\\
+  u(t) = u(0) \upe^{-t/\tau}
+       + \upe^{-t/\tau} \int_0^t \upe^{t'/\tau} A(t') \d t'\\
+  u^2(t) = u^2(0) + 2u(0)\upe^{-2t/\tau} \int_0^t \upe^{t'/\tau} A(t') \d t'
+       + \upe^{2t/\tau} \int_0^t \d t \d t'' \upe^{(t'+t'')/\tau} A(t') A(t'')
+\end{gather}
+The correlation function determines the expectation value
+\begin{equation}
+  \braket<u^2(t)> = u^2(0)\upe^{-t/\tau}
++ \upe^{-2t/\tau} \int_0^t \d t' \d t'' \upe^{(t'+t'')/\tau}
+  \braket<A(t') A(t'')>
+\end{equation}
+Take the rotation
+\begin{equation}
+  \upe^{(t'+t'')} \braket<A(t')A(t'')> \equiv \upe^{\sqrt2 \tilde t/\tau} C(s)
+= \int_0^{t/\sqrt2} \d\tilde t \upe^{\sqrt2\tilde t/\tau}
+  \int_{-\tilde t}^{\tilde t} C(s) \d x
+= + \int_{t/\sqrt2}^{\sqrt2t} \d\tilde t \upe^{\sqrt2\tilde t/\tau}
+    \int_{-\sqrt2t+\tilde t}^{\sqrt2t-\tilde t} C(s) \d s
+\end{equation}
+where $\d t' \d t'' = \d\tilde t\d s$.
+\begin{paracol}{2}
+  \[
+    I = \int \d t' \d t'' \upe^{\sqrt2\tilde t/\tau} C(s)
+  \]
+  \switchcolumn \centering
+  \begin{tikzpicture}
+    \draw [->] (0,0) node [below left] {$\tilde t = 0$} -- (3,0)
+     node [right] {$t'$};
+    \draw [->] (0,0) -- (0,3) node [right] {$t''$};
+    \draw [->] (0,0) -- (2.5,2.5) node [right] {$\tilde t$};
+    \draw [->] (.5,-.5) -- (-1.5,1.5) node [right] {$s$};
+    \draw (0,0) rectangle (2,2) node [below right] {$\sqrt2t$};
+    \node [left] at (0,2) {$t$} node [below] at (2,0) {$t$};
+    \draw (-.5,.5) -- (0,1) node [left] {$s = \tilde t$} --
+          (1,0) node [below] {$s = -\tilde t$} -- (.5,-.5);
+    \draw (0,2) -- (1.5,0) (1,2) -- (2,1.25)
+     node [blue, right] {$s = -(\sqrt2t - \tilde t)$};
+    \node [red, right] at (1,1) {$\tilde t = t/\sqrt2$};
+  \end{tikzpicture}
+\end{paracol}
+
+Brownian motion $C(s)$ Markov process
+\[
+  C(s) = C(\delta s), \quad
+  I = \frac{Ct}{\Omega} \int_0^{\sqrt2t}
+      \d\tilde t \frac{\sqrt2}{2} \upe^{\sqrt2 \tilde t/\tau}
+    = C\frac t{\sqrt2}(\upe^{\iu t/\tau} - 1)
+\]
+Then,
+\[
+  \braket<u^2(t)> = u^2(0) \upe^{-2t/\tau}
++ C\frac{\tau}{\sqrt2}(1 - \upe^{-2t/\tau})
+\]
+For $t \to \infty$, $\braket<u^2(\infty)> = kT/m$,
+$C = \frac{\sqrt2kT}{m\tau}$,
+\[
+  \braket<u^2(t)> = u^2(0) \upe^{-2t/\tau} + \frac{kT}{m}(1 - \upe^{-2t/\tau})
+\]
+
+\subsection{Fluctuation-Usage Theorem}
+
+The relation between the fluctuation of time and usage for Brownian,
+$\tau = \ab(\frac\alpha m)^{-1}$, so
+\[
+  \alpha = \frac m\tau = \frac{m^2}{\alpha kT}C
+= \frac{m^2}{\alpha kT} \int_{-\infty}^\infty \d t\braket<\delta(t)>
+= \frac{m^2}{\alpha kT} \int_{-\infty}^\infty \d t \braket<A(0)A(t)>
+= \frac{m^2}{\alpha kT} \int_{-\infty}^\infty \d s \braket<A(t + s)A(t)>
+\]
+We can also prove the distribution coefficient
+\begin{equation}
+  D = \frac{kT}{\alpha}
+= \frac12 \int_{-\infty}^\infty \d u\braket<u(t) u(t + s)>
+\end{equation}
+
+\subsection{The themoral conductance noice and the fluctuations in voltage}
+
+In RL circuit, the KVL equation
+\[
+  L \odv{I(t)}t = -RI(t) + V(t)
+\]
+where $V_\text{ext} = 0$, $\braket<I(t)> = 0$, $\braket<V(t)> = 0$.
+The form of Brown motation
+\begin{align}
+  I(t) & \leftrightarrow u(t),\\
+  L & \leftrightarrow m,\\
+  R & \leftrightarrow \alpha,\\
+  V(t) & \leftrightarrow \chi(t)
+\end{align}
+Taking the Foruier transformation
+\[
+  \tilde V(\omega)
+= \frac1{2\pi} \int_{-infty}^\infty V(t) \upe^{-\iu\omega t} \d t
+\]
+and
+\[
+  \braket<V(t) V(t + \delta)> = C\delta(s)
+\]
+\[
+  \frac1{4\pi^2} \int \d\omega \d\omega'
+  \braket<\tilde V(\omega) \tilde V(\omega')>
+  \upe^{\iu\omega t + \iu\omega'(t+s)}
+= C\delta(s)
+= C\frac1{2\pi} \int \d\omega' \upe^{\iu\omega's}
+\]
+Assume
+\begin{multline}
+  \braket<\tilde V(\omega) \tilde V(\omega^2)> 
+  = \braket<|\tilde V(\omega)|^2> \delta(\omega + \omega')
+  = \frac1{4\pi^2} \int \d\omega \d\omega' \braket<|\hat V(\omega)|^2>
+    \upe^{\iu\omega t + \iu\omega(t+s)} \delta(\omega + \omega')\\
+  = \frac1{4\pi^2} \int \d\omega'
+  \underset{2\pi C \to \text{Independent from $\omega$}}
+    {\braket<|\tilde V(\omega')|^2>} \upe^{-\iu\omega's}
+\end{multline}
+The fluctuation of voltage
+\[
+  \braket<V^2> = \braket<V^2(t)>
+= K(0) = \int_{-\infty}^\infty \tilde K(\omega) \d\omega
+= \int_{-\infty}^\infty 4\pi \tilde K(\nu) \d \nu
+\]
+where $\nu = 2\pi\omega$ and
+\begin{enumext}[columns = 2]
+  \item $S(\nu) = 4k_BTR \propto T$: Themoral noise
+  \item $S(\nu) = 4k_BTR \propto R$: Superconduct: no noise.
+  \item $\braket<I^2> \neq 0$
+  \item $S(\nu)$ is independent from $\nu$: white noise.
+\end{enumext}
+
+\subsection{Shot noise}
+
+\begin{enumext}
+  \item The shot of electrons is random
+  \item The time between electrons released and arrive at the positive point is
+  short, equivalent to a sudden current.
+\end{enumext}
+If $n(\tau)$ is the number of released electrons in unit time around
+time $\tau$, then the current $j(t - \tau)$ at time $\tau$ raised from the
+released electrons will getweaker until $0$ when $t - \tau$ is large.
+\[
+  I(t) = \int_{-\infty}^\infty \d\tau n(\tau) \iu(t - \tau)
+\]
+and the average
+\[
+  \braket<I(t)> = \int_{-\infty}^\infty \d\tau \braket<n> \iu(t - \tau)
+= \braket<n> \int_{-\infty}^\infty \iu(t - \tau) \d \tau = \braket<n> e
+\]
+The fluctuation
+\[
+  \Delta I = I(t) - \braket<I>
+= \int_{-\infty}^\infty \d t[n(\tau) - \braket<n>] \iu(t - \tau) \d t
+\]
+and the square
+\[
+  \braket<(\Delta I)^2> = \int \d\tau \d\tau'
+    \braket<\Delta n(\tau) \Delta n(\tau')> \iu(t - \tau) \iu(t - \tau')
+\]
+For shot noise,
+\begin{gather*}
+  \braket<\Delta n(\tau) \Delta n(\tau')> \propto \delta(\tau - \tau'),\\
+  \braket<(\Delta I)^2> = \braket<n> \int_{-\infty}^\infty |n(\tau)|^2 \d\tau
+= \braket<n> 4\pi \int_0^\infty |S(\omega)|^2 \d\omega
+\approxeq 4\pi\braket<n> |S(\omega)|^2 \Delta \omega
+\end{gather*}
+For a scaler, $S(\omega) = \tau$ only at a given frequency.
+
+If $\omega t \ll 1$, $\upe^{-\iu\omega t} \approx 0$.
+\[
+  S(\omega) \approxeq \frac1{2\pi} \int_{-\infty}^\infty i(t) \d t = \frac e{2\pi}
+\]
+Then, we can measure the charge $e^*$ of a quasi-particle.
+\[
+  \braket<(\Delta I)^2> = 2\braket<n> e^2 \Delta \nu
+= 2e^* \braket<I> \Delta \nu*
+\]
+In 1981: Fractional Quantum Hall Effect $\nu = \frac13$, $e^* = \frac e3$.
