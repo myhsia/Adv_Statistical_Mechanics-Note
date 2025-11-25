@@ -796,3 +796,184 @@ Then, we can measure the charge $e^*$ of a quasi-particle.
 = 2e^* \braket<I> \Delta \nu*
 \]
 In 1981: Fractional Quantum Hall Effect $\nu = \frac13$, $e^* = \frac e3$.
+
+\section{Main Equation \& Fock-Planck Equation}
+
+\subsection{Master equation}
+
+\paragraph{Markov Process}
+
+The probability at time $t$ is only related to the former time of the nearest
+neighbor state.
+
+Denote $x(t)$ a random variable $(u(t), I(t), \cdots)$.
+\begin{enumext}
+  \item $P_1(x_1,t_1)$ denotes the probability of the value of $x$ is $x_1$
+  at $t_1$.
+  \item $P_2(x_1,t_1;x_2,t_2)$ denotes both the value of $x$ is $x_1$ at $t_1$
+  and the value of $x$ is $x_2$ at $t_2$, is so-called the united probability.
+  \item Similarly for $P_n(x_1,t_1;\cdots;x_n,t_n)$.
+  \item $P_{1/1}(x_1,t_1|x_2,t_2)$ is for a given $x$, when its
+  value is $x_1$ at time $t_1$, the probability of the value of $x$ is $x_2$
+  at $t_2$ (Conditional probability).
+\end{enumext}
+They satisfy the following identities
+\begin{enumext}
+  \item $\int P_1(x_1,t_1)\d x_1 = 1$.
+  \item $\int P_n(x_1,t_1,\cdots,x_n,t_n) \d x_n
+  = P_{n-1}(x_1,t_1,\cdots,x_n,t_n)$.
+  \item WHen the system is stable,
+  $P_n(x_1,t_1;\cdots,x_n,t_n) = P_n(x_1,t_1+\tau;\cdots,x_n,t_n+\tau)$
+  is independent from time.
+  \item $P_1(x_1,t_1)P_{1/1}(x_1,t_1|x_2,t_2) = P_2(x_1,t_1;x_2,t_2)$.
+  \item $\int P_{1/1}(x_1t_1|x_2t_2)\d x_2 = 1$.
+\end{enumext}
+In quantum mechanics,
+\[
+  P_1(x_1,t_1) = |\psi_1(x_1,t_1)|^2, \quad
+  P_1(x_1,t_1|x_2,t_2) = |U(x_2,t_2;x_1,t_1)|^2
+\]
+The latter one denotes the jump probability of
+$\ket|\psi_1(x_1,t_1)> \to \ket|\psi_2(x_2,t_2)>$.
+\[
+  P_{n-1/1}(x_1t_1\cdots x_{n-1}t_{n-1}|x_n,t_n)
+= P_{1/1}(x_{n-1}t_{n-1}|x_n,t_n)
+\]
+\begin{example}
+  \begin{multline*}
+    P_3(x_1,t_1;x_2,t_2;x_3,t_3)
+  = P_2(x_1t_1;x_2t_2) P_{2/1}(x_1t_1;x_2t_2|x_3t_3)\\
+  = P_1(x_1t_1) P_{1/1}(x_1t_1;x_2t_2) P_{1/1}(x_2t_2|x_3t_3)
+  \end{multline*}
+  Integral on both sides by $\d x_2$
+  \[
+    P_2(x_1t_1;x_3t_2) = P_1(x_1t_1) \quad
+    \int \d x_2 P_{1/1}(x_1t_1;x_2t_2) P_{1/1}(x_2t_2;x_3t_3).
+  \]
+  Div $P_1(x_1,t_2)$ on both sides
+  \begin{equation}
+    P(x_1t_1;x_3t_3) = \int \d x_2 P(x_1t_2;x_2t_2) P(x_2t_2;x_3t_3)
+  \end{equation}
+  We obtain the SCK equation.
+  Take $t_2 = t + \tau$, $t_1 = t$
+  \[
+    P(x_2,t + \tau) = \int P(x,t) P(xt|x_2,t + \tau) \d x,
+  \]
+  The derivatives
+  \[
+    \pdv{P(x,t)}t = \lim_{\tau\to0} \frac{P(x,t + \tau) - P(x,t)}{\tau},\quad
+    \pdv{P(x_2,t)}t = \lim_{\tau\to0} \frac1\tau
+      \int P(xt)[P(x,t|x_2,t + \tau) - P(x,t|x_2t)]
+  \]
+  If $\tau = 0$
+  \[
+    P(x_2,t) = \int P(xt) P(xt|x_2t) \d x, \quad
+    P(xt|x't) = \delta(x - x')
+  \]
+\end{example}
+Denote $W(x_1,x_2)$ is the jump probability density of the value of $x$ changes
+from $x_1$ to $x_2$ in unit time during the time interval $t \to t + \tau$,
+then $\tau\int W(x_1,x)\d x$ is the total probability of the value $x_1 \to x$
+in time interval $\tau$, then $[1 - \tau\int W(x_1,x)\d x]$ is the probability
+that the jump will not occurs, if $\delta(x_1 - x_2)$ is multiplied, then  it is
+the probability tha keep $x_1 = x_2$ and not other values of $x$.
+\[
+  P(x_1t|x_2t+\tau) = [1 - \tau\int W(x_1,x)\d x] \delta(x_1 - x_2)
+  + W(x_1, x_2)\tau
+\]
+Take the time derivative
+\begin{multline*}
+  \pdv{x_0,t}{t} = \frac1\tau\bigg[
+      \cancel{\int P(x_1,t)\delta(x_1 - x_2) \d x_1}
+    - \int P(x_1,t)\tau \int W(x_1,x)\d x \delta(x_1 - x_2)\d x_1\\
+    + \tau \int P(x_1,t)W(x,x_2)
+    - \cancel{\int P(x_1,t)\delta(x_1 - x_2) \d x_1}\bigg]
+\end{multline*}
+we obtain the Master equation
+\[
+  \pdv{P(x_2,t)}t = \int [W(x_1,x_2)P(x_1,t) - P(x_2,t) W(x_2,x_1)]\d x
+\]
+\begin{example}
+  For a lonely system, its density matrix
+  \[
+    \rho(t) = \sum_i w_i(t) \ketbra|i><i|
+  \]
+  and the Hamiltonian
+  \[
+    H = H_0 + V, \quad H_0\ket|i> = E_i\ket|i>.
+  \]
+  $U^*(\tau)$ is time evolution operator
+  \[
+    \rho(t + \tau) = \sum_i w_i(t) U(\tau) \ketbra|i><i| U^\dagger(\tau)
+  = \sum_{i,j,k} w_i \ket|j>\braket<j|U(t)|i>\braket<i|U^\dagger|k>\bra<k|
+  = \sum_i \sum_{j,k} w_i(t) \ketbra|j><k| U_{ji}(\tau) U_{ki}^*(\tau)
+  \]
+  Take random phase approximation (RPA)
+  \[
+    \rho(t + \tau) \approxeq \sum_i \sum_j w_i(t)
+    \ketbra|j><j| U_{ji}(t) U_{ji}^*(\tau)
+  = \sum_j w_j (t + \tau) \ketbra|j><j|
+  \]
+  That is
+  \[
+    w_{j}(t + \tau) = \sum_i w_i(t) |U_{ji}(t)|^2, \quad
+    w_j(t + \tau) - w_j(t) = \sum_i (w_i(t) - w_j(t))|U_{ji}(\tau)|^2,
+  \]
+  where $i = j$ canceled. $|U_{ji}|_{j\neq i}^2$.
+  \[
+    |U|_{ji}^2 = \frac1{\hbar^2}
+      \ab(\frac{\sin(w_{ij}\tau/2)}{w_{ij}/2})^2 |\braket<j|V|i>|^2
+    \approxeq \tau \frac{2\pi}{\hbar} \delta(E_i - E_j) |\braket<j|V|i>|^2
+  \]
+  The derivative
+  \[
+    \odv{w_i(t)}t = \frac{w_i(t + \tau) - w_i(t)}{\tau}\bigg|_{\tau\to0}
+  = \sum_i (w_i(t) - w_j(t))
+    \frac{2\pi}{\hbar} \delta(E_i - E_j) |\braket<j|V|i>|^2
+  \]
+  where $\tau = (E_i - E_j)/\hbar$,
+  $\sum_i$ is the sum of all the quantum states.
+  Take $\sum_i \to \sum_{E_i,F_i}$,
+  then
+  \[
+    \sum_{E_i} \to \int \d E_i n(E_i),
+  \]
+  $n(E_i)$ denotes the DOE.
+  \[
+    \odv{W_{E_iF_i}(t)}t = \sum_{F_i} (W_{E_jF_i} - W_{E_jF_j})
+      \ab(\frac{2\pi}{\hbar} n(E_i)|\braket<E_jF_j|V|E_jF_j>|^2 P_{E_j}(E_jF_j))
+  \]
+\end{example}
+
+\subsection{Forkker-Planck equation}
+
+$x$ can be continuous, $w(x,x')$ will get weaker quickly as the increase
+of $|x - x'|$. We can deonote $\xi = x - x'$ as a small variable, then
+\[
+  W(x',x) = W\ab(\frac{x' + x}{2}, x' - x) \approxeq W(x', -\xi)
+\]
+Take the approximation to the main equation
+\[
+  \pdv{P(x,t)}t = \int [w(x',x) P(x',t) - W(x,x') P(x,t)] \d x'
+= \int [w(x - \xi, \xi) P(x - \xi, t) - W(x, -\xi) P(x, t)] \d \xi
+\]
+Expand it
+\[
+  W(x - \xi,\xi) P(x - \xi,t) = W(x,\xi) P(x,t) - \xi\pdv*{w(x,\xi) P(x,t)}x
++ \frac12\xi^2 \pdv*[2]{[w(x,\xi)P(x,t)]}\xi + \cdots
+\]
+Substitute the expansion back
+\[
+  \pdv{P(x,t)}t = \cancel{\int w(x,\xi) P(x,t) \d \xi}
+- \int \xi \pdv*{[w(x,\xi)P(x,t)]}x
++ \frac12 \int \xi^2 \pdv*[2]{[w(x,\xi) P(x,t)]}x \d \xi - \cancel{\cdots}
+\]
+Rearrange
+\begin{equation}
+  \pdv{P(x,t)}t + \pdv*{[\alpha_1(x) P(x,t)]}x
+= \frac12 \pdv*[2]{\alpha_2(x)P(x,t)}x
+= \int \xi^n w(x,\xi) \d\xi
+\end{equation}
+$n$-th matrix. Forkker-Planck equation.
+If $\alpha_1(x) = 0$, $\alpha_2(x) = \text{Const}$, then F-P equation is
+equivalent to Browian motion equation.
