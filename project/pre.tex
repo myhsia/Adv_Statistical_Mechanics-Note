@@ -1,0 +1,485 @@
+\documentclass[aspectratio = 1610]{beamer}
+\linespread{1.2}
+\usepackage[compatibility = false]{caption}
+\usepackage[mono = false]{libertine}
+\usepackage{microtype, CJKutf8, enumext, tabularx, subcaption, graphicx}
+\usetheme{westlake}
+\usepackage{ragged2e, multicol}
+\justifying
+\usepackage{minted}
+\setminted{numbersep = 1ex, fontsize = \footnotesize, breaklines, linenos}
+
+\westlakeset{
+  title      = Numerical Calculation for Bose-Hubbard Model,
+  subtitle   = Final Project of \textsf{Advanced Statistical Mechanics},
+  author     = {
+    Mingyu Xia (夏明宇) and Yue Xiao (肖月) and
+    \texorpdfstring{
+    $\underset{\text{\scshape The Lecturer}}
+      {\text{\underline{Lintao Yu (余林涛)}}}$}{Lintao Yu (余林涛)},
+    Mingyu Xia and Yue Xiao and Lintao Yu},
+  date       = {\texttt{Group 8 \textbar\ 2025-12-23}},
+  background = bgimage,
+  bibsource  = reference.bib,
+}
+
+\begin{document}
+
+\begin{CJK*}{UTF8}{gbsn}
+\maketitle
+\end{CJK*}
+
+\section{MODEL INTRODUCTION}
+
+\begin{frame}{Hamiltonian}
+  The Bose-Hubbard model (BHM) gives a description of the physics of
+  interacting spinless Bosons on a lattice\cite{wiki:BHM}.
+  \begin{equation}
+    \mathcal H = -t \sum_{\braket<i,j>} \hat b_i^\dagger \hat b_j
+             + \frac12 U \sum_i \hat n_i (\hat n_i - 1) - \mu \sum_i \hat n_i.
+  \end{equation}
+  \pause
+  Containing
+  \begin{columns}
+  \begin{column}{.48\linewidth}
+    \begin{alertblock}{Hopping Term --- Superfluid}
+      Bosons move between neighboring sites with amplitude $t$. The operator
+      $\hat b_i^\dagger$ creates a particle at site $i$, while $\hat b_j$
+      removes one at site $j$.
+    \end{alertblock}
+  \end{column}
+  \pause
+  \hfill
+  \begin{column}{.48\linewidth}
+    \begin{exampleblock}
+      {On-Site Repulsive Term --- Mott-insulation}
+      Bosons on the same site repel with strength $U$. The
+      term $\hat n_i(\hat n_i - 1)$ penalizes multiple occupancy,
+      where $\hat n_i$ counts particles at site $i$.
+    \end{exampleblock}
+  \end{column}
+  \end{columns}
+  \pause
+  \begin{block}{Chemical Potential Term}
+    Controls the average particle number via external field $\mu$.
+    For $\mu = 5$, the system will keep a fixed density of the mean
+    particle number.
+  \end{block}
+\end{frame}
+
+\section{SSE EXPANSION FOR BHM}
+
+\begin{frame}{Kernel Formula}
+  Applying the Taylor expansion to the partition function
+  \begin{equation}
+    Z = \sum_{m=0}^\infty \frac{\beta^m}{m!}
+        \sum_{\{i_1,\ldots,i_m\}} \sum_{\{b_1,\ldots,b_m\}}
+        \prod_{k=1}^m \braket<i_k|-H_{b_k}|i_{k+1}>.
+  \end{equation}
+  \pause
+  \textbf{Expasion Usage Example}
+  Taking the order $m = 3$ in 1D-4site model with the parameters
+  \begin{center}
+    \begin{tabularx}{.9\linewidth}{lllllXX}
+      \toprule
+      Parameters & $t$ & $U$ & $\mu$ & $\beta$ & $N$ & $\{b_1,b_2,b_3\}$\\
+      \midrule
+      Values    & $1$ & $2$ & $5$ & $4$ & $4$ &
+      $\{[(t,(1,2)), (U,3), (\mu,4)]\}$\\
+      Notations & / & / & / & / & Total number of particles in the 4-site &
+      Jumping, repulsion, chemical potential operators\\
+      \bottomrule
+    \end{tabularx}
+  \end{center}
+  \pause
+  The state sequences become
+  \begin{enumext}[columns = 2]
+    \item $\ket|i_1> = \ket|2,1,1,0>$.
+    \item $\ket|i_2> = \ket|1,2,1,0>$.
+    \item $\ket|i_3> = \ket|1,2,1,0>$.
+    \item $\ket|i_4> = \ket|2,1,1,0> = \ket|i_1>$.
+  \end{enumext}
+\end{frame}
+
+\section{NUMERICAL CALCULATION ANALYSIS: 3 SCHEMES}
+
+\begin{frame}{Scheme A: Heat Bath Update}
+  \begin{block}{Basic Principle}
+    \alert{Weight-Proportional Sampling}: Transition probabilities equal
+    normalized weights $\pi_j = w_j/\sum w_k$. No rejection step, i.e., always
+    accept according to weights.
+  \end{block}
+  \pause
+  \begin{exampleblock}{Transition Matrix Structure}
+    For 4 scattering processes (bounce, straight, jump, turn)
+    \[
+      T_A =
+      \begin{bmatrix}
+        \pi_1 & \pi_2 & \pi_3 & \pi_4 \\
+        \pi_2 & \pi_1 & \pi_4 & \pi_3 \\
+        \pi_3 & \pi_4 & \pi_1 & \pi_2 \\
+        \pi_4 & \pi_3 & \pi_2 & \pi_1
+      \end{bmatrix}, \quad T_{A_{ii}} = \pi_i.
+    \]
+    The diagonal term $T_{ii} = \pi_i$ allows state stagnation, then causes
+    high autocorrelation.
+  \end{exampleblock}
+  \pause
+  \alert{Simple but inefficient due to frequent bounce moves.}
+\end{frame}
+
+\begin{frame}{Scheme B: Minimal Bounce Solution}
+  \begin{block}{Basic Principle}
+    \alert{Linear Programming Optimization}: Minimize total bounce probability
+    $\Tr(T_B) = \sum_i T_{B_{ii}}$ subject to
+    \begin{itemize}
+      \item Normalization: $\sum_j T_{B_{ij}} = 1$.
+      \item Detailed balance: $w_i T_{B_{ij}} = w_j T_{B_{ji}}$.
+    \end{itemize}
+  \end{block}
+  \pause
+  \begin{exampleblock}{Example Matrix}
+    For weights $[0.2, 0.4, 0.3, 0.1]$
+    \[
+      T_B =
+      \begin{bmatrix}
+        0.1 & 0.5 & 0.3 & 0.1 \\
+        0.5 & 0.1 & 0.1 & 0.3 \\
+        0.3 & 0.1 & 0.1 & 0.5 \\
+        0.1 & 0.3 & 0.5 & 0.1
+      \end{bmatrix}.
+    \]
+    The diagonal term reduced: $T_{B_{11}} = 0.1$, in comparison to $\pi_1=0.2$
+    in Scheme A.
+  \end{exampleblock}
+  \pause
+  \alert{Reduces wasted bounce moves via constrained optimization.}
+\end{frame}
+
+\begin{frame}{Scheme C: Locally Optimal Algorithm}
+  \begin{block}{Basic Principle}
+    \alert{Peskun's theorem + Metropolization}: Diagonal elements set to zero
+    for all but the largest weight state
+    \[
+      T_{C_{ii}} = 0 \quad (i \neq \text{max}).
+    \]
+    Prohibits lingering in low-weight states; Minimizes autocorrelation.
+  \end{block}
+  \pause
+  \begin{exampleblock}
+    {Transition Matrix ($\pi_1 \leq \pi_2 \leq \pi_3 \leq \pi_4$)}
+    \[
+      T_C =
+      \begin{bmatrix}
+        0 & \frac{\pi_2}{1-\pi_1} & \frac{\pi_3}{1-\pi_1} &
+        \frac{\pi_4}{1-\pi_1} \\
+        \frac{\pi_1}{1-\pi_2} & 0 & \frac{\pi_3}{1-\pi_2} &
+        \frac{\pi_4}{1-\pi_2} \\
+        \frac{\pi_1}{1-\pi_3} & \frac{\pi_2}{1-\pi_3} & 0 &
+        \frac{\pi_4}{1-\pi_3} \\
+        \frac{\pi_1}{1-\pi_4'} & \frac{\pi_2}{1-\pi_4'} &
+        \frac{\pi_3}{1-\pi_4'} & \pi_4'
+      \end{bmatrix}.
+    \]
+    Only $T_{C_{44}} \neq 0$; All other diagonals are zero.
+  \end{exampleblock}
+  \pause
+  \alert{Optimal for balanced weights; Derived from Peskun's ordering theorem.}
+\end{frame}
+
+\section{SIMULATION RESULTS}
+
+\begin{frame}{Simulations under different sweep numbers}
+  \begin{columns}
+  \begin{column}{.61\linewidth}
+    \begin{figure}[htbp]
+      \begin{subfigure}{.48\linewidth}
+        \centering
+        \includegraphics[page = 1, width = \linewidth]{./BoseHubbardSSE.pdf}
+        \caption{$400$ Sweeps}
+      \end{subfigure}
+      \pause
+      \hspace*\fill
+      \begin{subfigure}{.48\linewidth}
+        \centering
+        \includegraphics[page = 2, width = \linewidth]{./BoseHubbardSSE.pdf}
+        \caption{$1200$ Sweeps}
+      \end{subfigure}\par
+      \pause
+      \begin{subfigure}{.48\linewidth}
+        \centering
+        \includegraphics[page = 3, width = \linewidth]{./BoseHubbardSSE.pdf}
+        \caption{$4000$ Sweeps}
+      \end{subfigure}
+      \pause
+      \hspace*\fill
+      \begin{subfigure}{.48\linewidth}
+        \centering
+        \includegraphics[page = 4, width = \linewidth]{./BoseHubbardSSE.pdf}
+        \caption{$8000$ Sweeps}
+      \end{subfigure}
+    \end{figure}
+  \end{column}
+  \pause
+  \hfill
+  \begin{column}{.37\linewidth}
+    \small
+    As $U$ increases, the diagonal weights in the SSE configuration space
+    become dominant.
+    Scheme C shows a slight increase in $\tau$ in comparison to B.
+    \pause
+    \begin{table}[htbp]
+      \renewcommand *\arraystretch {1.31}
+      \centering
+      \caption{Comparasion under different $U$}
+      \scriptsize
+      \begin{tabular}{*3{l@{~}}l}
+        \toprule
+        Phases  & Superfluid  & Transition  & Near-Mote   \\
+        \midrule
+        $U$   & $U < 3$ & $3 \leq U \leq 6$ & $U \to 9$   \\
+        (A)     & $20\sim 30$ & $30\sim 45$ & $45 \sim 50$\\
+        (B)     & $8 \sim 10$ & $10\sim 20$ & $15 \sim 20$\\
+        (C)     & $7 \sim 9$  & $9 \sim 18$ & $18 \sim 25$\\
+        \bottomrule
+      \end{tabular}
+    \end{table}
+    \pause
+    A fixed random seed is loaded to ensure the fixed result for every
+    time running.
+  \end{column}
+  \end{columns}
+\end{frame}
+
+\section{CONCLUSION}
+
+\begin{frame}{Conclusion}
+  \begin{alertblock}{Heat Bath Update (A) is Consistently Inefficient}
+    Due to the non-zero diagonal elements of the transition matrix (state
+    stagnation), the samples are highly correlated, and $\tau_\text{int}(n)$ is
+    2-3 times that of B/C.
+  \end{alertblock}
+  \pause
+  \begin{exampleblock}{Algorithm Selection is Model-Dependent}
+    Low $U$ (weight balance) selects local optima (C), high $U$ (diagonal weight
+    dominance) selects minimum bounce (B).
+  \end{exampleblock}
+  \pause
+  \begin{block}{Core Design Principle}
+    For efficient algorithms, the condition ``Diagonal elements of non-maximum
+    weight states returning to zero'' is necessary (both B and C satisfy this),
+    and the remaining degrees of freedom need to be adapted to the
+    weight distribution.
+  \end{block}
+\end{frame}
+
+\appendix
+
+\section{SIMULATION METHOD}
+
+\begin{frame}{\large Configuration \& Process}
+  \footnotesize
+  \begin{alertblock}{\small Key Parameters}
+    \begin{columns}
+    \begin{column}{.48\linewidth}
+      \begin{itemize}
+        \item \textbf{Lattice}: 1D chain, $L = 64$, $t = 1$, $\mu = 5$.
+        \item \textbf{Thermodynamics}: $\beta = L = 64$ (low-$T$),
+        $U \in [0,6]$.
+        \item \textbf{Algorithm}: A: $16$ loops $\times 4$; B/C: $4$ loops.
+    \end{itemize}
+    \end{column}
+    \hfill
+    \begin{column}{.48\linewidth}
+      \begin{itemize}
+        \item \textbf{Statistics}: $4000$ independent chains, each with $1$
+        million steps.
+        \item \textbf{Cutoff}: For efficiency, particle number reduced
+        at $U = 3$, $8$.
+      \end{itemize}
+    \end{column}
+    \end{columns}
+  \end{alertblock}
+  \pause
+  \begin{columns}
+  \begin{column}{.48\linewidth}
+    \begin{exampleblock}{\small Method: SSE + Directed Loop}
+      \alert{Stochastic Series Expansion} maps quantum problem to $(d + 1)$D
+      classical graph
+      \[
+        Z = \Tr e^{-\beta H} = \sum_{\alpha} \sum_{n=0}^{\infty}
+        \frac{\beta^n}{n!} \braket<\alpha|(-H)^n|\alpha>.
+      \]
+      \alert{Worm algorithm} updates via vertex scattering using A/B/C
+      transition matrices.
+    \end{exampleblock}
+  \end{column}
+  \pause
+  \hfill
+  \begin{column}{.48\linewidth}
+    \begin{block}{\small Procedure}
+      \begin{enumerate}
+        \item \textbf{Burn-in}: Discard first 10\% of samples.
+        \item \textbf{Worm updates}: Collect density series $\{n^{(t)}\}$.
+        \item \textbf{Autocorrelation}\vspace*{-1ex}
+        \[
+          \tau_\text{int}(n) = \frac12 + \sum_{t=1}^\infty
+            \frac{\braket*<n^{(i + t)} n^{(i)}> - \braket*<n^{(i)}>^2}
+                 {\braket*<n^{(i)^2}> - \braket*<n^{(i)}>^2}.
+        \]\vspace*{-3.5ex}
+        \item \textbf{Average}: Mean over 4000 chains, plot $U$
+        vs $\tau_\text{int}(n)$.
+      \end{enumerate}
+    \end{block}
+  \end{column}
+  \end{columns}
+\end{frame}
+
+\section{\textsf{PYTHON} IMPLEMENTATION}
+
+\setlength \columnsep {2.5em}
+\begin{frame}[fragile]
+  {Class Initialization and State Representation}
+  \begin{multicols}{2}
+  The class stores the lattice size $L$, inverse temperature $\beta$, and model
+  parameters. The state is represented by an array of occupation
+  numbers $\mathbf{n}$.
+\begin{minted}{python3}
+def __init__(self, L, beta, U, mu, t = 1, method = 'A'):
+  self.L = L
+  self.beta = beta
+  self.U = U
+  self.mu = mu
+  self.t = t
+  self.method = method  # 'A', 'B', 'C'
+\end{minted}
+Initialize state: occupation numbers on each site.
+\begin{minted}[firstnumber = last]{python3}
+  self.n = np.zeros(L, dtype = int)
+\end{minted}
+  Starting density roughly $\mu/U$ to reach equilibrium faster.
+\begin{minted}[firstnumber = last]{python3}
+  initial_dens = max(1, int(mu/U + .5)) if U > 0 else 1
+  self.n[:] = initial_dens
+\end{minted}
+  Energy shift: Ensures diagonal weights in SSE remain positive.
+  Calculated based on maximum expected local density.
+\begin{minted}[firstnumber = last]{python3}
+  self.E_shift = .5 * U * 10 * 9 + 20
+\end{minted}
+  \end{multicols}
+\end{frame}
+
+\begin{frame}[fragile]{Calculating Vertex Weights}
+  In SSE, the probability of choosing an operator depends on its ``weight''.
+  Diagonal weights are related to the local energy, while off-diagonal weights
+  are related to the hopping amplitude $t$.
+\begin{minted}{python3}
+def get_vertex_weight(self, n1, n2, op_type):
+  E1 = .5 * self.U * n1 * (n1 - 1) - self.mu * n1
+  E2 = .5 * self.U * n2 * (n2 - 1) - self.mu * n2
+  H_diag_val = .5 * (E1 + E2)
+\end{minted}
+Branches for the Diagonal operator (1) and Off-diagonal: hopping (2).
+\begin{minted}[firstnumber = last]{python3}
+  if op_type == 1: 
+    return max(0, self.E_shift - H_diag_val)
+  elif op_type == 2:
+    return self.t
+  return 0
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile, allowframebreaks]{Transition Matrix Schemes}
+  The core of the ``Optimal Monte Carlo'' paper is the design of the transition
+  matrix $T_{ij}$. According to Peskun's theorem, to minimize the
+  autocorrelation time, one should minimize the diagonal elements $T_{ii}$ (the
+  ``bounce'' or ``stagnation'' probability).
+\begin{minted}{python3}
+  def solve_greedy_min_bounce(self, weights):
+  w0, w1, w2 = weights
+  sw = w0 + w1 + w2
+  pi = np.array(weights) / sw
+  p_out = np.zeros(3)
+\end{minted}
+  \begin{itemize}
+    \item \alert{Scheme A: Heat Bath}
+    The core of the ``Optimal Monte Carlo'' paper is the design of the
+    transition matrix $T_{ij}$. According to Peskun's theorem, to minimize the
+    autocorrelation time, one should minimize the diagonal elements $T_{ii}$
+    (the ``bounce'' or ``stagnation'' probability).
+    \item \alert{Scheme B and C: Optimization via Peskun's Theorem}
+    Scheme B (Minimal Bounce) and Scheme C (Locally Optimal) aim to set
+    $T_{ii} = 0$ whenever possible. The code implements this using a ``greedy''
+    approach or Metropolized Gibbs sampling.
+  \end{itemize}
+  Metropolized Gibbs strategy: In~\cite{pollet2004optimal}, Using
+  \[
+    T_{ij}^{MG} =
+    \begin{bmatrix}
+      0 & \frac{\pi_2}{1 - \pi_1} & \frac{\pi_3}{1 - \pi_1} &
+      \cdots & \frac{\pi_n}{1 - \pi_1}\\
+      \frac{\pi_1}{1 - \pi_1} & 1 - \ldots & \frac{\pi_3}{1 - \pi_2} &
+      \cdots & \frac{\pi_n}{1 - \pi_2}\\
+      \frac{\pi_1}{1 - \pi_1} & \frac{\pi_2}{1 - \pi_2} & 1 - \ldots &
+      \cdots & \frac{\pi_n}{1 - \pi_3}\\
+      \vdots & \vdots & \vdots & \ddots & \vdots\\
+      \frac{\pi_1}{1 - \pi_1} & \frac{\pi_2}{1 - \pi_2} &
+      \frac{\pi_3}{1 - \pi_3} & \cdots & 1 - \ldots
+    \end{bmatrix}
+  = \min\ab(\frac{\pi_j}{1 - \pi_i}, \frac{\pi_j}{1 - \pi_j}).
+  \]
+  \begin{multicols}{2}
+\begin{minted}[firstnumber = last]{python3}
+  for i in [1, 2]:
+    term1 = pi[i] / (1 - pi[0]) if (1 - pi[0]) > 1e-9 else 0
+    term2 = pi[i] / (1 - pi[i]) if (1 - pi[i]) > 1e-9 else 1
+    p_out[i] = min(term1, term2)
+  current_sum = p_out[1] + p_out[2]
+  if current_sum > 1:
+    p_out[1] /= current_sum
+    p_out[2] /= current_sum
+    p_out[0] = 0
+  else:
+    p_out[0] = 1 - current_sum
+  return p_out
+\end{minted}
+  \end{multicols}
+\end{frame}
+
+\begin{frame}[fragile]{The Simulation Loop}
+\begin{multicols}{2}
+  The \verb|run| method performs the actual Markov Chain sweeps. Each site is
+  updated based on the calculated transition probabilities.
+\begin{minted}{python3}
+def run(self, n_sweeps):
+  densities = []
+  for _ in range(n_sweeps):
+    for i in range(self.L):
+      n_curr = self.n[i]
+      w0 = self.get_vertex_weight(n_curr, n_curr, 1)
+      w_plus = self.get_vertex_weight(n_curr, n_curr + 1, 2)
+      w_minus = self.get_vertex_weight(n_curr, n_curr - 1, 2) if n_curr > 0 else 0
+      probs = self.solve_scattering([w0, w_plus, w_minus], self.method)
+\end{minted}
+  Sample the next state.
+\begin{minted}[firstnumber = last]{python3}
+      r = np.random.rand()
+      if r < probs[0]:
+        pass # Stay
+      elif r < probs[0] + probs[1]:
+        self.n[i] += 1
+      else:
+        self.n[i] -= 1
+\end{minted}
+  Record average density as the observable.
+\begin{minted}[firstnumber = last]{python3}
+    densities.append(np.mean(self.n))
+    return densities
+\end{minted}
+\end{multicols}
+\end{frame}
+
+\section{Thanks for Listening! Any Questions?}
+
+\end{document}

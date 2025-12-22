@@ -1,0 +1,291 @@
+%%
+%% This is file `beamerthemewestlake.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% westlakethesis.dtx  (with options: `beamer')
+%% -----------------------------------------------------------------------
+%%   Copyright (C) 2023-2025 by Mingyu Xia <myhsia@outlook.com>          *
+%%                                                                       *
+%%   It may be distributed and/or modified under the conditions of the   *
+%%   LaTeX Project Public License (LPPL), either version 1.3c of this    *
+%%   license or (at your option) any later version. The latest version   *
+%%   of this license is in the file                                      *
+%%                                                                       *
+%%       http://www.latex-project.org/lppl.txt                           *
+%%                                                                       *
+%%   This work has the LPPL maintenance status `maintained'.             *
+%%                                                                       *
+%%   The Current Maintainer of this work is Mingyu Xia.                  *
+%% -----------------------------------------------------------------------
+\ProvidesExplPackage{beamerthemewestlake}{2025-12-22}{v0.0.1}
+  {WestlakeThesis ~ \text_titlecase:n {beamer} ~ Module}
+\mode<presentation>
+\ExplSyntaxOff
+\RequirePackage{tikz}
+\usetikzlibrary{fadings, calc, arrows, angles, quotes}
+\tikzset
+  {
+    > = stealth',
+    every picture/.append style =
+      { line join = round, line cap = round, thick }
+  }
+\ExplSyntaxOn
+\graphicspath
+  {
+    {./figure/}  {./image/}  {./graphic/}  {./picture/}
+    {./figures/} {./images/} {./graphics/} {./pictures/}
+  }
+% title info
+\keys_define:nn { beamer / westlakeset }
+  {
+    title      .tl_set:N    = \l__wlu_set_title_tl,
+    subtitle   .tl_set:N    = \l__wlu_set_subtitle_tl,
+    author     .clist_set:N = \l__wlu_set_author_clist,
+    date       .tl_set:N    = \l__wlu_set_date_tl,
+    background .tl_set:N    = \l__wlu_set_background_image,
+    bibsource  .tl_set:N    = \l__wlu_set_bibsource_tl,
+  }
+\NewDocumentCommand \westlakeset { m }
+  {
+    \keys_set:nn { beamer / westlakeset } { #1 }
+    \title { \Large \bfseries \l__wlu_set_title_tl }
+    \tl_set:Nn \insertshorttitle { \l__wlu_set_subtitle_tl }
+    \author [ \clist_item:Nn \l__wlu_set_author_clist { 2 } ]
+      {
+        \clist_item:Nn \l__wlu_set_author_clist { 1 }
+      }
+    \date { \l__wlu_set_date_tl }
+    \tl_if_empty:NTF \l__wlu_set_bibsource_tl
+      {
+        \newcommand* \printbibliography
+          {
+            \begin{frame}[t]
+              \frametitle{Bibliography}
+            \end{frame}
+          }
+        \newcounter {citecount}
+        \renewcommand*\cite[1]
+          {
+            \refstepcounter{citecount}
+            \textsuperscript{[\thecitecount]}
+          }
+      }
+      {
+        \RequirePackage [ natbib = true, sorting = none, backend = biber,
+                          autocite = superscript, style = numeric-comp ]
+                        { biblatex }
+        \addbibresource { \l__wlu_set_bibsource_tl }
+        \let \@printbibliography \printbibliography
+        \renewcommand* \printbibliography
+          {
+            \begin{frame}[t, allowframebreaks]{Bibliography}
+              \small
+              \@printbibliography
+            \end{frame}
+          }
+      }
+  }
+% theme color
+\definecolor{westlakeyellow}{rgb}{.905, .565, .241}
+\definecolor{westlake}{rgb}{.132, .324, .570}
+\usecolortheme[named = westlake]{structure}
+% round list label
+\useinnertheme{rounded}
+% bg & headlogo
+\usebackgroundtemplate
+  {
+    \tikz [ remember~picture, overlay ]
+      {
+        \tl_if_empty:NF \l__wlu_set_background_image
+          {
+            \node [ inner~sep = 0pt, outer~sep = auto, opacity = .8 ] at
+              (current~page)
+              {
+                \includegraphics [ height = \paperheight ]
+                  { \l__wlu_set_background_image }
+              };
+          }
+        \int_compare:nNnTF { \insertpagenumber } = { 1 }
+          {
+            \fill [ westlake!90, thick ]
+              ([yshift = 1.2cm]current~page.south~west)
+             to[bend~left = 4] ++ (.2\paperwidth,0)
+             to[bend~left = 2] ++ (.3\paperwidth,-.5)
+             to[bend~right = 5] ++ (.3\paperwidth,-.3)
+             to[bend~right = 5] ++ (.2\paperwidth,.4) --
+              (current~page.south~east) -- (current~page.south~west) -- cycle;
+            \fill [ westlake!90, thick, opacity = .3 ]
+              ([yshift = 1.4cm]current~page.south~east)
+             to[bend~right = 2] ++ (-.2\paperwidth,-.2)
+             to[bend~right = 1] ++ (-.3\paperwidth,-.6)
+             to[bend~left = 5] ++ (-.2\paperwidth,-.1)
+             to[bend~left = 5] ++ (-.3\paperwidth,.6) --
+             (current~page.south~west) -- (current~page.south~east) -- cycle;
+          }
+          {
+            \node [ inner~sep = 0pt, outer~sep = auto,
+                    opacity = .1,    xshift = -2em
+                  ] at (current~page.east)
+              {
+                \includegraphics [ height = .75\paperheight ]
+                  { westlake-logo.pdf }
+              };
+          }
+      }
+  }
+\titlegraphic
+  {
+    \tikz [ remember~picture, overlay ]
+      \node [ below~right, shift = {(.5ex,-.5em)} ] at (current~page.north~west)
+        { \includegraphics [ width = 2\textwidth/7 ] { westlake-badge.pdf } };
+  }
+
+% Section page
+\AtBeginSection[]
+  {
+    \begin{frame}
+      \tikz [ remember~picture, overlay ]
+        \node [ below~right, shift = {(.5ex,-1em)} ]
+          at (current~page.north~west)
+          { \includegraphics [ width = 2\textwidth/7 ]{ westlake-badge.pdf } };
+      \vfill
+      \usebeamerfont{title} \bfseries \color{westlake} \insertsectionhead \par
+      \tikz
+        {
+          \draw [ line~cap = round, westlake!20, ultra~thick ]
+            (0,0) --++ (2\linewidth/3,0);
+          \filldraw
+            [ line~cap = round, westlake!60, ultra~thick, path~fading = west
+            ] (0,0) --++
+              (\fp_eval:n
+                {\insertpagenumber/\insertdocumentendpage * 2/3}\linewidth,
+              0);
+        }
+      \vfill
+    \end{frame}
+  }
+\let \@maketitle \maketitle
+\renewcommand \maketitle
+  {
+    \group_begin:
+    \setbeamertemplate{footline}{}
+    \setbeamertemplate{headline}{}
+    \@maketitle
+    \group_end:
+  }
+
+% Blocks
+\setbeamercolor{block~title}
+  {
+    use = structure, fg  = structure.fg,
+    bg  = structure.fg!20!bg
+  }
+\setbeamercolor{block~body}
+  {
+    use = block~title, parent = normal~text,
+    bg  = block~title.bg!50!bg
+  }
+\addtobeamertemplate{block~begin}
+  {\pgfsetfillopacity{0.8}}{\pgfsetfillopacity{1}}
+\setbeamercolor{block~title~alerted}
+  {
+    use = alerted~text, fg = alerted~text.fg,
+    bg  = alerted~text.fg!20!bg
+  }
+\setbeamercolor{block~body~alerted}
+  {
+    use = block~title~alerted, parent = normal~text,
+    bg  = block~title~alerted.bg!50!bg
+  }
+\addtobeamertemplate{block~alerted~begin}
+  {\pgfsetfillopacity{0.8}}{\pgfsetfillopacity{1}}
+\setbeamercolor{block~title~example}
+  {
+    use = example~text,fg = example~text.fg,
+    bg  = example~text.fg!20!bg
+  }
+\setbeamercolor{block~body~example}
+  {
+    use = block~title~example, parent=normal~text,
+    bg  = block~title~example.bg!50!bg
+  }
+\addtobeamertemplate{block~example~begin}
+  {\pgfsetfillopacity{0.8}}{\pgfsetfillopacity{1}}
+
+% header/footer
+\useoutertheme{infolines}
+\setbeamertemplate{navigation~symbols}{} % remove navigation buttons
+\setbeamercolor{title}{parent = author~in~head/foot}
+\setbeamercolor*{palette~primary}
+  {
+    use = structure, fg = black,
+    bg  = structure.fg!30!white
+  }
+\setbeamercolor*{palette~secondary}
+  {
+    use = structure, fg = white,
+    bg  = structure.fg!60!white
+  }
+\setbeamercolor*{palette~tertiary}
+  {
+    use = structure, fg = white,
+    bg  = structure.fg!90!white
+  }
+\addtobeamertemplate{headline}{}
+  {
+    \tikz [ remember~picture, overlay ]
+      {
+        \fp_compare:nNnTF
+          { \fp_eval:n { \insertpagenumber/\insertdocumentendpage } } > { .5 }
+          {
+            \filldraw [ westlake!60 ]
+              (current~page.north) --++ (0,-4ex) [ rounded~corners = 1ex ] --++
+              (\fp_eval:n
+                {\insertpagenumber/\insertdocumentendpage/2}\paperwidth,0)
+              [ rounded~corners = 0pt ] --++ (4ex,4ex)
+             node [ left = 2ex, midway, white, font = \bfseries \small ]
+              {
+                \fp_to_int:n
+                  {
+                    \fp_eval:n
+                      {100*\insertpagenumber/\insertdocumentendpage}
+                  }\%
+              } -- cycle;
+          }
+          {
+            \filldraw [ westlake!60 ]
+              (current~page.north) --++ (0,-4ex) [ rounded~corners = 1ex ] --++
+              (\fp_eval:n
+                {\insertpagenumber/\insertdocumentendpage/2}\paperwidth,0)
+              [ rounded~corners = 0pt ] --++ (4ex,4ex)
+             node [ right = 2ex, midway, westlake, font = \bfseries \small ]
+              {
+                \fp_to_int:n
+                  {
+                    \fp_eval:n
+                      {100*\insertpagenumber/\insertdocumentendpage}
+                  }\%
+              } -- cycle;
+          }
+      }
+  }
+
+% Typeset
+\newcommand \iu {{\mathup i\mkern1mu}}
+\newcommand \eu {\mathup e}
+\numberwithin{equation}{section}
+\RequirePackage { keytheorems, amssymb, mathtools, physics2,
+                  fixdif, derivative, cancel, siunitx, nicematrix }
+\renewcommand* \qedsymbol {$\color{gray}\blacksquare$}
+\usephysicsmodule{ ab, ab.braket, op.legacy }
+\RequirePackage [ labelsep = period, font = footnotesize ] {caption}
+\RequirePackage {subcaption, booktabs, anyfontsize, ragged2e}
+\captionsetup{belowskip = 0pt}
+\captionsetup[sub]{font = scriptsize}
+\justifying
+\AtBeginEnvironment{columns}{\vspace*{-.5ex}}
+\mode<all>
+%% -----------------------------------------------------------------------
+%% End of file `beamerthemewestlake.sty'.
