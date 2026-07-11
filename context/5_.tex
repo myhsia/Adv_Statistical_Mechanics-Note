@@ -1,0 +1,76 @@
+\chapter{Grand Canonical Ensemble}
+
+$(T, \mu, V)$ 不变.
+
+\begin{itemize}
+  \item 与正则系综类似，热库同时也是粒子源.
+  \begin{equation}
+    E_T = E_A + E_B, ~ N_T = N_A + N_B
+  \end{equation}
+  \begin{align*}
+    \rho_n & = \rho_{AN} = \frac{\Omega_B(N_T - N_A, E_T - E_A)}{\Omega(N_T,E_T)}
+    = \frac1{\Omega(N_T,E_T)} \upe^{\ln \Omega_B (N_T-N_B, E_T-E_B)}\\
+  & = \frac{\Omega_3(N_T,E_T)}{\Omega(N_T,E_T)}
+  \exp\ab[-\pdv{\ln\Omega_B(N_T,E_T )}{{N_T}} N_A - \pdv{\ln\Omega_B(N_T,E_T )}{{N_T}} N_A]\\
+  & = \frac1{Z_G} \upe^{\beta \mu N_A-\beta E_A}
+  \end{align*}
+  即 $\rho_{N_A} = \frac1{Z_G} \upe^{-\beta(E_n - \mu_N)}$.
+  The normalization condition
+  \[
+    \sum_{N=0}^\infty \sum_n \rho_{Nn} = 1
+  \]
+  \[
+    Z_G = \sum_{N=0}^\infty \upe^{\beta\mu N} \sum_n \upe^{-\beta E_N}
+  = \sum_{N=0}^\infty \upe^{\beta\mu N} Z_N = \Tr \upe^{-\beta(\hat H - \mu N)}
+  \]
+  while $\mu$ is fermion's erergy.
+  \[
+    \braket<n|\hat H|n> = E_n
+  \]
+  \begin{align}
+    \bar E & = -\pdv*{}\beta \ln Z_G\\
+    p & = \frac1\beta \pdv*{}V \ln Z_G\\
+    S & = o_B(\ln Z_G - \alpha \pdv*{}\alpha \ln Z_G - \beta \pdv*{}\beta \ln Z_G)\\
+    F & = -k_BT\ln Z_G + k_BT \alpha \pdv*{}\alpha \ln Z_G\\
+    \psi & = -k_B T \ln Z_G
+  \end{align}
+  \item 经典和粒子数涨落 $\sim \frac1{\sqrt N}$.
+  \item 经典极限 $Z_G = \sum_N \upe^{-\alpha N} Z_N$
+\end{itemize}
+
+\begin{example}[固体表面的吸附率]
+  \[\theta = \frac{\overline N}{N_0}, ~ N \to \bar N\]
+  $(T,\mu, \nu)$
+  单个分子被吸附后的能量降低 $\epsilon_0$.
+  \[
+    E_N = -\epsilon_0 N
+  \]
+\end{example}
+\[
+  Z_G = \sum_{N=0}^{N_0} \sum_n \upe^{-\alpha N-\beta E_N}
+= \sum_{N=9}^{N_0} \sum_n \upe^{-\alpha N-\beta E_N}
+= \sum_{N=0}^\infty \sum_n \upe^{\beta(\beta+\epsilon_0)N}
+\]
+其中 $n$ 表示分子占据 $N$ 个确定吸附中心中的 $N$ 个时的某一特定状态
+\[
+  \sum_n= \frac{N_0!}{N!(N_0 - N)}!
+\]
+\[
+  Z(G) = \sum_{N=0}^{N_0} \frac{N_0!}{N!(N_0-1)!} \upe^{p(\mu+\epsilon_0)N}
+= (1 + x)A^{N_0} = (1 + \upe^{\beta(\mu + \epsilon_0)})^{N_0}
+\]
+\[
+  \overline N = -\pdv*{}x \ln Z_G
+= \frac1\beta \pdv*{}\mu \ln Z_G\big|_{T_{\beta(\mu+\epsilon_0)}}
+= N_0 \pdv*{}\alpha \upe^{\alpha+\beta_0\epsilon}
+= \frac{N_0\upe^{\beta(\mu+\epsilon_0)}}{1 + \upe^{\beta(\mu+\epsilon_0)}}
+\]
+这里达到平衡态 $\mu = \mu_A = \mu_B$, 这里 $\mu_B$ 可以用理想气体的化学势.
+\[
+  \upe^{-\beta\mu} = \frac{(2\pi mk_BT)^{3/2} k_BT}{\beta h^3}
+\]
+\[
+  \theta = \frac{\bar N}{N_0}
+= \frac{ph^3}{ph^3 + (2\pi m)^{3/2} - (k_BT)^{5/2} - \upe^{-\epsilon_0/k_BT}}
+\]
+即 $p$ 升高，$\theta$ 升高；$T$ 升高；$\theta$ 下降.

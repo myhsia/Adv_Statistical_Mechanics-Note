@@ -1,0 +1,179 @@
+\chapter{From Microcanonical Ensembles to Canonical Ensembles}
+
+\begin{definition}[正则系综]
+  系统与大热源接触，达到平衡的系综，$(T,V,N)$ 固定.
+\end{definition}
+
+大热源的作用是提供确定的温度
+\begin{itemize}
+  \item $A$: 就是要研究的正则系综中的系统.
+  \item $B$: 大热源中的系统
+  \item $A + B$: 孤立系.
+\end{itemize}
+\[
+  E_\text{total} = E_A + E_B,~ V_\text{total} = V_A + V_B,~
+  N_\text{total} = N_A + N_B
+\]
+Assume $\Omega(E_\text{total})$ is the number of the total state of $A + B$,
+then the states in $A$ is labelled as $\ket|n>$, and $A$ is at the $|n>$ state;
+$B$ has $\Omega(E_\text{total} - E_A)$ states. The probability that the system $A$ at state $\ket|n>$ can be described as
+\begin{equation}
+  \rho_{An} = \frac{\Omega_B(E_\text{total} - E_A)}{\Omega(E_\text{total})}.
+\end{equation}
+and the mean value $\bar E_n \ll E_\text{total}$, $E_A \ll E_\text{total}$.
+It's not important that which state $B$ is located, as well as $B$'s properties.
+Then, the freedom-particle system can be used to represent $B$.
+\begin{example}[Chapter 3, Problem 1]
+  $\Omega_B(E_\text{total} - E_A) \sim (E_\text{total} - E_A)^M$,
+  $M \sim O(N_3) \sim O(N)$.
+  To expand it:
+  \[
+    \Omega_B(E_\text{total} - E_A) = E_\text{total}^M\ab(1 - \frac{E_A}{E_\text{total}})^M = E_\text{total}^M\ab(1 - M\frac{E_A}{E_\text{total}} + \cdots)
+  \]
+  we can also expand it in another way (a safer expansion)
+  \[
+    \Omega_B(E_\text{total} - E_A) = \exp[M \ln(E_\text{total} - E_A)]
+  \]
+  Then expand the ``$\ln$'' item
+  \[
+    \ln(E_\text{total} - E_A) = \ln E_\text{total}
+  + \ln\ab(1 - \frac{E}{E_\text{total}}) = \ln E_\text{total} - \frac{E_A}{E} - \frac12\ab(\frac{E_A}{E_\text{total}})^2 + \cdots
+  \]
+  then we have
+  \[
+    \rho_{An} = \frac{1}{\Omega(E_\text{total})}\upe^{\ln\Omega_B}
+  = \frac{1}{\Omega(E_\text{total})} \exp\ab[\ln\Omega_B(E_\text{total}) - \pdv{\Omega_B(E_B)}{E_\text{total}}E_A + \cdots]
+  \approx \frac{\Omega_B(E_\text{total})}{\Omega(E_\text{total})} \upe^{-\beta E_A}
+  \equiv \frac1{Z_N}\upe^{-\beta E_A}
+  \]
+  we define $\beta = \pdv{\Omega_B(E_\text{total})}{E_\text{total}} \xlongequal{\triangle} \frac1{k_BT}$
+  then remove the ``$A$'' index
+  \[
+    \rho_{An} = \rho_n,~ \sum_n \rho_n = 1 \Rightarrow Z_N = \sum_n \upe^{-\beta E_N}
+  \]
+  Now, we arrive at the partition function $Z_N$
+  \begin{equation}
+    Z_N = \Tr\upe^{-\beta H} = \sum_n \braket<n|\upe^{-\beta H}|n> = \sum_n \upe^{-\beta E_n}
+  \end{equation}
+\end{example}
+Using the partition function, we have
+\begin{gather}
+  \overline A = \sum_n A_n \rho _n = \frac1{Z_n} \sum_n \braket<n|A|n> \upe^{-\beta E_n}
+  = \frac1{Z_n} \sum_n \braket<n|A \upe^{-\beta H}|n> = \frac1{Z_n} \Tr A\upe^{-\beta H}.\\
+  \bar E \xlongequal{\text{inner energy}} \sum_n E_n\rho_n
+  = \frac1{Z_n} \sum_n E_n \upe^{-\beta E_n}
+  = \frac1{Z_n} \ab(-\pdv*{}\beta \sum_n \upe^{-\beta E_n})
+  = -\frac1{Z_n} \pdv*{}p Z_n = -\pdv*{}\beta \ln Z_n\\
+  p_n = -\pdv{E_n}V,~
+  \overline p = \sum_n p_n \rho_n = \frac1{Z_n} \sum_n -\pdv{E_n}V \upe^{-\beta E_n} = \frac1\beta \pdv*{}V \ln Z_N\\
+  \d S = \frac{\d \bar E}T + \frac{\overline p}T \d N
+  = k_B(\beta\d \bar E + \beta\overline p\d V)
+  = k_B\ab(-\beta\pdv*{}\beta \d\ln Z_N + \d V\pdv*{}{V}\ln Z_N)
+  = \d\ab[k_B \ab(\ln Z_N - \beta \pdv*{}p \ln Z_N)]\\
+  F = \bar E - TS = -k_B T \ln Z_N
+\end{gather}
+
+\section{能量涨落，热力学极限，经典极限}
+
+\begin{definition}[涨落]
+  For energy:
+  \begin{enumext}[columns = 2]
+    \item 方差：$\frac{\overline{(E - \bar E)^2}}{E^2}$
+    \item 方均根：$\sqrt{\frac{\overline{(E - \bar E)^2}}{E^2}}$
+  \end{enumext}
+  \[
+    \overline{(E - \bar E)^2} = \overline{(E^2 - 2E\bar E = \bar E^2)} = \overline{E^2} - \bar E^2,~
+    \overline{E^2} = \sum_n E_n^2 \rho_n = \ldots = \bar E^2 - \pdv {\bar E}\beta\bigg|_{N,V}
+  \]
+  \[\overline{(E - \bar E)^2} = -\pdv{\bar E}\beta\bigg|_{N,V} = k_BT\ab(\pdv{\bar E}T)_{N,V} = k_BT^2C_V\]
+  \[
+    \frac{\sqrt{\overline{(E-\bar E)^2}}}{\bar E}
+  = \frac{\sqrt{k_B+C_V}}{\bar E}
+  = \frac{\sqrt{k_Bc_v}+\sqrt N}{A+N} \propto \frac1{\sqrt N}
+  \]
+\end{definition}
+
+\begin{definition}[热力学极限]
+  $N$, $V \to \infty$, $n = \frac NV$ final.
+\end{definition}
+\begin{definition}[经典极限]
+  热波长 $\lambda_T = h/()2\pi m k_B T^{1/2} \ll \delta\bar r$ (average distance of particle).
+
+  $\Delta E = E_n - E_{n-1} \ll k_BT$ --- 经典极限.
+
+  \[
+    Z_n = \frac1{N!h^3} \int \d\Omega \upe^{-\beta H(q,p)}
+  \]
+\end{definition}
+
+\section{State equation of non-ideal gas}
+
+Model:
+\begin{equation}
+  E = k + V = \sum_{i = 1}^N \frac{\bm p_i^2}{2m} = \sum_{i<j}\phi_{ij}
+\end{equation}
+here, $\phi_{ij} = \phi(\bm r_i - \bm r_j)$ stands for the interactions between molecule.
+\[
+  Z_N = \int (\d\Omega) \upe^{-\beta(k+V)},~
+  (\d\Omega) = \frac{1}{N!h^{3N}}\prod_i\d^3p_i\d^3r_i
+  = \frac{1}{N!\lambda_T^{3N}} Q_N(\beta,V)
+\]
+while $Q_N = \int \d\bm r_1 \cdots \bm r_N \upe^{-\beta\sum_{i<j}\phi_{ij}} = \int (\d\bm r) \prod_{i<j} \upe^{-\beta \phi_{ij}}$.
+
+For ideal gas, $Q_N = V^N$. The interacting force is graphed:
+$r^* \sim 1\text\AA$
+
+\[  
+  f_{ij} = e^{-\beta p_{ij}} - 1
+\]
+\[
+  f(r) =
+  \begin{cases}
+    -1, & r \to 0, (\phi \to \infty)\\
+    0, & r \to r^* (\phi \to 0)
+  \end{cases}
+\]
+\[
+  Q_N = \int (\d\bm r) \prod_{i<j} (1 + f_{ij}) = \int (\bm \d r) \ab(1 + \sum_{i<j}f_{ij} + \sum_{i<j}f_{ij}\sum_{i'<j'}f_{i'j'} + \cdots)
+\]
+Since $\upe^{-\beta\phi(r_0)}/2 \ll 1$,
+\[  
+Q_N = \int (\d \bm r) (1+ \sum_{i<j}f_{ij})
+= V^N + \frac12 N(N-1) V^{N-2} \int \d\bm r_1 \d\bm r_2 f_{12},~
+\bm r_1 - r_2 = \bm r
+\]
+\[
+  \int \d\bm r,\d\bm r_2 f_{12} = \int \d\bm r_1 \int\d\bm r_2 f(|\bm r|) \approx V\int \d r f(r)
+\]
+\[
+  Q_N \approx V^N\ab(1 + f\frac12(N^2 - N))/V \int \d^3\bm r f(r)
+  \approx V^N \ab(1 + \frac12 \frac{N^2}V \int \d\bm r f(r))
+\]
+\[
+  \ln Q_N = N\ln V + \ln\ab(1 + \frac{N^2}{2V} \int\d^3\bm r f(r))
+\]
+The pressure
+\[  
+  p = \frac1\beta \pdv*{}V \ln N_N = \frac1\beta \pdv*{}V\ln Q_N
+    = \frac{Nk_BT}V\ab[1 \underset{B_2/N}{\text{\fbox{$- \frac N{2V^2} \int \d^3r f(\bm r)$}}}]
+\]
+\[
+  \phi(r) = 
+  \begin{cases}
+    \infty, & r < r_0\\
+    -p_0\ab(\frac{r_0}{r})^b, & r \geq r_0
+  \end{cases}
+\]
+\[
+  B_2 = -\frac N2 \int_0^\infty \exp\ab(-\frac{-\phi(r)}{k_BT}-1) r^2 \d r
+  \approx 2\pi N\ab(\frac{r_0^3}{3} - \phi_0\frac{r_0^3}{3k_BT})
+  \equiv N_b - \frac{Na}{k_BT}
+\]
+Substitute $B_2$ into $p$
+\[
+  p = \frac{Nk_BT}{V}\ab(1 + \frac{Nb}{V}) - \frac{N^2a}{V^2} \approx \frac{Nk_BT}{V(1-Nb/V)} - \frac{N^2a}{V^2}
+\]
+Then we arrive at the 范德瓦耳斯 equation
+\begin{equation}
+  \ab(p + \frac{N^2a}{V^2})(V - Nb) = N k_B T
+\end{equation}

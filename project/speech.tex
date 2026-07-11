@@ -1,0 +1,306 @@
+\documentclass[12pt, legalpaper]{article}
+\usepackage[scheme = plain, linespread = 1.4, fontset = lxgw]{ctex}
+\usepackage{amsmath, physics2}
+\usephysicsmodule{ab, ab.braket, op.legacy}
+\usepackage[margin = .8cm, paperheight = 24.28cm, paperwidth = 11.2cm]{geometry}
+\usepackage{multirow}
+\long\def \turnpage#1 {\par\noindent\rule{\dimeval{.5\linewidth-2.5\ccwd}}{.5pt}\hfill
+  {\small \lower.25\ccwd\hbox{\fangsong 翻页(#1\%)}}\hfill
+  \rule{\dimeval{.5\linewidth-2.5\ccwd}}{.5pt}\par}
+\setlength \parindent {0pt}
+
+\begin{document}
+
+各位下午好. 我们组汇报的主题是\textbf{Bose-Hubbard 模型的数值计算与算法优化}.
+我是汇报人余林涛，小组成员还有夏明宇和肖月两位同学.
+我们的研究聚焦强关联量子多体系统的数值模拟，通过设计并对比三种量子蒙特卡洛
+（MCMC）采样算法，实现采样效率的优化. 接下来将按
+\begin{enumerate}
+  \item 模型介绍
+  \item SSE 级数展开
+  \item 数值计算分析
+  \item 模拟结果
+  \item 核心结论
+  \item 仿真方法
+\end{enumerate}
+六个部分讲解.
+
+\turnpage{5}
+
+\section{模型介绍}
+
+\turnpage{7}
+
+Bose-Hubbard 模型是描述无自旋玻色子在周期性晶格上相互作用的基础理论模型，
+广泛应用于超流-莫特绝缘相变、高温超导等领域的研究. 其哈密顿量的完整形式如下
+\begin{equation}
+  \mathcal H = -t \sum_{\braket<i,j>} \hat b_i^\dagger \hat b_j
+      + \frac12 U \sum_i \hat n_i (\hat n_i - 1) - \mu \sum_i \hat n_i.
+\end{equation}
+\turnpage{9}
+其中
+\begin{enumerate}
+  \item 跳跃项推动系统进入超流相（粒子无耗散流动）:
+  玻色子以跃迁振幅 $t$ 在相邻格点间自由移动，趋向于让粒子在晶格上均匀分布.
+  \turnpage{12}
+  \item 在位排斥项推动系统进入莫特绝缘相（粒子被束缚在单个格点，无宏观流动）：
+  描述同一格点上两个玻色子的排斥作用（$n_i = 0$ 或 $1$ 时该项为 $0$，$n_i \geq2$
+  时随粒子数增长）；排斥强度由 $U$ 控制，阻碍粒子在同一格点聚集；
+  当 $U > 9$ 时，排斥作用完全压制跳跃作用，系统进入莫特绝缘相；
+  $U$ 较小时（$U < 3$），跳跃作用主导，系统处于超流相；
+  \turnpage{14}
+  \item 化学势项 $-\mu \sum_i \hat n_i$：描述外部场对玻色子的能量贡献，
+  用于控制系统的平均粒子数密度.
+\end{enumerate}
+
+\turnpage{16}
+
+\section{SSE 级数展开}
+
+\turnpage{19}
+
+由于哈密顿量的非对易性，直接计算量子多体系统的配分函数极其困难.
+随机级数展开（SSE）是解决这一问题的核心方法，其本质是通过泰勒展开将指数算子转化
+为“经典闭合图”的求和，实现量子问题的经典化转化.
+在我们的模型中配分函数的 SSE 展开式：
+\begin{equation}
+  Z = \sum_{m=0}^\infty \frac{\beta^m}{m!}
+      \sum_{\{i_1,\ldots,i_m\}} \sum_{\{b_1,\ldots,b_m\}}
+      \prod_{k=1}^m \braket<i_k|-H_{b_k}|i_{k+1}>.
+\end{equation}
+\turnpage{21}
+为直观展示展开过程，我们以 1D-4 格点，展开阶数为 $m = 3$ 为例：
+这里的四个状态序列需满足“守恒+闭合”条件
+\turnpage{23}
+\begin{enumerate}
+  \item $\ket|i_1> = \ket|2, 1, 1, 0>$ 为初始状态，总粒子数为 4；
+  \item 第二个状态序列 $\ket|i_2> = \ket|1, 2, 1, 0>$：
+  代表格点 $1$ 的 $1$ 个粒子跃迁至格点 $2$，总粒子数仍为 $4$，这就是守恒条件；
+  \item 第三个状态序列 $\ket|i_3> = \ket|1, 2, 1, 0>$：
+  在位排斥算子 $(U, 3)$ 作用于格点 3（粒子数为 1，
+  $\hat n_3(\hat n_3 - 1) = 0$），化学势算子 $(\mu, 4)$ 作用于格点 4
+  （粒子数为 0），均不改变粒子数状态；
+  \item 第四个状态序列 $\ket|i_4> = \ket|2, 1, 1, 0> = \ket|i_1>$，
+  可以看到它回归初始状态，这即是闭合条件.
+\end{enumerate}
+
+通过该实例可见，SSE 的核心价值是将抽象的量子配分函数，转化为
+“算子序列+状态序列+顶点权重”的经典构型集合，
+后续 MCMC 算法的本质就是对这些经典构型进行高效采样，从而计算物理量的统计平均值.
+
+\turnpage{26}
+
+\section{算法设计}
+
+我们的核心目标是通过优化 MCMC 的跃迁矩阵，减少采样过程中的“样本相关性” ---
+用密度积分自相关时间 $\tau_\text{int}(n)$ 量化，也就是说 $\tau_\text{int}(n)$
+越短，样本独立性越强，采样效率越高. 接下来详细介绍三种算法的原理
+
+\turnpage{28}
+
+\subsection{方案 A：热浴更新}
+
+这种方法的核心原理是基于权重比例来进行采样，直接将跃迁概率设定为归一化后的顶点权重，即 $\pi_j = w_j / \sum_{k=1}^4 w_k$
+（4 种散射过程：反弹、直线、跳跃、转向）；这种方法没有拒绝步骤，
+始终按权重接受跃迁，实现起来比较简单，仅需对权重归一化即可.
+
+\turnpage{30}
+
+跃迁矩阵结构
+\[
+  T_A =
+  \begin{bmatrix}
+    \pi_1 & \pi_2 & \pi_3 & \pi_4 \\
+    \pi_2 & \pi_1 & \pi_4 & \pi_3 \\
+    \pi_3 & \pi_4 & \pi_1 & \pi_2 \\
+    \pi_4 & \pi_3 & \pi_2 & \pi_1
+  \end{bmatrix}
+\]
+其中对角元 $T_{A_{ii}}=\pi_i$，
+代表“滞留概率” --- 粒子可停留在当前散射过程，无需转移；
+
+\turnpage{33}
+
+这种方法的缺点在于：
+对角元非零导致严重的“状态滞留”，样本间相关性极强，采样效率低下.
+
+\turnpage{35}
+
+\subsection{方案 B：最小反弹算法}
+
+这种方法是基于线性规划的约束优化，核心目标是最小化反弹过程的总概率，
+即最小化跃迁矩阵的迹 $\Tr(T_B) = \sum_{i=1}^4 T_{B_{ii}}$；
+通过两大核心约束来实
+\begin{enumerate}
+  \item 概率归一化约束：
+  对任意行索引 $i$，$\sum_{j=1}^4 T_{B_{ij}}=1$（确保每一步跃迁的概率和为 1）；
+  \item 细致平衡约束：
+  对任意 $i$, $j$，$w_i T_{B_{ij}} = w_j T_{B_{ji}}$（保证采样的无偏性）；
+\end{enumerate}
+
+\turnpage{37}
+
+通过一个实例验证（权重 $[0.2, 0.4, 0.3, 0.1]$）.
+求解线性规划后得到跃迁矩阵
+\[
+  T_B =
+  \begin{bmatrix}
+    0.1 & 0.5 & 0.3 & 0.1 \\
+    0.5 & 0.1 & 0.1 & 0.3 \\
+    0.3 & 0.1 & 0.1 & 0.5 \\
+    0.1 & 0.3 & 0.5 & 0.1
+  \end{bmatrix}.
+\]
+可见反弹过程的对角元 $T_{B_{11}} = 0.1$，较热浴更新的 $\pi_1 = 0.2$ 显著降低.
+
+\turnpage{40}
+
+有效减少无效转移.
+
+\turnpage{42}
+
+\subsection{方案 C：局部最优算法（Locally Optimal Algorithm）——定理驱动算法}
+
+这种方法基于 Peskun 定理（Peskun’s Ordering Theorem），该定理指出：
+在满足细致平衡的前提下，跃迁矩阵的“非对角元占比越高”，采样效率越高；基于此，
+核心设计规则为仅保留权重最大的散射过程的滞留概率，其余过程禁止滞留
+（$T_{C_{ii}}=0, i \neq \text{max}$）；
+
+\turnpage{44}
+
+跃迁矩阵结构（设 $\pi_1 \leq \pi_2 \leq \pi_3 \leq \pi_4$，
+$\pi_4$ 为最大权重）：
+\[
+  T_C =
+  \begin{bmatrix}
+    0 & \frac{\pi_2}{1-\pi_1} & \frac{\pi_3}{1-\pi_1} &
+    \frac{\pi_4}{1-\pi_1} \\
+    \frac{\pi_1}{1-\pi_2} & 0 & \frac{\pi_3}{1-\pi_2} &
+    \frac{\pi_4}{1-\pi_2} \\
+    \frac{\pi_1}{1-\pi_3} & \frac{\pi_2}{1-\pi_3} & 0 &
+    \frac{\pi_4}{1-\pi_3} \\
+    \frac{\pi_1}{1-\pi_4'} & \frac{\pi_2}{1-\pi_4'} &
+    \frac{\pi_3}{1-\pi_4'} & \pi_4'
+  \end{bmatrix}.
+\]
+其中 $\pi_4' = 1 - \sum_{j \neq 4} T_{C_{4j}}$（仅最大权重过程允许少量滞留），非对角元需重新归一化以满足概率和为 1；
+
+\turnpage{47}
+
+它的优势是：禁止低权重状态滞留，最大化样本独立性，适配低 $U$ 场景
+（权重分布均衡）.
+
+\turnpage{49}
+
+\section{计算结果分析}
+
+我们的核心观测指标为 $\tau_{int}(n)$（自相关时间越小，效率越高），量化结果如下
+
+\turnpage{51}
+
+\subsection{整体趋势}
+
+\turnpage{53}
+
+方案 A 热浴更新的 $\tau_{int}(n)$ 始终是 B、C 的 $2-3$ 倍，
+在所有 $U$ 区间均显著低效；
+
+\turnpage{56}
+
+然后，我们逐渐增大扫描次数的取值.
+我们会发现
+
+\turnpage{58}
+
+随 $U$ 增大，SSE 构型空间的对角权重逐渐主导，方案 C 局部最优算法的
+$\tau_{int}(n)$ 略有上升，方案 B 最小反弹算法保持比较稳定；
+
+扫描次数 $\geq 4000$ 时，三种算法的结果均趋于稳定，无明显波动.
+
+\turnpage{60}
+
+\subsection{不同相区的性能对比}
+
+\turnpage{63}
+
+在这个表格中，
+
+\turnpage{65}
+
+我们可以看到
+\begin{enumerate}
+  \item 在低 $U$（权重均衡，超流相）区间：方案 C 局部最优算法最优，
+  $\tau_{int}(n)$ 仅 $7-9$；
+  \item 在高 $U$ 区间（对角权重主导，近莫特相）：
+  方案 B 最小反弹算法最优，$\tau_{int}(n)$ 仅 $15-20$；
+  \item 传统的方案 A 热浴更新因状态滞留问题，在所有场景下均无优势.
+\end{enumerate}
+
+\turnpage{67}
+
+\section{核心结论与展望}
+
+基于以上详细的模型分析、算法设计与仿真验证，得出三点核心结论
+
+\turnpage{70}
+
+\begin{enumerate}
+  \item 热浴更新算法（A）的低效具有必然性：
+  其跃迁矩阵的非零对角元导致严重的状态滞留，样本相关性强，
+  自相关时间是优化算法的 $2-3$ 倍，不适用于强关联量子多体系统的高效采样；
+  \turnpage{72}
+  \item 算法选择必须依赖模型参数：
+  在低 $U$ 区间（超流相，权重分布均衡）优先选择局部最优算法，
+  在高 $U$ 区间（近莫特相，对角权重主导）优先选择最小反弹算法，
+  通过“场景适配”可以有效提升采样效率；
+  \turnpage{74}
+  \item 高效算法的统一设计原则为：使“非最大权重状态的对角元归零”，
+  剩余自由度需根据权重分布特性进行适配.
+\end{enumerate}
+
+\turnpage{77}
+
+\section{仿真方法}
+
+\turnpage{79}
+
+我们使用了此表列出的关键参数.
+
+\turnpage{81}
+
+并使用 SSE 将量子问题映射到 $(d + 1)$ 维的经典图像.
+
+\turnpage{84}
+
+计算的流程如表所示.
+
+\turnpage{86}
+
+接下来是我们使用的计算程序. 我们使用 \textsf{Python} 进行仿真.
+
+\turnpage{88}
+
+首先初始化类用于存储参数.
+
+\turnpage{91}
+
+然后定义计算顶点权重的函数.
+
+\turnpage{93}
+
+再定义计算转移矩阵的函数.
+
+\turnpage{95}
+
+这里用到了此矩阵的表达式.
+
+\turnpage{98}
+
+最后在运行仿真时，执行马尔可夫链扫描.
+
+\turnpage{100}
+
+以上就是我们小组的全部分享，感谢大家的耐心聆听！
+如有任何疑问或交流需求，欢迎提出.
+
+\end{document}
