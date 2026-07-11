@@ -1,0 +1,299 @@
+% !TeX root = ../main.tex
+
+\section{Homework \#7}
+
+\begin{problem}[林宗涵《热力学与统计物理》 11.1]
+  由热力学涨落几率公式
+  \begin{equation}
+    W = W_{\max} \exp\{-(\Delta T\Delta S - \Delta p\Delta V)/2kT\}.
+    \tag{11.1.16}\label{11.1.16}
+  \end{equation}
+  出发，以 $\Delta p$ 与 $\Delta S$ 为独立变量，证明
+  \[
+    W = W_{\max} \exp\ab\{
+      \frac1{2kT}\ab(\pdv Vp)_s(\Delta p)^2
+    - \frac1{2kC_p}(\Delta S)^2\}.
+  \]
+  进而证明
+  \[
+    \overline{\Delta S\Delta p} = 0,\quad
+    \overline{(\Delta S)^2} = kC_p,\quad
+    \overline{(\Delta p)^2} = -kT\ab(\pdv pV)_s = \frac{kT}{V \kappa_s}.
+  \]
+\end{problem}
+\begin{solution}
+  Expnading $\Delta T$ and $\Delta S$
+  \[
+    \Delta T = \ab(\pdv TS)_p \Delta S + \ab(\pdv Tp)_S \Delta p, \quad
+    \Delta V = \ab(\pdv VS)_p \Delta S + \ab(\pdv Vp)_S \Delta p.
+  \]
+  Substituting them into~\eqref{11.1.16}
+  \[
+    \Delta T \Delta S - \Delta p \Delta V = \ab(\pdv TS)_p (\Delta S)^2
+    + \ab[\ab(\pdv Tp)_S - \ab(\pdv VS)_p] \Delta p \Delta S
+    - \ab(\pdv Vp) (\Delta p)^2.
+  \]
+  Using the Maxwell's relation $\ab(\pdv Tp)_S = \ab(\pdv VS)_p$, the
+  crossing-term vanishes. Then
+  \[
+    \Delta T \Delta S - \Delta p \Delta V
+  = \ab(\pdv TS)_p (\Delta S)^2 - \ab(\pdv Vp) (\Delta p)^2.
+  \]
+  Due to the definition of the heat capacity $C_p = T\ab(\pdv ST)_p$, then
+  $\ab(\pdv TS)_p = \frac T{C_p}$. Hence
+  \[
+    W = W_{\max} \exp\ab\{
+      \frac1{2kT}\ab(\pdv Vp)_s(\Delta p)^2
+    - \frac1{2kC_p}(\Delta S)^2\},
+  \]
+  which is a standard 2D Gaussian's distribution
+  \[
+    P = \frac1{2\pi\sigma_x\sigma_y}
+    \exp\ab[-\frac{x^2}{2\sigma_x^2} - \frac{y^2}{2\sigma_y^2}]
+  \]
+  with the independence between $\Delta p$ and $\Delta S$. Then
+  \[
+    \overline{\Delta S \Delta p} = 0, \quad
+    \overline{(\Delta S)^2} = kC_p, \quad
+    \overline{(\Delta p)^2} = -kT\ab(\pdv pV)_s
+    \xlongequal{\kappa_S = -\frac1V\ab(\pdv Vp)_S} \frac{kT}{V\kappa_S}.
+  \]
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 11.2]
+  由热力学量涨落几率公式
+  \begin{equation}
+    W(\Delta T, \Delta V) = W_{\max} \exp\ab\{
+      -\frac{C_V}{2kT^2} (\Delta T)^2 + \frac1{2kT}\ab(\pdv pV)_T(\Delta V)^2\}.
+    \tag{11.1.19}
+  \end{equation}
+  求得的 $\overline{(\Delta T)^2}$, $\overline{\Delta T\Delta V}$ 及
+  $\overline{(\Delta V)^2}$ 出发，证明
+  \[\begin{array}{l@{~}c@{~}l@{\quad}l@{~}c@{~}l@{\quad}l@{~}c@{~}l}
+    \overline{\Delta T \Delta S} & = & kT, &
+    \overline{\Delta p \Delta V} & = & -kT, &
+    \overline{\Delta S \Delta V} & = & kT\ab(\pdv VT)_p,\\
+    \overline{\Delta T \Delta p} & = & \frac{kT^2}{C_V} \ab(\pdv pT)_V, &
+    \frac{\overline{(\Delta N)^2}}{N^2} & = & \frac{kT}{V} \kappa_\tau.
+  \end{array}\]
+\end{problem}
+\begin{solution}
+  Similarly to the last problem
+  \[
+    \overline{(\Delta T)^2} = \frac{kT^2}{C_V}, \quad
+    \overline{\Delta T\Delta V} = 0,\quad
+    \overline{(\Delta V)^2} = -kT\ab(\pdv Vp)_T.
+  \]
+  \begin{enumext}
+    \item Expanding $\Delta S$
+    \[
+      \Delta S = \ab(\pdv ST)_V \Delta T + \ab(\pdv SV)_T \Delta V
+    = \frac{C_V}{T} \Delta T + \ab(\pdv pT)_V \Delta V.
+    \]
+    Then
+    \[
+      \overline{\Delta T\Delta S}
+    = \frac{C_V}{T} \overline{(\Delta T)^2}
+    + \ab(\pdv pT)_V \overline{\Delta T \Delta V}
+    = \frac{C_V}{T} \frac{kT^2}{C_v} = kT.
+    \]
+    \item Expanding $\Delta p$
+    \[
+      \Delta p = \ab(\pdv pT)_V \Delta T + \ab(\pdv pV)_T \Delta V.
+    \]
+    Then
+    \[
+      \overline{\Delta p \Delta V}
+    = \ab(\pdv pT)_V \overline{\Delta T \Delta V}
+    + \ab(\pdv pV)_T \overline{(\Delta V)^2}
+    = \ab(\pdv pV)_T \ab[-kT\ab(\pdv Vp)_T] = -kT.
+    \]
+    \item Using the expansion of $\Delta S$
+    \[
+      \overline{\Delta S \Delta V}
+    = \frac{C_V}{T} \overline{\Delta T \Delta V}
+    + \ab(\pdv pT)_V \overline{(\Delta V)^2}
+    = \ab(\pdv pT)_V \ab[-kT \ab(\pdv Vp)_T]
+    = -kT \ab[-\ab(\pdv VT)_p] = kT \ab(\pdv VT)_p.
+    \]
+    \item Using the expansion of $\Delta p$
+    \[
+      \overline{\Delta T \Delta p}
+    = \ab(\pdv pT)_V \overline{(\Delta T)^2}
+    + \ab(\pdv pV)_T \overline{\Delta T \Delta V}
+    = \frac{kT^2}{C_V} \ab(\pdv pT)_V
+    \]
+    \item For a system with a fixed volume and temperature, taking $\Delta N$ as
+    a variable, then the distribution
+    \[
+      W \propto \exp\ab\{-\frac1{2kT}\ab(\pdv \mu N)_{T,V}(\Delta N)^2\},
+    \]
+    Then, $\overline{(\Delta N)^2} = kT(\pdv N/\mu)_{T,V}$.
+    Using the relation
+    \[
+      \ab(\pdv\mu N)_{T,V} = \frac V{N^2} \frac1{\kappa_T}
+    \]
+    to obtain
+    \[
+      \overline{(\Delta N)^2} = \frac{kTN^2}{V} \kappa_T, \quad
+      \frac{\overline{(\Delta N)^2}}{N^2} = \frac{kT}{V} \kappa_T.
+    \]
+  \end{enumext}
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 11.3]
+  \S11.2 关于流体的密度涨落关联函数的理论，若采用 \eqref{eq:11.2.15}
+  的近似（也称为平均场近似）
+  \begin{equation}
+    \Delta f = f - \bar f = \frac a2 (n - \bar n)^2 + \frac b2(\nabla n)^2,
+    \tag{11.2.15}\label{eq:11.2.15}
+  \end{equation}
+  试证明密度-密度关联函数 $C(r)$ 及其傅立叶变换 $\tilde C(q)$ 为
+  \[
+    C(r) = \frac{kT}{4\pi b} \frac1r \upe^{-r/\xi} \sim \frac1r \upe^{-r/\xi},
+    \quad
+    \tilde C(q) = \frac{kT}{a + bq^2}.
+  \]
+\end{problem}
+\begin{solution}
+  Denote $\delta n(\bm r) = n(\bm r) - \bar n$.
+  Then, the total fluctuation of the free energy
+  \[
+    \Delta F = \int \d^3\bm r \Delta f
+  = \frac12 \int \d^3 \bm r[a(\delta n)^2 + b(\nabla \delta n)^2].
+  \]
+  Taking the Fourier transformation
+  \[
+    \delta n(\bm r)
+  = \int \frac{\d^3q}{(2\pi)^3} \delta n_{\bm q} \upe^{\iu\bm q \cdot \bm r},
+    \quad
+    \delta n_{\bm q}
+  = \int \d^3\bm r \delta n(\bm r) \upe^{-\iu \bm q \cdot \bm r}.
+  \]
+  In the Fourier space, the total fluctuation of the free energy
+  \[
+    \Delta F = \frac12 \int\frac{\d^3\bm q}{(2\pi)^3} (a + bq^2)
+    |\delta n_{\bm q}|^2.
+  \]
+  Due to the independence of the wavevectors in different modes, and they
+  satisfy Gaussian's distribution, then the variance
+  \[
+    \braket<\delta n_{\bm q} \delta n_{\bm q'}>
+  = (2\pi)^3 \delta^3(\bm q + \bm q') \braket<|\delta n_{\bm q}|^2>.
+  \]
+  Due to the Gaussian's integral
+  \[
+    \braket<|\delta n_{\bm q}|^2> = \frac{kT}{a + bq^2}.
+  \]
+  The Fourier transform of the density-density correlation function is
+  defined as
+  \[
+    \tilde C(q) = \int \d^3 \bm r C(r) \upe^{-\iu\bm q\cdot \bm r},\quad
+    C(r) = \braket<\delta n(\bm r)\delta n(0)>.
+  \]
+  Due to the property of the Fourier transformation
+  \[
+    \braket<\delta n_{\bm q} \delta n_{\bm q'}>
+  = (2\pi)^3 \delta^3(\bm q + \bm q') \tilde C(q)
+  \]
+  By comparing, one can obtain $\tilde C(q) = kT/(a + bq^2)$.
+  Taking Fourier transformation to $\tilde C(q)$
+  \[
+    C(r) = \int \frac{\d^3 \bm q}{(2\pi)^3}
+    \tilde C(q) \upe^{\iu \bm q \cdot \bm r}
+  = \frac{kT}{b} \int \frac{\d^3q}{(2\pi)^3}
+    \frac{\upe^{\iu \bm q \cdot \bm r}}{q^2 + \xi^{-2}},
+  \]
+  where $\xi = \sqrt{b/a}$. Using the Fourier transformation in 3D
+  \[
+    \int \frac{\d^3\bm q}{(2\pi)^3}
+    \frac{\upe^{\iu\bm q \cdot \bm r}}{q^2 + m^2}
+  = \frac1{4\pi r} \upe^{-mr}, \quad m = \frac1\xi.
+  \]
+  Substituting
+  \[
+    C(r) = \frac{kT}{b} \cdot \frac1{4\pi r} \upe^{-r/\xi}
+        \sim \frac1r \upe^{r/\xi}.
+  \]
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 11.4]
+  根据上题所求得的 $C(r)$ 与 $\tilde C(q)$ 的结果，如果认为它们在临界点的临域也成立，
+  证明相应的临界指数 $\nu = \frac12$, $\eta = 0$.
+  \begin{remark}
+    这是从涨落关联函数计算平均场近似下临界指数 $\nu$ 与 $\eta$ 的方法，
+    用类似的办法可以求出铁磁体的自旋密度涨落的关联函数在临界点的临域行为，从而确定临界指数
+    $\nu$ 与 $\eta$.
+  \end{remark}
+\end{problem}
+\begin{solution}
+  In the mean-field approximation, the correlation functions are
+  \[
+    C(r) = \frac{kT}{4\pi b} \frac{1}{r} e^{-r/\xi}, \quad
+    \tilde{C}(q) = \frac{kT}{a + b q^2},
+  \]
+  where the correlation length is $\xi = \sqrt{b/a}$. Near the critical point,
+  the coefficient $a$ goes to zero as $a \propto |T - T_c|$, so
+  \[
+    \xi \propto |T - T_c|^{-1/2}.
+  \]
+  Thus, the critical exponent for the correlation length is $\nu = 1/2$.
+  At the critical point ($T = T_c$), we have $a = 0$, leading to:
+  \[
+    C(r) \propto \frac{1}{r}, \quad \tilde{C}(q) \propto \frac{1}{q^2}.
+  \]
+  Comparing with the standard scaling form of the critical correlation function
+  in three dimensions ($d = 3$)
+  \[
+    C(r) \sim r^{-(d-2+\eta)},
+  \]
+  we get $3 - 2 + \eta = 1 \Rightarrow \eta = 0$. Equivalently, the Fourier
+  transform scales as $\tilde{C}(q) \sim q^{-(2-\eta)}$, which also
+  gives $\eta = 0$.
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 11.5]
+  试由布朗粒子的朗之万方程
+  \begin{equation}
+    m\odv ut = -\alpha u + X(t),
+    \tag{11.3.1}
+  \end{equation}
+  出发，导出布朗粒子位移平方的平均值的下列关系
+  \[
+    \overline{x^2} = 2Dt; \quad D = \frac{kT}{\alpha}.
+  \]
+\end{problem}
+\begin{solution}
+  Using the coordinate, then the ODE becomes
+  \[
+    m\odv[2]xt = -\alpha \odv xt + X(t).
+  \]
+  Multiply by $x$ to both sides and then rearrangge
+  \[
+    \frac m2 \odv[2]{x^2}t - m\ab(\odv xt)^2 = -\frac\alpha 2 \odv{x^2}t + xX.
+  \]
+  Taking the mean value to both sides
+  \[
+    \frac m2 \odv[2]{\overline{x^2}}t - \overline{mu^2}
+  = -\frac\alpha 2 \odv{\overline{x^2}}t + \overline{xX}.
+  \]
+  Since $X(t)$ is independent from $x$,
+  then $\overline{xX} = \overline x \cdot \overline X = 0$.
+  Assume the thermal equilibrium is reached, then using $\overline{mu^2} = kT$.
+  The ODE becomes
+  \[
+    \odv[2]{\overline{x^2}}t + \ab(\frac\alpha m) \odv{\overline{x^2}}t
+  - \frac{2kT}{m} = 0.
+  \]
+  Denote $\tau = (\alpha/m)^{-1}$.
+  Due to the initial state $\overline{x^2} = \odv{\overline{x^2}}t = 0$,
+  then, the solution of this ODE is
+  \[
+    \overline{x^2} = \frac{2kT\tau^2}{m}
+    \ab\{\frac t\tau - (1 - \upe^{-t/\tau})\}.
+  \]
+  If $t \gg \tau$, then the solution becomes
+  \[
+    \overline{x^2} = \frac{2kT\tau}{m}t = 2Dt, \qq{with} D = \frac{kT}{\alpha}.
+  \]
+\end{solution}

@@ -1,0 +1,354 @@
+% !TeX root = ../main.tex
+
+\section{Homework \#6}
+
+\begin{problem}
+  导出熵密度随时间变化满足的方程
+  \begin{equation}
+    \pdv st + \nabla \cdot \bm J_s = 0.
+    \tag{10.3.13}
+  \end{equation}
+\end{problem}
+\begin{solution}
+  Denote $s$ the density of entropy, and $\bm J_s$ the entropy flux density.
+  The total entropy in $V$ is
+  \[
+    S_V(t) = \int_V s(\bm x, t) \d V.
+  \]
+  Due to the conservation of entropy, at the boundary, there exists
+  \[  
+    \odv{S_V}t = -\oint_{\partial V} \bm J_s \cdot \d\bm A.
+  \]
+  Substituting the definition of $S_V$
+  \[
+    \odv*{\int_V s\d V}y = \int_V \pdv st \d V.
+  \]
+  Applying the divergence theorem to the flux term
+  \[
+    \oint_{\partial V} \bm J_s \cdot \d A = \int_V \nabla \cdot \bm J_s \d V.
+  \]
+  Hence, one can obtain
+  \[
+    \int_V \pdv st \d V = -\int_V \nabla \cdot \bm J_s \d V,\quad
+    \int_V \ab(\pdv st + \nabla \cdot \bm J_s) \d V = 0.
+  \]
+  Then, we proved the identity.
+\end{solution}
+
+\begin{problem}\leavevmode
+  \begin{enumext}
+    \item 试由量子情况下费米子满足的细致平衡条件
+    \[
+      f_1f_2(1 - f_1')(1 - f_2') = f_1'f_2'(1 - f_1)(1 - f_2)
+    \]
+    导出费米－狄拉克统计.
+    \item 试由量子情况下玻色子满足的细致平衡条件
+    \[
+      f_1f_2(1 + f_1')(1 + f_2') = f_1'f_2'(1 + f_1)(1 + f_2)
+    \]
+    导出玻色－爱因斯坦统计.
+  \end{enumext}
+\end{problem}
+\begin{solution}
+  Take logarithm to both sides
+  \[
+    \ln f_1 + \ln f_2 + \ln(1 - f_1') + \ln(1 - f_2')
+  = \ln f_1' + \ln f_2' + \ln(1 - f_1) + \ln(1 - f_2)
+  \]
+  Rearrange
+  \[
+    \ln\frac{f_1}{1 - f_1} + \ln\frac{f_2}{1 - f_2}
+  = \ln\frac{f_1'}{1 - f_1'} + \ln\frac{f_2'}{1 - f_2'}
+  \]
+  Then, $\ln\frac{f}{1 - f}$ is invariant after collision.
+  Since the conservation of energy and momentum,
+  $\ln\frac{f}{1 - f}$ should be linear to the energy and chemical potential.
+  Hence
+  \[
+    \ln\frac{f}{1 - f} = \beta(\epsilon - \mu),\quad
+    f = \frac1{\upe^{\beta(\epsilon-\mu)} + 1}
+  \]
+  Similarly to Fermions,
+  \[
+    \ln\frac{f}{1 + f} = \beta(\epsilon - \mu),\quad
+    f = \frac1{\upe^{\beta(\epsilon-\mu)} - 1}
+  \]
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 10.2]
+  按照推导元碰撞数 (10.1.22) 同样考虑, 一个速度为 $\bm v_1$, 质量为 $m_1$
+  的分子在单位时间内与速度处于 $\d^3\bm v_2$ 内, 质量为 $m_2$ 的分子在立体角元
+  $\d\Omega$ 内的碰撞数为
+  \[
+    \d\Theta_{12} = f_2 \d^3\bm v_2 d_{12}^2 g_{12} \cos\theta \d\Omega.
+  \]
+  \begin{enumext}
+    \item 由上式, 证明一个速度为 $\bm v_1$ 的 $m_1$ 分子在单位时间内与 $m_2$
+    分子的碰撞数为
+    \[
+      \Theta_{12} = \iint f_2 \d^3\bm v_2 d_{12}^2 g_{12} \cos\theta \d\Omega
+    = \pi d_{12}^2 \int f_2 g_{12} \d^3 \bm v_2.
+    \]
+    \item $\Theta_{12}$ 与 $m_1$ 分子的速度 $\bm v_1$ 有关, 对 $\bm v_1$ 的平均为
+    \[
+      \bar \Theta_{12} = \frac1{n_1} \int \Theta_{12} f_1 \d^3 \bm v_1.
+    \]
+    $\bar\Theta_{12}$ 代表一个 $m_1$ 分子在单位时间内与 $m_2$ 分子的平均碰撞数,
+    现设气体处于平衡态, 已知
+    \[
+      f_1 = n_1 \ab(\frac{m_1}{2\pi kT})^{3/2} \upe^{-m_1\bm v_1^2/2kT}, \quad
+      f_1 = n_1 \ab(\frac{m_2}{2\pi kT})^{3/2} \upe^{-m_2\bm v_2^2/2kT}.
+    \]
+    于是得
+    \[
+      \bar \Theta_{12} = \pi d_{12}^2
+      \frac{n_2(m_1m_2)^{3/2}}{(2\pi kT)^3}
+      \iint \upe^{-\frac{m_1\bm v_1^2 + m_2\bm v_2^2}{2kT}} g_{12}
+      \d^3\bm v_1 \d^3 \bm v_2.
+    \]
+    以两分子的质心速度 $\bm v_c$ 和相对速度 $\bm v_r$ 为独立变量,
+    $\bm v_c$ 与 $\bm v_r$ 的定义为
+    \[
+      (m_1 + m_2) \bm v_c = m_1 \bm v_1 + m_2 \bm m_2, \quad
+      \bm v_r = \bm v_2 - \bm v_1.
+    \]
+    证明
+    \[
+      m_1\bm v_1^2 + m_2\bm v_2^2
+    = (m_1 + m_2)\bm v_c^2 + \frac{m_1m_2}{m_1 + m_2}\bm v_r^2,\quad
+      \d^3 \bm v_1 \d^3 \bm v_2 = \d^3 \bm v_c \d^3 \bm v_r.
+    \]
+    最后证明
+    \[
+      \bar \Theta_{12} = \ab(1 + \frac{m_1}{m_2})^{1/2} \pi n_2
+      d_{12}^2 \bar v_1, \quad
+      \bar v_1 = \sqrt{\frac{8kT}{\pi m_1}}.
+    \]
+    \item 若气体中只有一种分子, 则上式化为
+    \[
+      \bar \Theta = \sqrt2 \pi nd^2 \bar v.
+    \]
+    $\Theta$ 代表处于平衡态的气体中一个分子在单位时间内的平均碰撞数.
+    试用上式估计在 $\qty 0\degreeCelsius$ 与 $\qty1{atm}$ 下, 一氧分子的平均碰撞数.
+    已知氧分子的 $d = \qty{3.62e-8}\cm$, $k/m = R/m^+$, $m^+ = 32$ 为氧的分子量,
+    $R$ 为气体常数.
+  \end{enumext}
+\end{problem}
+\begin{solution}\leavevmode
+  \begin{enumext}
+    \item Integrate over $\d^3\bm v_2$
+    \begin{multline*}
+      \Theta_{12} = \int \d\Theta_{12}
+    = \int f_2 \d^3\bm v_2 d_{12}^2 g_{12} \cos\theta \d\Omega\\
+    = d_{12}^2 \int f_2 g_{12} \d^3\bm v_2 \int_0^{2\pi} \d\varphi
+      \int_0^{\pi/2} \cos\theta \sin\theta \d\theta
+    = \pi d_{12}^2 \int f_2 g_{12} \d^3 \bm v_2.
+    \end{multline*}
+    \item Due to the relation between the speed of the molecule and the speed
+    for the center of mass and the relative speed
+    \[
+      \bm v_i = \bm v_c - \frac{m_i}{M} \bm v_r
+    \]
+    where $M = m_1 + mn_2$. Then, the identity
+    \[
+      m_2\bm v_1^2 + m_2\bm v_2^2 = M\bm v_c^2 + \mu\bm v_r^2
+    \]
+    is true, $\mu = m_1m_2/(m_1 + m_2)$ denotes the reduced mass.
+    Taking the integral variable transformation, the Jacobian
+    \[  
+      \d^3\bm v_1 \d^2\bm v_2 = |J| \d^3 \bm v_c \d^3 \bm v_r, \quad
+      J = \pdv[fun]{v_{1_x},v_{1_y},v_{1_z},v_{2_x},v_{2_y},v_{2_z}}
+        {v_{c_x},v_{c_y},v_{c_z},v_{r_x},v_{r_y},v_{r_z}}
+      = \ab(\frac{m_1}{M} + \frac{m_2}{M})^3 = 1.
+    \]
+    Then, the integral variable transformation is invariant, i.e.,
+    \[
+      \d^3\bm v_1 \d^2\bm v_2 = \d^3 \bm v_c \d^3 \bm v_r.
+    \]
+    So, the integral can be written as
+    \[
+      \bar \Theta_{12} = \pi d_{12}^2
+      \frac{n_2(m_1m_2)^{3/2}}{(2\pi kT)^3}
+      \iint \upe^{-\frac{m_1\bm v_c^2 + m_2\bm v_r^2}{2kT}} g_{12}
+      \d^3\bm v_c \d^3 \bm v_r.
+    \]
+    Split the 2D integral into a multiplication of two 1D integral, since
+    \begin{gather*}
+      \int \upe^{-M\bm v_c^2/2kT} \d^3 \bm v_c
+    = 4\pi \int_0^\infty \upe^{-Mv_c^2/2kT} v_c^2 \d\bm v_c
+    = \ab(\frac{2\pi kT}{M})^{3/2},\\
+      \int \upe^{-M\bm v_r^2/2kT} \d^3 v_r \bm v_r
+    = 4\pi \int_0^\infty \upe^{-Mv_r^2/2kT} v_r^3 \d\bm v_r
+    = \frac{2\pi(2kT)^2}{\mu^2}.
+    \end{gather*}
+    Substituting them into the integral
+    \[
+      \bar\Theta_{12} = \ab(1 + \frac{m_1}{m_2})^{1/2}
+                        \pi n_2 d_{12}^2 \bar v_1, \quad
+      \bar v_1 = \sqrt{\frac{8kT}{\pi m_1}}.
+    \]
+    \item In this case, $m_1 = m_2 = m$, $d_{12} = d$, $n_2 = n$. Then, the
+    result in part (b) becomes
+    \[
+      \bar\Theta_{12} = 4 nd^2\sqrt{\frac{\pi kT}{m}}
+    \]
+    Denote $m^+ = N_Am$, since $R = N_Ak$, then
+    \[
+      \bar\Theta = 4nd^2 \sqrt{\frac{\pi RT}{m^+}}
+    = \num{2.88e25} \frac{d^2}{m^+}.
+    \]
+    For oxygen, $\bar \Theta = \num{6.67e9}$.
+  \end{enumext}
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 10.3]
+  由细致平衡条件
+  \begin{equation}
+    f_1f_2 = f_1'f_2'
+    \tag{10.2.18}
+  \end{equation}
+  出发, 导出平衡态的分布函数
+  \begin{equation}
+    f = n\ab(\frac{m}{2\pi kT})^{3/2}
+        \exp\ab\{-\frac{m}{2kT}(\bm v - \bm v_0)^2\}.
+    \tag{10.2.25}
+  \end{equation}
+\end{problem}
+\begin{solution}
+  Take the logarithm to the both sides of the equilibrium condition
+  \[
+    \ln f(\bm v_1) + \ln f(\bm v_2) = \ln f(\bm v_1') + \ln f(\bm v_2')
+  \]
+  which indicates the invariences of collision.
+  Since the number of molecules, momentum, and the energy is conserved in
+  collision, then the solution of $\ln f$ can be written as a linear combination
+  of them
+  \[
+    \ln f = \alpha_0 + \bm \alpha \cdot m \bm v + \alpha_4 \frac12 \bm v^2,
+  \]
+  which $\bm \alpha = (\alpha_1, \alpha_2, \alpha_3)$ corresponding to
+  $v_x$, $v_y$, and $v_z$. Then, $f$ can be written as
+  \[
+    f = c_0 \exp\ab\{-c_4 \frac12 m(\bm v - \bm c)^2\},
+  \]
+  The parameters $c_0$, $\bm c = (c_1,c_2,c_3)$, and $c_4$ can be determined by
+  the following conditions
+  \[
+    n = \int f\d^3\bm v, \quad
+    \bm v_0 = \frac1n \int \bm v f\d^3\bm v,\quad
+    \frac32 kT = \frac1n \int \frac m2 (\bm v - \bm v_0)^2 f\d^3\bm v.
+  \]
+  Substituting $f$ into the conditiions, then
+  \[
+    n = c_0\ab(\frac{2\pi}{mc_4})^{3/2}, \quad \bm v_0 = c, \quad
+    c_4 = \frac1{kT}.
+  \]
+  The parameters in $f$ are all obtained. Finally
+  \[
+    f = n\ab(\frac{m}{2\pi kT})^{3/2}
+        \exp\ab\{-\frac{m}{2kT}(\bm v - \bm v_0)^2\}.
+  \]
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 10.4]
+  对满足经典极限条件下的理想气体, 证明平衡态下熵与 $H$ 函数的关系为公式
+  \begin{equation}
+    S = -kH + \text{Constant}.
+    \tag{10.2.34}
+  \end{equation}
+\end{problem}
+\begin{solution}
+  From the last problem, let $\bm v_0 = 0$ for simplification.
+  Then, $f$ becomes the well-known Maxwell distribution
+  \[
+    f = n\ab(\frac m{2\pi kT})^{3/2} \exp\ab\{-\frac{m\bm v^2}{2kT}\}.
+  \]
+  Substituting it into $H$-function
+  \[
+    H = \iint f\ab[\ln n + \frac32 \ln\ab(\frac m{2\pi kT})
+      - \frac1{kT}\frac{m\bm v^2}{2}] \d^3\bm v \d^3\bm r.
+  \]
+  Since $f$ is independent from $\bm r$, then the integral variable $\bm r$ is
+  omitted. Take $n = N/V$, $\int f\d^3\bm v = n$,
+  $\int \frac{m\bm v^2}{2} f\d^3\bm v = \frac32nkT$. Then
+  \[
+    H = N\ab[\ln\frac NV + \frac32 \ln\ab(\frac m{2\pi kT} - \frac32)].
+  \]
+  Comparing with the entropy for single-atom molecule ideal gas
+  \[
+    S = Nk\ab[\ln \frac VN + \frac32 \ln T + \frac52
+        + \frac32\ln\ab(\frac{2\pi mk}{h^2})]
+  \]
+  We can obtain
+  \[
+  S = -kH + Nk\ab[1 + \ln\ab(\frac mh)^3] = -kH + C.
+  \]
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 10.5]
+  对于经典稀薄气体, 定义熵密度 $s(\bm r, t)$, 熵流密度 $\bm J_s$
+  和熵产生率 $\theta$ 如下
+  \begin{gather*}
+    s(\bm r, t) = -k\int f\ln f\d^3\bm v,\\
+    \bm J_s = -k\int \bm v f\ln f\d^3\bm v,\\
+    \theta = -k\int (1 + \ln f) \ab(\pdv ft)_c \d^3\bm v.
+  \end{gather*}
+  试证明
+  \[
+    \pdv st + \nabla \cdot \bm J_s = \theta,
+  \]
+  其中 $\theta \geq 0$.
+\end{problem}
+\begin{solution}
+  Taking the time derivative directly to $s(\bm r, t)$
+  \[
+    \pdv st = -k\int (1 + \ln f) \pdv ft \d^3\bm v
+  \]
+  Substituting the Boltzmann equation to $\pdv ft$. Then
+  \[
+    \pdv st = k \int(1 + \ln f) \ab(\bm v \cdot \pdv f{\bm r}) \d^3\bm v
+  + k\int(1 + \ln f) \ab(\mathcal R \cdot \pdv f{\bm v})\d^3\bm v
+  - k\int(1 + \ln f) \ab(\pdv ft)_c \d^3\bm v.
+  \]
+  The second term on RHS vanishes. Substituting the definition of $\bm J$, then
+  \[
+    \pdv st + \nabla \cdot \bm J_s = \theta.
+  \]
+\end{solution}
+
+\begin{problem}[林宗涵《热力学与统计物理》 10.6]
+  已证明简并气体的细致平衡条件为公式
+  \begin{equation}
+    \frac{f_1}{1 + \eta f_1} \cdot \frac{f_2}{1 + \eta f_2}
+  = \frac{f_1'}{1 + \eta f_1'} \cdot \frac{f_2'}{1 + \eta f_2'}.
+    \tag{10.4.17}
+  \end{equation}
+  其中 $\eta = +1$ 对应于理想玻色气体, $\eta = -1$ 对应于理想费米气体.
+  试由上述细致平衡条件出发, 导出平衡态下的玻色分布与费米分布.
+\end{problem}
+\begin{solution}
+  Take logarithm to both sides
+  \[
+    \ln\frac{f_1}{1 + \eta f_1} + \ln\frac{f_2}{1 + \eta f_2}
+  = \ln\frac{f_1'}{1 + \eta f_1'} + \ln\frac{f_2'}{1 + \eta f_2'}
+  \]
+  Then, $\ln\frac{f}{1 + \eta f}$ is invariant after collision.
+  Since the conservation of energy and momentum,
+  $\ln\frac{f}{1 + \eta f}$ should be a linear combination of
+  \[
+    \ln \frac f{1 + \eta f} = -\alpha - \beta \epsilon(\bm p)
+  + \beta \bm v_0 \cdot \bm p
+  \]
+  Hence
+  \[
+    \ln\frac{f}{1 + \eta f}
+  = \exp[-\alpha - \beta(\epsilon(\bm p) - \bm v_0 \cdot \bm p)]
+  \]
+  One can obtain the Boson/Fermion distribution
+  \[
+    f
+  = \frac1{\exp[\alpha + \beta(\epsilon(\bm p) - \bm v_0 \cdot \bm p)] - \eta},
+  \]
+  where $\eta = +1$ or $\eta = -1$ corresponds to the Boson gas or the
+  Fermion gas.
+\end{solution}

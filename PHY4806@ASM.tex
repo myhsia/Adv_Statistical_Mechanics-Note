@@ -1,0 +1,73 @@
+% Mingyu Xia (夏明宇, Westlake ID: 20251202247) Homework #i
+\documentclass[11pt]{whatsnote}
+
+\coverset{
+  title   = Advanced Statistics Mechanics,
+  author  = \ttfamily \textsc{Mingyu Xia},
+  afill   = PhD @Westlake University,
+  date    = November 2025,
+  extinfo = {\includegraphics[width = .1\paperwidth]{myhsia_seal}},
+  head    = universe.pdf,
+  clogo   = cat.pdf,
+  llogos  = {mouse1.png, mouse2.png,
+             mouse4.png, mouse5.png}
+}
+\usepackage{pdfpages, esint}
+\usepackage[fontset = lxgw, scheme = plain]{ctex}
+
+\begin{document}
+
+\maketitle[yellow!50!violet]
+\frontmatter
+\tableofcontents
+\mainmatter
+
+\include{./context/1_.tex}
+\include{./context/2_.tex}
+\include{./context/3_.tex}
+\include{./context/4_.tex}
+\include{./context/5_.tex}
+\include{./context/6_.tex}
+\include{./context/7_.tex}
+\include{./context/8_.tex}
+
+\appendix
+\include{./context/review.tex}
+\fancyhead[OL, ER]{Mingyu Xia (Westlake ID: 20251202247)}
+\fancyhead[EL]{\sffamily \rightmark}
+\fancyhead[OR]{\fontfamily{lmr}\selectfont<<\texttt
+  {\href{mailto:xiamingyu@westlake.edu.cn}{xiamingyu@westlake.edu.cn}}>>}
+\renewcommand *\thesection{Lecture \#\arabic{section}}
+\makeatletter
+\begingroup
+  \let \@makechapterhead \@gobble
+  \chapter{Problem Set}
+  \endgroup
+\makeatother
+\newweek
+\input{./context/week1.tex}
+\newweek \clearpage
+\input{./context/week2.tex}
+\newweek \clearpage
+\input{./context/week3.tex}
+\newweek \clearpage
+\input{./context/week4.tex}
+\newweek \clearpage
+\input{./context/week5.tex}
+\newweek \clearpage
+\input{./context/week6.tex}
+\newweek \clearpage
+\input{./context/week7.tex}
+\makeatletter
+\begingroup
+  \let \@makechapterhead \@gobble
+  \chapter{Lecturer Yue Yu's Mmanuscript}
+  \endgroup
+\makeatother
+\setcounter{page}{1}
+\makeatletter
+\sidefoot {\inteval{4 * \the \c@page - 3} -- \inteval{4 * \the \c@page}}
+\makeatother
+\includepdf [pages = -] {./media/[0(Note)]_Lecture-ASM}
+
+\end{document}

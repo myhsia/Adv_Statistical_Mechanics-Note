@@ -1,0 +1,241 @@
+% !TeX root = ../main.tex
+
+\chapter{Recitation}
+
+\begin{problem}
+  $N$ 个质量为 $m$ 的自由粒子, 在边长为 $L$ 的正方盒子中,
+  $H = -\frac{\hbar^2}{2m}\nabla^2$，其能量本征值为 $E$ 的本征函数
+  $\psi_E(\bm r)$ 满足周期性边界条件, 求热平衡时正则系统的密度矩阵元
+  $\rho(\bm r, \bm r')$. 证明 $\braket<H> = \frac32 k_BT$.
+\end{problem}
+\begin{solution}
+  In the cubic box, the wave function and energy
+  \[
+    \psi = A\upe^{\iu kx} + B\upe^{-\iu kx}, \quad k = \sqrt{2mE}
+  \]
+  Apply the PBC
+  \[
+    \begin{cases}
+      \psi(0) = \psi(L),  & A + B = A\upe^{\iu kL} + B\upe^{-\iu kL},\\
+      \psi'(0) = \psi'(L),& A - B = A\upe^{\iu kL} - B\upe^{-\iu kL}.
+    \end{cases}
+  \]
+  Then one can obtain $\upe^{\iu kL} = 1$. Then, the wavevector and energy are
+  quantized
+  \[
+    k_n = \frac{2\pi}{L}n, \quad E_n = \frac1{2m}\ab(\frac{2\pi}{L})^2 n^2
+  \]
+\end{solution}
+
+\begin{problem}
+  一维谐振子的哈密顿量为
+  $H = -\frac{\hbar^2}{2m}\pdv*[2]{}q + \frac m2\omega^2q^2$,
+  其本征值和本征函数在量子力学教科书中可以找到. 可以证明:
+  \[
+    \braket<q|\upe^{-\beta H}|q'>
+  = \ab(\frac{m\omega}{2\pi\hbar\sinh(\hbar\omega\beta)})^{\frac12}
+    \exp\ab\{-\frac{m\omega}{4\hbar}
+          \ab[(q + q')^2\tanh\frac{\beta\hbar\omega}{2}
+    ] + (q - q')^2 \coth\frac{\beta\hbar\omega}{2}\}.
+  \]
+  求正则配分函数 $Z = \int_{-\infty}^\infty \braket<q|\upe^{-\beta H}|q>\d q$
+  和正则系综的密度矩阵元 $\rho(q,q')$.
+\end{problem}
+\begin{solution}
+  
+\end{solution}
+
+\begin{problem}
+  对于玻色气体, 平均粒子数为 $\braket<n_i>
+  = \ab[\exp\ab(\frac{\epsilon_i - \mu}{k_BT})]^{-1}$, 利用
+  $\frac{\braket<(\delta N)^2>}{N^2} = \frac{k_BT}{\braket<N^2>}
+  \pdv{\braket<N>}\mu$, 求玻色气体的相对粒子数涨落,
+  说明玻色气体粒子数相对涨落数量级为 $1$.
+\end{problem}
+\begin{solution}
+  
+\end{solution}
+
+\begin{problem}
+  $1$ 维伊辛链, 如果相互作用是短程的, 则没有有限温度相变. 但如相互作用是无限力程的, 即
+  $H = -\frac c2 \sum_{i\neq j} \sigma_i - \sigma_j \mu B\sum_i \sigma_i$,
+  则有有限温度相变.
+  \begin{enumext}
+    \item 证明当 $N \gg 1$, 哈密顿量 $H \to -\frac12 c\sigma^2N^2 - \mu BN\sigma$
+    ($\sigma = \frac{\sum_i\sigma_i}{N}$).
+    \item 用 $2\bar\sigma \sigma$ 代替 $\sigma^2$, 证明配分函数
+    $Z = \sum_{\{\sigma_i\}} \upe^{-\beta H}
+    = [2\cosh(\beta cN\bar\sigma + \mu\beta B)]^N$.
+    \item 求 $\bar M = N\mu\bar\sigma = k_BT \pdv{\ln Z}B$, 证明 $\bar\sigma$
+    满足自洽方程 $\bar\sigma = \tanh \beta(\mu B + cN\bar\sigma)$.
+    \item 当 $B \to 0$, $cN$ 有限, 求 $\bar\sigma$ 相变温度 $T_c$.
+  \end{enumext}
+\end{problem}
+\begin{solution}
+  
+\end{solution}
+
+\begin{problem}
+  对简化的 Lennard-Jones 势 $u(r) =
+  \begin{cases}
+                      \infty, & r < r_0,\\
+    -u_0\ab(\frac{r_0}{r})^6, & r \geq r_0.
+  \end{cases}$. 第二位力系数 $a_2 = -b_2 = \frac{2\pi}{\lambda^3}
+  \int_0^\infty (1 - \upe^{-u(r)/k_BT})r^2 \d r$, 其中
+  $\lambda = \frac{h}{(2\pi mk_BT)^{1/2}}$ 是气体分子的平均热波长. 计算当
+  $\frac{u_0}{k_BT} \ll 1$ 时的 $a_2$.
+\end{problem}
+\begin{solution}
+  
+\end{solution}
+
+\begin{problem}
+  非理想气体状态方程的位力展开式是 $\frac{pv}{k_BT}
+  = \sum_{l=1}^\infty a_l\ab(\frac{\lambda^3}{v})$, 其中 $v = V/N$,
+  $a_1 = 1$. 利用上题结果,
+  \begin{enumext}
+    \item 证明近似到第二位力系数的状态方程是 $p = \frac{k_BT}{v}\ab\{
+      1 + \frac{2\pi r_0^3}{3v}\ab(1 - \frac{u_0}{k_BT})\}$.
+    \item 利用 $\frac{u_0}{k_BT} \ll 1$ 条件, 证明状态方程可改写为
+    $\ab(p + \frac av)(v - b) = k_BT$ 形式, 即 van der Waals 方程.
+  \end{enumext}
+\end{problem}
+\begin{solution}
+  
+\end{solution}
+
+\begin{problem}
+  计算 van der Waals 气体的临界指数.
+\end{problem}
+\begin{solution}
+  
+\end{solution}
+
+\begin{problem}
+  用朗道二级相变理论计算顺磁－铁磁相变的临界指数.
+\end{problem}
+\begin{solution}
+  
+\end{solution}
+
+\begin{problem}
+  超流液氦\ce{4He}II 的基态是超流成分, 低能元激发可以看成理想气体.
+  若 $\bm$ 和 $\epsilon(\bm p)$ 是元激发的动量和能量, $n(\bm p)$ 是元激发数,
+  则系统总能量和总动量是
+  \[
+    E = E_0 + \sum_p n(\bm p) \epsilon(\bm p); \quad
+    \bm P = \sum_p n(\bm p) \bm p.
+  \]
+  在低温小动量时, 元激发是声子, $\epsilon(\bm p) = u_1p$;
+  在稍高温度, $\epsilon(\bm p) = \Delta + \frac{(p - p_0)^2}{2m^*}$,
+  元激发称为旋子. 分别计算声子部分和旋子部分的自由能, 内能, 熵和热容量 $C_V$.
+  计算平均总声子数和总旋子数 (假设旋子能量 $\gg k_BT$).
+\end{problem}
+\begin{solution}
+  
+\end{solution}
+
+\begin{problem}
+  从几率分布来说明微正则系综, 正则系综和巨正则系综的等价性.
+\end{problem}
+\begin{solution}
+  
+\end{solution}
+
+\begin{problem}
+  考虑 $i = 1$, $\ldots\,$,~$N$ 个自旋 $\sigma_i$. 与伊辛模型相反,
+  $\sigma_i$ 可以在 $(-\infty, \infty)$ 连续取值, 满足约束 $\sum_i \sigma_i^2 = N$.
+  这个模型称为球模型. 如果用 $\braket<\sum_i \sigma_i^2> = N$ 代替严格的约束,
+  则称为平均球模型 (mean spherical model), 系统的哈密顿量是
+  \[
+    H = -J\sum_{\braket<ij>} \sigma_i \sigma_j
+  - \mu B \sum_i \sigma_i + \lambda \sum_i \sigma_i^2,
+  \]
+  其中 $\lambda$ 成为球场, 由 $\braket<\pdv H/\lambda> = N$ 决定.
+  写出平均球模型的配分函数并写出由配分函数表示的约束方程.
+\end{problem}
+\begin{solution}
+  
+\end{solution}
+
+\begin{problem}
+  在平均球模型中, 考虑 $d$ 维立方格子, 则可以求出配分函数
+  \[
+    Z(K = \beta J, h = \beta\mu B, \beta \lambda)
+  = \prod_{\bm k} \ab[\frac\pi{\beta(\lambda - E_k)}]^{1/2}
+    \upe^{\frac{Nh^2}{4\beta(\lambda-E_0)}},
+  \]
+  其中
+  \[
+    E_k = J\sum_{j=1}^N \cos(k_ja), \quad
+    k_j = \frac{2\pi n_j}{L_j}, \quad
+    n_j = 0,\ N_j - 1,\quad
+    N_j = \frac{L_j}{a}, \quad N = \sum_j N_j.
+  \]
+  \begin{enumext}
+    \item 计算自由能 $F_\lambda$.
+    \item 导出 $\lambda$ 满足的方程.
+    \item 证明 $\braket<M> = \braket*<-\pdv HB>
+    = k_BT\ab(\pdv*FB)_T = \frac{N\mu^2B}{2(\lambda - E_0)}$.
+    \item 计算零场熵 $S_0 = -\ab(\pdv FT)_{B=0}$ 和相应的比热 $c_0 = T\pdv{S_0}T$.
+  \end{enumext}
+\end{problem}
+\begin{solution}
+  
+\end{solution}
+
+\begin{problem}
+  上题中 $\braket<M>$ 在 $\lambda = E_0$ 处奇异, $\lambda_c = E_0 = Jd$
+  是相变临界点. 对 $d = 1$, 可以证明重整化群方程是 $K_1' = \frac{K_1^2}{2\Lambda}$,
+  $K_2' = K_2\ab(1 + \frac{K_1}{\Lambda})$, 其中 $K_1 = \frac{J}{k_BT}$,
+  $K_2 = \frac{\mu B}{k_BT}$, $\Lambda = \lambda/k_BT$.
+  \begin{enumext}
+    \item 证明 $T = 0$ 是固定点.
+    \item 在固定点, $K_1 = \lambda$.
+    \item 在固定点附近, 证明重整化群方程退化为 $K_1' \approx \frac{K_1}{2}$,
+    $K_2' \approx 2K_2$, $\Lambda' \approx \frac\Lambda2$.
+    \item 根据退化的重整化群方程, 确定临界指数 $\nu$, $\alpha$, $\beta$, $\gamma$,
+    $\delta$, $\eta$.
+  \end{enumext}
+\end{problem}
+\begin{solution}
+  
+\end{solution}
+
+\begin{problem}
+  由涨落很小时的准热力学基本公式证明压强涨落 $\Delta\rho$ 和熵涨落 $\Delta S$
+  的几率为
+  \[
+    W(\Delta\rho, \Delta S) \propto \exp\ab[
+      \frac1{2k_BT} \ab(\pdv Vp)_S (\Delta p)^2 - \frac1{2k_BC_p}(\Delta S)^2].
+  \]
+  进一步证明: $\braket<\Delta p\Delta S> = 0$,
+  $\braket<(\Delta S)^2> = k_BC_p$,
+  $\braket<(\Delta p)^2> = -k_BT \ab(\pdv Vp)_S = \frac{k_BT}{V\kappa_S}$.
+  (提示: 取 $p$, $S$ 独立变量)
+\end{problem}
+\begin{solution}
+  
+\end{solution}
+
+\begin{problem}
+  证明 $\braket<\Delta T \Delta S> = k_BT$.
+\end{problem}
+\begin{solution}
+  Due to the expansion
+  \[
+    \Delta T = \ab(\pdv TS)_p \Delta S + \ab(\pdv Tp)_s \Delta p
+  \]
+  Then, substitute it into the braket
+  \[
+    \braket<\Delta T \Delta S>
+  = \ab(\pdv TS)_p \braket<(\Delta S)^2>
+  + \ab(\pdv Tp)_s \braket<\Delta p \Delta S>
+  \]
+  Due to the expansion, $\Delta p$ and $\Delta S$ are independent, so the
+  last term is zero. From the last question
+  \[
+    \braket<\Delta T \Delta S> = \ab(\pdv TS)_p \braket<(\Delta S)^2>
+  = k_BC_p \ab(\pdv TS)_p \xlongequal{C = T\pdv S/T} k_BT.
+  \]
+\end{solution}

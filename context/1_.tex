@@ -1,0 +1,218 @@
+\chapter{Review: Basic Concepts of Thermodynamics}
+
+\section{Definitions}
+
+\begin{definition}[Equilibrium State]
+  在没有外界影响的条件下，物体部分的长时间不发生变化的状态.
+\end{definition}
+\begin{definition}[热平衡定律]
+  A 与 B 平衡，B 与 C 平衡，则 A 与 C 平衡.
+\end{definition}
+\begin{definition}[Temperature]
+  衡量物体间是否热平衡的物理量称为温度，一切互为热平衡的物体温度相等.
+\end{definition}
+\begin{definition}[温标]
+  确定温度具体数值的规则叫温标
+\end{definition}
+\begin{definition}[物态方程]
+  \begin{description}
+    \item[几何变量] $V$, $A$, $L$
+    \item[力学变量] $p$, $\sigma$, $F$
+    \item[电磁变量] $\bm E$, $\bm p$, $\bm H$, $\bm M$
+    \item[化学变量] $\mu$
+  \end{description}
+\end{definition}
+\begin{equation}
+  T = f(p, V, ...)
+\end{equation}
+\begin{definition}[内能]
+  绝热过程（没有热量/能量交换的过程）中外界对物体做功只与初态和末态有关，
+  初态和终态的内能差 $U_2 - U1 = W_a \qq{外界对物体的绝热功}$
+\end{definition}
+
+\begin{definition}[热力学第一定律]
+  推广到非绝热过程，系统从外界吸热，$Q = U_2 - U_1 - W_0$（能量守恒）.
+\end{definition}
+
+\begin{definition}[热容]
+  \begin{equation}
+    C_y = \odv{Q_y}T, \qq{$y$ 是一个不变的量}
+  \end{equation}
+  如果 $y = V$，称为定容；$y = p$，称为定压.
+
+  比热 $C/V$
+\end{definition}
+
+\begin{definition}
+  内能是态函数，$H = U + pV$，称为焓
+  
+  绝热过程中，$\Delta H = W_a$.
+
+  等压过程中，$p$ 固定 $\Delta H = Q_p$.
+
+  Entropy: 对可逆过程，态函数
+  \begin{equation}
+    \Delta S = S - S_0 = \int_\text{Initial State}^\text{Final State} \frac{\d Q}{T}
+  \end{equation}
+\end{definition}
+
+\begin{definition}[热力学第二定律]
+  \begin{equation}
+    \Delta S \geq \int_{(i)}^{(f)} \frac{\d Q}T
+  \end{equation}
+\end{definition}
+
+\begin{definition}[热力学基本方程]
+  \begin{equation}
+    \d U = T\d S = \sum_i F_n \d y_i
+    p-V-T: \d U = T\d S - p\d V
+  \end{equation}
+  自由能：$F =  U - TS$
+  $\d F = \d Y - \d(TS)$, 
+  $\d F = -S\d T - p\d N$
+\end{definition}
+
+\begin{definition}[G.bbs 自由能: $G = F + pV$]
+  \begin{equation}
+    \d G = -S\d T + V\d p
+  \end{equation}
+  means 等温等压过程中，$G$ 又不增加.
+\end{definition}
+
+\section{均匀系（单相系）的平衡}
+
+均匀系 $p-V-T$:
+\begin{equation}
+  \d U = T\d S - p\d V ~ (S,V)
+\end{equation}
+\begin{framed}
+  \begin{equation}
+    \d f = \ab(\pdv fx)_y\d x + \ab(\pdv fy)_x \d y
+  \end{equation}
+\end{framed}
+\begin{equation}
+  \ab(\pdv TV)_S = -\ab(PS)_V
+\end{equation}
+同理，对于焓
+\begin{equation}
+  \d H = T\d S + V\d P ~ (S,P)
+\end{equation}
+\begin{framed}
+  \begin{equation}
+    \ab(\pdv TP)_S = \ab(\pdv VS)_P
+  \end{equation}
+\end{framed}
+\begin{gather}
+  \d F = -S\d T - p\d V\\
+  \d G = -S\d T + V\d P
+\end{gather}
+
+\begin{definition}[可测量热力学量]
+  \begin{enumerate}
+    \item $p$, $V$, $\ldots\,$,~$T$.
+    \item 响应函数：压缩系数，膨胀系数，...
+  \end{enumerate}
+\end{definition}
+
+\section{单元系的相变热力学}
+\begin{itemize}
+  \item 单相系 $\in$ 单元系
+  \item 相变：整个单详细的性质发生了变化，从一个平衡态到另一个平衡态
+  \item 系统处于某一个相中，就是系统处于热平衡，判据 $S = S_{\max} \Leftrightarrow$ 孤立系处于平衡态. $\delta S = \delta^2 S = 0$, $\delta U = \delta V = \delta N = 0$.
+  \item $\delta S = 0$, $\delta^2S < 0$.
+  \begin{itemize}
+    \item $\delta^3 S = 0$ 是稳定的必要条件
+    \item $\delta^4 S < 0 \to$ critical state
+  \end{itemize}
+\end{itemize}
+
+\begin{enumerate}
+  \item 自由能判据：$T$, $V$, $N$ 不变，$F = F_{\min}$
+  \item Gibbs 自由能判据：$T$, $P$, $N$ are constants, $G = G_{\min}$.
+\end{enumerate}
+
+\begin{itemize}
+  \item If the number of particles is changeable, then
+  \begin{equation}
+    \d U = T\d S - p\d V + (u + T_s + pV)\d N
+  \end{equation}
+  Here, $G/N = \mu$ is chemical potential.
+  \item $\mu\d N$
+  \begin{align}
+    \mu & = \ab(\pdv UN)_{S,V} = \ab(\pdv HN)_{S,P} = \ab(\pdv FN)_{T,V} = \ab(\pdv GN_{T,P})\\
+    \d \mu = -S\d T + \sigma \d P
+  \end{align}
+  \item $\Psi = F - \mu N = U - T_s - \mu N = F - G$ is called the giant potential (巨势).
+\end{itemize}
+
+由平衡判据，可以得到平衡条件.
+
+如熵极大 $T_1 = T_2$（热平衡）, $P_1 = P_2$（力学平衡）, $\mu_1 = \mu_2$（化学平衡）.
+
+总粒子数不守恒 $\delta F = 0$, $P_1 = P_2$, $\mu_1 = \mu_2 = 0$.
+
+由平衡判据，可以得到稳定条件
+
+E.g.: 自由能极小
+\[C_v > 0,~ K_T = \frac1V\ab(\pdv PV)_T > 0\]
+
+\begin{itemize}
+  \item Due to equilibrium conditions, we can obtain the \emph{phase diagram}.
+  
+  两相平衡，$\mu^1 = \mu^2$, $T_1 = T_2 = T$, $P_1 = P_2 = P$.
+  \[\mu^1(T,P) = \mu^2(T,P), ~ T, P\text{平面上}\]
+  
+  Three-phase equilibrium: $\mu_1 = \mu_2 = \mu_3$.
+\end{itemize}
+
+\section{热力学第三定律}
+
+\begin{definition}
+  多元系的复相平衡和化学平衡
+  （$T$, $P$, $N$, $\ldots\,$,~$N_k$） $\{N_i\}$ $\mu\d N \to \sum_i\mu_i \d N_i$
+  $\mu_1 = \ab(\pdv\xi{N_i})_{T,P,\{N_{j\neq i}\}}$
+
+  \[\int \d T - V\d q + \sum_i N_i \d \mu_i = 0\]
+  $k + 1$ 是独立的.
+\end{definition}
+
+发生化学反应时，
+\[\sum_{i=1}^k \nu_iA_i = 0\]
+如
+\[
+  \begin{matrix}
+    \ce{CO} & + & \frac12\ce{O2} & = & \ce{CO2}\\
+    A_2 & & A_3 & & A_1\\
+    \nu_2 = -1 & & \nu_3 = -\frac12 & & \nu_1 = 1
+  \end{matrix}
+\]
+反应平衡条件
+\begin{equation}
+  \sum_i \nu_i\mu_i = 0
+\end{equation}
+
+一些经验关系
+\begin{itemize}
+  \item 等温等压条件下，反应向放热方向进行， $\Delta H < 0$.
+  \item 等温等压化学反应，向着 $\Delta G$ 减小方向进行.
+  \[\Delta G = \Delta H - TS \Rightarrow \lim_{T\to 0}(\Delta S)_T \to 0\]
+  称为 Nernest Theorem.
+\end{itemize}
+
+\begin{definition}[热力学第三定律]
+  绝对熵 $\lim_{T\to0} S = 0$：不可能通过有限步骤使物体冷却到绝对零度.
+\end{definition}
+
+\section{Linear Nonequilibrium Thermodynamics}
+
+\begin{itemize}
+  \item 能量守恒方程 -> 推广的热力学第一定律（每一小块质心运动考虑进去）.
+  \item 对小块，熵的微分方程成立.
+  \item 第二定律：$\theta = \fdv St$ 表示小块熵产生率.
+  \[\odv St = -\nabla \cdot \bm J_s + \theta. \text{$\bm J_s$ 为熵流密度}\]
+  $\bm J_s = \frac{\bm J_q}T$, $\bm J_q$ 为热流，$\theta = \frac K{T^2}(\nabla T)^2 > 0$. $K$ 为热导率.
+  \item $\pdv nt + \nabla \bm{J_n} = 0$
+  \item 输运过程
+\end{itemize}
+Fourier: $\bm J_q = -K\nabla T$
+Fick: $\bm J_n = -D_n\nabla T$, $\bm J_e = \sigma \bm E = -\sigma\nabla \phi$

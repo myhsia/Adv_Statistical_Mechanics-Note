@@ -1,0 +1,310 @@
+\chapter{Quantum Statistics}
+
+\begin{itemize}
+  \item For dimension $d = 3$: Quantum gas could be either boson or fermion
+  \item For dimension $d = 2$: Quantum gas could be either boson, or fermion, or anyon.
+  \item For dimension $d = 1$: The statistic properties are related to interactions.
+\end{itemize}
+
+\section{Bose and Fermi Statistics of free particles under GRSC}
+
+The Giant Regular System Comprehensive is
+\begin{equation}
+  Z_G = \sum_{N=0}^\infty \sum_{s~\text{$N$ is fixed}}
+        \upe^{-\alpha N-\beta E_s}
+\end{equation}
+Combine $E_{N_{n_1}} = E_{N_{n_2}} = \ldots = E_N$ together and
+substitute them into $Z_G$
+\[
+  Z_g = \sum_{N=0}^\infty \sum_{E_N} \sum_{s(E_{N_s}=E_N)}
+    \upe^{-\alpha N-\beta E_{N_s}}
+\]
+For free particles
+\[
+  E_N = \sum_\lambda a_\lambda \epsilon_\lambda, \qq{and}
+  N = \sum_\lambda a_\lambda
+\]
+$\epsilon_\lambda$ is the energy of single particle,
+$a_\lambda$ is the occupation number of $\lambda$ energy level,
+and $\{a_\lambda\}$ is a distribution of the number of particles
+after a given $\lambda$.
+Now, we can sum in partition
+\[
+  Z_a = \sum_{N=0}^\infty \sum_{E_N}
+  \sum_{\{a_\lambda|\sum_\lambda a\lambda \epsilon_\lambda = E_N\}}
+  W(\{a_\lambda\})
+  \upe^{-\sum_\lambda (\alpha+\beta\epsilon_\lambda)a_\lambda}
+= \sum_{\{a_\lambda\}} W(\{a_\lambda\})
+  \upe^{-\sum_\lambda (\alpha+\beta\epsilon_\lambda)a_\lambda}
+\]
+Here, $\{a_\lambda\}$ represent various energy level and particle numbers;
+$W$ is the micro state number of distributing $\{a_\lambda\}$. Hence
+\[
+  Z_a = \sum_{\{a_\lambda\}} \prod_\lambda W_\lambda
+  \upe^{-\alpha a_\lambda -\beta a_\lambda \epsilon_\lambda}
+= \prod_\lambda \ab(\sum_{a_\lambda}) W_\lambda
+  \upe^{-\alpha a_\lambda-\beta a_\lambda\epsilon_\lambda}
+\]
+For Fermion, a state can only contain one particle
+\[
+  W_\lambda = \frac{g_\lambda!}{a_\lambda!(g_\lambda-a_\lambda)},
+\]
+here, $g_\lambda$ is the degeneracy number.
+For Boson,
+\[
+  W_\lambda = \frac{(g_\lambda + a_{\lambda-1})!}{a_\lambda!(g_\lambda - 1)!}
+\]
+Substitute $W$ respectively
+\begin{gather}
+  Z_\lambda^{(F)} = \sum_{a_\lambda=0}^\infty
+  \frac{g_\lambda!}{a_\lambda!(g_\lambda - 1)!}
+  \upe^{-(\alpha+\beta\epsilon_\lambda)a_\lambda}
+= (1 + \upe^{-\alpha - \beta\epsilon_\lambda})^{-g_\lambda}\\
+  Z_\lambda^{(B)} = \sum_{a_\lambda=0}^\infty
+  \frac{(g_\lambda + a_\lambda - 1)!}{a_\lambda!(g_\lambda - 1)!}
+  \upe^{-(\alpha+\beta\epsilon_\lambda)a_\lambda}
+= (1 - \upe^{-\alpha - \beta\epsilon_\lambda})^{-g_\lambda}
+\end{gather}
+Combine $Z_\lambda^{(F)}$ and $Z_\lambda^{(B)}$ together,
+\[
+  Z_G = \prod_\lambda Z_\lambda =
+  \prod_\lambda (1 \pm \upe^{-\alpha-\beta\epsilon_\lambda})^{\pm g_\lambda}
+\]
+\[
+  \ln Z_G = \pm \sum_\lambda g_\lambda
+  \ln(1 \pm \upe^{-\alpha-\beta\epsilon_\lambda})
+\]
+Now, calculating the average distribution
+(assume that $\xi$ is a given energy level)
+\begin{align*}
+  \bar a_\xi & = \sum_N \sum_n a_\xi \rho_{N\xi}
+= \frac1{Z_G} \sum_{G_\xi} a_\xi W_\xi \upe^{-(\alpha+\beta\epsilon_\xi)a_\xi}
+= \frac1{Z_\xi} \sum_{a_\xi} a_\xi W_\xi \upe^{-(\alpha+\beta\epsilon_\xi)a_\xi}\\
+& = -\frac1{Z_\xi} \pdv*{}\alpha Z_\xi = -\pdv*{}\alpha \ln Z_\xi
+  = -\pdv*{}\alpha(\pm g_\xi \ln(1 \pm \upe^{-\alpha-\beta\epsilon_\xi}))
+= \frac{g_3}{\upe^{\beta(\epsilon_\xi-\mu) \pm 1}}
+\end{align*}
+
+\section{The Symmetry of Quantum Statistic \& Wave Function}
+
+For example, a wave function contains $N$-particle
+\[
+  \psi(\bm r_1,\cdots,\bm r_N)
+\]
+If $\bm r_i \leftrightarrow \bm r_j$, then
+\[
+  |\psi(\cdots,\bm r_i,\cdots,\bm r_j,\cdots)|^2 =
+  |\psi(\cdots,\bm r_j,\cdots,\bm r_i,\cdots)|^2
+\]
+then
+\[
+  \psi(\bm r_2,\bm r_1,\cdots) =
+  \upe^{\iu \alpha_{12}} \psi(\bm r_1,\bm r_2,\cdots)
+\]
+For Fermion, due to paul's principle, $\psi(\bm r_1,\bm r_1,\bm r_3) = 0$.
+\[
+  \lim_{\bm r_2\to\bm r_1} \psi(\bm r_1,\bm r_2,\bm r_3,\cdots) = 0
+\]
+and $\psi(\bm r_1,\bm r_2,\cdots) = -\psi(\bm r_2,\bm r_1,\cdots)$.
+Since $\upe^{i\pi} = -1$, then $\alpha_{12} = \pi \pm 2n\pi$.
+
+For Boson,
+\[
+  \lim_{\bm r_1 \to \bm r_2} \psi(\bm r_1, \bm r_2, \cdots)
+= \lim_{\bm r2 \to \bm r_1} \psi(\bm r_2, \bm r_1, \cdots)
+= \psi(\bm r_1,\bm r_1,\cdots) \neq 0
+\]
+then we have $\alpha_{12} = \pm 2n\pi$.
+
+In 3D space, rotate the particle
+$\bm r_2$ rotate around $\bm r_1$ has no topo barrier.
+$\upe^{\iu \phi} = \upe^{\iu 2\pi n}$. If n is $odd$, then it's Fermion; or it is Boson.
+
+In the space's dimension greater or equal than $3$, only exist Bose or Fermi statistic.
+
+\section{Anyon (任意子), Braid Group (辨子群)}
+
+$\tau \in (0,\beta)$, then 
+\[
+  \rho(x,x';t) = \int_{(x)}^{(x')} \D x
+  \upe^{-\iu \int_0^\infty \d t \mathcal L}
+\]
+where $\D$ means integral by all the paths.
+
+In 3D space, path 1 is equivalent to path 2, since it could transform between two paths without break by the propagator; but when the paths are limited with  in 2D space, it could not transform from path 1 to path 2 continuously. Now,
+\[
+  \D x \to \sum_\alpha \varphi_\alpha \D x_\alpha
+\]
+where $\alpha$ is used to label the 有可相互连续互变的等价 in 2D space..
+Since the integral is not related to the length of the path, $\varphi_\alpha$ is a phase factor $\upe^{\iu\theta}$, in which $|\varphi_\alpha| = 1$.
+
+If there are $N$ particles in a 2D space, that is
+\[
+  R^{2N} = \{\bm r_1, \cdots, \bm r_N\} = M_N \text{(多连通)}
+\]
+and there many paths that form different 等价类 $\{\alpha\}$.
+
+For N particles, the process of braiding form group. $B_M(\mathbb R^2)$: braid group, for example (2D) [!Figure]
+\begin{enumext}[label = (\alph*), columns = 3]
+  \item $x_i x_{i+1} = \sigma_i$
+  \item $\sigma_i \sigma_{i+1} \sigma_i = \sigma_{i+1} \sigma_i \sigma_{i+1}$.
+  \item $x_{i+1} x_i = \sigma_i^{-1}$.
+\end{enumext}
+then, $\sigma_i \sigma_i^{-1} = 1$.
+and $\sigma_i \sigma_k = \sigma_k \sigma_i$, where $k \neq i \pm 1$.
+also 3D. [!Figure]
+(1) -- (3) are the relation that a braid group needs to satisfy.
+
+Non-abelian group.
+
+The expression of Braid group:
+\[
+  \varphi_\theta(\sigma_i) = \upe^{-\iu\theta}, \quad (0 \leq \theta < 2\pi)
+\]
+\begin{enumext}[label = (\alph*)]
+  \item $\theta = 0$, identity rep \textrightarrow Boson
+  \item $\theta = \pi$, $Z_L$ rep \textrightarrow Fermion
+  \item $\theta = \text{rational}$ \textrightarrow Fractional statistics Anyon.
+\end{enumext}
+Exchange: $r_i r_{i+1}$, rotate: $r_i r_{i+1} r_i$, then move $r_{i+1} r_i$.
+That is
+\begin{equation}
+  \varphi_\theta (\sigma_i^{\pm1}) = \upe^{\mp\iu\theta} = \upe^{-\iu\frac\theta\pi (\pm\pi)}
+= \exp\ab[-\iu \frac\theta\pi \sum_{l<j} \Delta\phi_{lj}]
+\end{equation}
+where, only $\Delta\phi_{i,i+1} = \pm\pi$, and $\Delta\phi_{lj} = 0$.
+
+For normal $\alpha$,
+\begin{equation}
+  \varphi_\theta(\alpha)
+= \exp\ab(-\iu\frac\theta\pi \int \d t \odv*{\sum_{i<j} \phi_{ij}}t)
+\end{equation}
+(? extra factor $\sum_\alpha \varphi_\alpha \D \mathcal L$)
+For the original propagator,
+\[
+  K(r't';rt) = \int \D r \exp\ab\{\iu \int_t^{t'} \d t \ab(\mathcal L - \frac\theta\pi \odv*{\sum_{i<j} \phi_{ij}}t)\}
+\]
+then
+\begin{equation}
+  \psi(r't') = \int \D r K^{(0)} (r't',rt) \psi(r,t)
+\end{equation}
+Now, define
+\begin{equation}
+  \tilde\psi(rt) = \exp\ab\{-\iu \frac\theta\pi \int_r^{r^0 \d\ab(\sum_{i<j} \phi_{ij})}\} \psi(r,t)
+\end{equation}
+where $r^0$ is some ref point.
+After considering braiding
+\begin{gather}
+  \tilde\psi(r't') = \int \D rK(r't',rt) \tilde\psi(rt)\\
+  \tilde\psi(r,t)  = \prod_{i<j} \frac{(z_i - z_j)^{\theta/\pi}}{|z_i - z_j|^{\theta/\pi}} \psi(r,t)
+= \prod_{i<j} (z_i - z_j)^{\theta/\pi} f(\theta,t)
+\end{gather}
+where $f(\theta)$ is the exchange pair.
+If the two particles exchanged, then it will lead to a factor
+\[
+  (-1)^{\theta/\pi} = \upe^{\iu \frac\theta\pi \pi} = \upe^{\iu\theta}
+\]
+that is a phase of $\exp\ab(\iu\frac\theta\pi \arg(z_i - z_j))$.
+
+\subsection{Non-Abelian Statistics}
+
+If the wave function is $s$ order degeneracy at a certain energy level, then for
+\[
+  \{\psi_i(\bm r_1, \ldots, \bm r_N), \ldots, \psi_s(\bm r_1, \ldots, \bm r_N)\}
+\]
+if we switch $\bm r_i \leftrightarrow r_j$, it will lead
+\[
+  \psi_a(\bm r_1, \ldots, \bm r_j, \bm r_i, \ldots, \bm r_N)
+= \sum B_{ab} \psi_b(\bm r_1, \ldots, \bm r_i, \bm r_j, \ldots, \bm r_N)
+\]
+where $B_{ab}$ is a matrix. Write it into matrix equation form
+\begin{equation}
+  \begin{pmatrix}
+    \psi_1\\\vdots\\\psi_s
+  \end{pmatrix}_{\bm r_j, \bm r_i} =
+  \pxmat[showleft = 2, showtop = 2] Bss
+  \begin{pmatrix}
+    \psi_1\\\vdots\\\psi_s
+  \end{pmatrix}_{\bm r_i, \bm r_j}
+\end{equation}
+obviously, $B_{ij} B_{jk} \neq B_{jk} B_{ij}$,
+which is the non-Abelian representation. of braid group.
+\fbox{Tops Quan Computational}
+
+\section{1D Statistics: Interaction Corresponding}
+
+For $N$ particles with $G$ states, how to promote Bose or Fermi Statistics.
+\begin{align}
+  W_B & = \frac{[G + N - 1]!}{N! (G - 1)!},\\
+  W_F & = \frac{G!}{N! (G - 1)!},\\
+\end{align}
+when $0 \leq s \leq 1$,
+\[
+  W_s = \frac{[G + (N - 1)(1 - S)]!}{N![G - SN - (1 - S)]!}
+\]
+For a set of $N$: $\{N_x\}$, existing $\alpha$ to satisfy
+\begin{equation}
+  W = \prod_\alpha \frac{[G_\alpha + N_\alpha - 1 - \sum_{\beta \neq \alpha} S_{\alpha\beta} (N_\alpha - \delta_{\alpha\beta})!]}
+  {N_{\alpha!}[G_\alpha - 1 - \sum_\beta S_{\alpha\beta} (N_\alpha - \delta_{\alpha})]!},
+\end{equation}
+let $S_{\alpha} = s\delta_{\alpha\beta}$,
+\begin{enumext}[label = \roman*, columns = 2]
+  \item $S = 0$
+  \begin{equation}
+    W_B = \prod_\alpha \frac{(G_\alpha + N_\alpha - 1)!}{N_\alpha(G_\alpha - 1)}
+  \end{equation}
+  \item $S = 1$
+  \begin{equation}
+    W_F = \prod_\alpha \frac{G_\alpha!}{N_\alpha!(G_\alpha - 1)!}
+  \end{equation}
+\end{enumext}
+\begin{example}
+  $\delta$-interaction Boson (Yang-Yang).
+  For 1D, the Hamiltonian is
+  \[
+    H = -\sum_{i=1}^N \pdv*[2]{}{x_i}
+      + 2C \sum_{i<j} \delta(x_i - x_j),
+    \quad c \geq 0
+  \]
+  Apply the Periodic Boundary Conditions, we can have the strict solution.
+  Due to the translation conservation, apply the Fourier transformation
+  \[
+    E = \sum_n K_i^2
+  \]
+  while the continuous limitation
+  \[
+    S_{\alpha\beta} \to S(k,k') = \delta(k - k') + \frac1{2\pi} \odv*{\theta(k - k')}k
+  \]
+  that is
+  \[
+    \odv{\theta(k - k')}k = -\frac{2C}{C^2 + (k - k')^2}
+  \]
+  where $\theta(k) = -2\tan^{-1} (k/c)$.
+  \begin{enumext}
+    \item When $C \to \infty$, $\theta' = 0$, $S(k,k') = \delta(k - k')$.
+    \item When $C \to 0$, then it's ideal boson.
+  \end{enumext}
+\end{example}
+
+\begin{example}[Calogero-Sutherlanel model]
+  \[
+    H = -\sum_{i = 1}^N \pdv*{}x + \sum_{i<j} \lambda (\lambda - 1) \frac{\pi^2}{L^2} \sin \ab(\frac\pi L \frac{x_i - x_j}{L})^{-2}
+  \]
+\end{example}
+when $L \to \infty$, the last term becomes $\lambda(\lambda - 1)/(x_i - x_j)^2$.
+\[
+  S(k,k') = \lambda \delta(k - k') = \delta(k - k') + (\lambda - 1) \delta(k - k')
+\]
+when $\lambda = \frac12$, it becomes a semion;
+when $\lambda = 2$, it becomes dual semion.
+\begin{equation}
+  \epsilon(k) =
+  \begin{cases}
+    (k^2 - k_F^2)/\lambda, & |k| < k_F,\\
+    k^2 - k_F^2, & |k| > k_F
+  \end{cases}
+\end{equation}
+Now, the partition function becomes
+\begin{equation}
+  Z_G = \prod_k \ab(1 + \upe^{-\epsilon(k,T)/T})
+\end{equation}
